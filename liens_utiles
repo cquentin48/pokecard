@@ -1,7 +1,11 @@
 liens utiles:
 
-api fb 
+api fb
 	friendlist: https://developers.facebook.com/docs/graph-api/reference/friend-list/
-
+	connect : https://developers.facebook.com/docs/facebook-login/web?locale=fr_FR#logout
+	share : https://developers.facebook.com/docs/plugins/share-button/?locale=fr_FR
 
 api google map:
+
+api twitter :
+	
