@@ -1,0 +1,10 @@
+{
+    "name": "lpiem/pokecard",
+    "authors": [
+        {
+            "name": "Noé Colin",
+            "email": "noe_colin@yahoo.fr"
+        }
+    ],
+    "require": {}
+}
