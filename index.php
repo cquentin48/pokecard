@@ -1,7 +1,5 @@
 <?php
   echo "Hello World !";
-
-  <?php
     function CallAPI($method, $url, $data = false)
     {
         $curl = curl_init();
@@ -43,5 +41,4 @@
       print_r($returnData);
     echo "</pre>";
     echo "<br/>";
-  ?>
 ?>
