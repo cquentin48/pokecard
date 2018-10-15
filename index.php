@@ -46,8 +46,9 @@
   }*/
   use PokePHP\PokeApi;
   $api = new PokeApi;
-  $pokemon = $api->pokemon('10');
+  echo $api->pokemon(10);
+  /*$pokemon = $api->pokemon(10);
   echo "<pre>";
-    print_r($pokemon);
-  echo "</pre>";
+    echo $pokemon;
+  echo "</pre>";*/
 ?>
