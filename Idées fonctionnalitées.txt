@@ -3,15 +3,17 @@
 3. Collections
 4. Echanges
 5. Connexions
-6. Achat sur Amazon
-7. Connexion sur Réseaux Sociaux pour partages
+6. Connexion sur Réseaux Sociaux pour partages
+7. Lier liste amis réseaux sociaux
 8. Succès
 9. Classements (marches dans les terrains, pokédex le plus rempli)
-10. Système de marché d'échange en différé/ aléatoire
+10. Système de marché d'échange en différé / aléatoire
 11. Gestion du profil
 12. "Dissoudre" la carte pour des pièces : en cas de double-type diviser par deux
 13. Une carte dissoute => 1 pièce de l'élément
 14. Création de carte => 10 pièce de l'élément
-15. Défausse 5 cartes => Carte aléatoire
+15. Défausse 5 cartes => Gain de carte aléatoire
 16. Performances de la journée avec récompenses
 17. Historique
+18. Météo
+19. Système d'ami
