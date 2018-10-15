@@ -7,8 +7,10 @@ api fb
 
 api google map:
 
-api google map:
-
 météo: https://openweathermap.org/city
 
 gestion des utilisateurs api via amazon api: https://docs.aws.amazon.com/fr_fr/connect/latest/APIReference/Welcome.html
+
+
+heroku
+freemysqlhosting
