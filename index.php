@@ -4,6 +4,8 @@
   $method = "POST";
   $url = "https://pokeapi.co/api/v2/pokedex/1/";
   //$returnData = CallAPI($method, $url);
+  include_once("https://pokeapi.co/api/v2/pokedex/1/");
+  
   echo "<pre>";
   print_r($returnData);
   echo "</pre>";
