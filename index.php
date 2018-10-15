@@ -1,44 +1,45 @@
 <?php
   echo "Hello World !";
-    function CallAPI($method, $url, $data = false)
-    {
-        $curl = curl_init();
 
-        switch ($method)
-        {
-            case "POST":
-                curl_setopt($curl, CURLOPT_POST, 1);
+  $method = "POST";
+  $url = "https://pokeapi.co/api/v2/pokedex/1/";
+  //$returnData = CallAPI($method, $url);
+  echo "<pre>";
+  print_r($returnData);
+  echo "</pre>";
+  echo "<br/>";
 
-                if ($data)
-                    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-                break;
-            case "PUT":
-                curl_setopt($curl, CURLOPT_PUT, 1);
-                break;
-            default:
-                if ($data)
-                    $url = sprintf("%s?%s", $url, http_build_query($data));
-        }
+  function CallAPI($method, $url, $data = false)
+  {
+      $curl = curl_init();
 
-        // Optional Authentication:
-        curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        curl_setopt($curl, CURLOPT_USERPWD, "username:password");
+      switch ($method)
+      {
+          case "POST":
+              curl_setopt($curl, CURLOPT_POST, 1);
 
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+              if ($data)
+                  curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+              break;
+          case "PUT":
+              curl_setopt($curl, CURLOPT_PUT, 1);
+              break;
+          default:
+              if ($data)
+                  $url = sprintf("%s?%s", $url, http_build_query($data));
+      }
 
-        $result = curl_exec($curl);
+      // Optional Authentication:
+      curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+      curl_setopt($curl, CURLOPT_USERPWD, "username:password");
 
-        curl_close($curl);
+      curl_setopt($curl, CURLOPT_URL, $url);
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 
-        return $result;
-    }
+      $result = curl_exec($curl);
 
-    $method = "POST";
-    $url = "https://pokeapi.co/api/v2/pokedex/1/";
-    $returnData = CallAPI($method, $url);
-    echo "<pre>";
-      print_r($returnData);
-    echo "</pre>";
-    echo "<br/>";
+      curl_close($curl);
+
+      return $result;
+  }
 ?>
