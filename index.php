@@ -46,6 +46,7 @@
   }*/
   use PokePHP\PokeApi;
   $api = new PokeApi;
+  die();
   echo "jlkj";
   echo $api->pokemon(10);
   /*$pokemon = $api->pokemon(10);
