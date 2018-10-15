@@ -47,7 +47,7 @@
   use PokePHP\PokeApi;
   $api = new PokeApi;
   echo "<pre>";
-    $api->resourceList('ENDPOINT', 'LIMIT', 'OFFSET');
+    $api->berry('10');
     print_r($api);
   echo "</pre>";
 ?>
