@@ -5,7 +5,9 @@ api fb
 	connect : https://developers.facebook.com/docs/facebook-login/web?locale=fr_FR#logout
 	share : https://developers.facebook.com/docs/plugins/share-button/?locale=fr_FR
 
-api google map:
+api twitter
+	followerslist: https://developer.twitter.com/en/docs/accounts-and-users/follow-search-get-users/api-reference/get-followers-list.html
+	connect & share : https://github.com/jublo/codebird-php#readme
 
 météo: https://openweathermap.org/city
 
