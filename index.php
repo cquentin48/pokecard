@@ -1,11 +1,11 @@
 <?php
-  echo "Hello World !";
+/*  echo "Hello World !";
 
   $method = "POST";
   $url = "https://pokeapi.co/api/v2/pokedex/1/";
   //$returnData = CallAPI($method, $url);
   include_once("https://pokeapi.co/api/v2/pokedex/1/");
-  
+
   echo "<pre>";
   print_r($returnData);
   echo "</pre>";
@@ -43,5 +43,10 @@
       curl_close($curl);
 
       return $result;
-  }
+  }*/
+  use PokePHP\PokeApi;
+  $api = new PokeApi;
+  echo "<pre>";
+    print_r($api);
+  echo "</pre>";  
 ?>

@@ -6,5 +6,7 @@
             "email": "noe_colin@yahoo.fr"
         }
     ],
-    "require": {}
+    "require": {
+        "danrovito/pokephp": "^1.3"
+    }
 }
