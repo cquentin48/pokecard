@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">PokeApiAndroid</string>
+    <string name="loginTitle">Connexion</string>
+    <string name="withPokeAccount">Avec un compte PokeCard</string>
+    <string name="throughSocialNetWorksAccounts">A travers les comptes des réseaux sociaux</string>
+    <string name="facebook_app_id">770236446650561</string>
+    <string name="CONSUMER_KEY">yv2RilFDBf8eSJfzofv4lJVSM</string>
+    <string name="CONSUMER_SECRET">vSNPQ7mP0SgLnsDG4226gGtZdDtZ7P4Mqxo22mie4nLhCJlNsw</string>
+    <string name="title_activity_map">Carte</string>
+</resources>
