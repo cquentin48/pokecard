@@ -3,8 +3,15 @@
     <string name="loginTitle">Connexion</string>
     <string name="withPokeAccount">Avec un compte PokeCard</string>
     <string name="throughSocialNetWorksAccounts">A travers les comptes des réseaux sociaux</string>
-    <string name="facebook_app_id">770236446650561</string>
+    <string name="connectWithPokeAccount">Se connecter avec un compte PokeCard</string>
     <string name="CONSUMER_KEY">yv2RilFDBf8eSJfzofv4lJVSM</string>
     <string name="CONSUMER_SECRET">vSNPQ7mP0SgLnsDG4226gGtZdDtZ7P4Mqxo22mie4nLhCJlNsw</string>
     <string name="title_activity_map">Carte</string>
+    <string name="fb_login_protocol_scheme">fb457859408069356</string>
+    <string name="facebook_app_id">770236446650561</string>
+    <string name="profileSubMenuTitle">Gestion du profil</string>
+    <string name="toogleCollectionSubMenuTitle">Gestion des collections</string>
+    <string name="toogleOptionsSubMenuTitle">Options</string>
+    <string name="aboutSubMenuTitle">Options</string>
+    <string name="logoutSubMenuTitle">Se déconnecter</string>
 </resources>

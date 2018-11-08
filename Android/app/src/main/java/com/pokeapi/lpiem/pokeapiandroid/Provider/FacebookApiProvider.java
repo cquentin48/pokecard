@@ -8,11 +8,10 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.pokeapi.lpiem.pokeapiandroid.Model.FacebookProfile;
+import com.pokeapi.lpiem.pokeapiandroid.Model.SocialNetworks.FacebookProfile;
 import com.pokeapi.lpiem.pokeapiandroid.View.MainActivity;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 
 public class FacebookApiProvider implements FacebookApiInterface {
     private CallbackManager callbackManager;

@@ -12,21 +12,6 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/loginTitle" />
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/loginButtonsLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -37,11 +22,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/pokeCardAccountLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="71dp"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
@@ -50,12 +37,21 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="@string/withPokeAccount" />
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"></LinearLayout>
+                    android:layout_height="195dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/connectWithPokeAccount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/connectWithPokeAccount" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -90,9 +86,10 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:orientation="vertical">
+
                         <com.facebook.login.widget.LoginButton
                             android:id="@+id/facebookLoginButton"
-                            android:layout_width="wrap_content"
+                            android:layout_width="189dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="30dp"
@@ -118,9 +115,10 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:orientation="vertical">
+
                         <com.google.android.gms.common.SignInButton
                             android:id="@+id/googleLoginButton"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
 
                     </LinearLayout>
@@ -128,4 +126,5 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>

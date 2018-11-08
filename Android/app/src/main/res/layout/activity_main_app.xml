@@ -6,4 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".View.MainAppActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarMainMenu"
+        android:layout_width="368dp"
+        android:layout_height="57dp"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="2dp" />
 </android.support.constraint.ConstraintLayout>

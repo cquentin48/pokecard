@@ -17,7 +17,7 @@ public class AppProviderSingleton {
     }
 
     private AppProviderSingleton() {
-        facebookApiProvider = new FacebookApiProvider();
+        /*facebookApiProvider = new FacebookApiProvider();*/
     }
 
     public FacebookApiProvider getFacebookApiProvider() {

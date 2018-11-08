@@ -5,11 +5,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -19,8 +23,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.pokeapi.lpiem.pokeapiandroid.Application.PokeApplication;
+import com.pokeapi.lpiem.pokeapiandroid.Model.SocialNetworks.FacebookProfile;
 import com.pokeapi.lpiem.pokeapiandroid.Provider.AppProviderSingleton;
 import com.pokeapi.lpiem.pokeapiandroid.R;
+
+import org.json.JSONArray;
 
 public class MainActivity extends AppCompatActivity {
     private AppProviderSingleton singleton;
@@ -30,11 +38,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.setTitle("PokeCard - Connexion à l'application");
         this.singleton = AppProviderSingleton.getInstance();
 
 
         this.initGoogleLogInButton();
-        this.initFacebookLogInButton();
+        //this.initFacebookLogInButton();
         this.initTwitterLogInButton();
     }
 
@@ -47,8 +56,21 @@ public class MainActivity extends AppCompatActivity {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                singleton.getFacebookApiProvider().getData(loginResult,AccessToken.getCurrentAccessToken());
+                final FacebookProfile facebookProfile = new FacebookProfile();
+                GraphRequest request = GraphRequest.newMyFriendsRequest(
+                        AccessToken.getCurrentAccessToken(),
+                        new GraphRequest.GraphJSONArrayCallback() {
+                            @Override
+                            public void onCompleted(JSONArray array, GraphResponse response) {
+                                //Ajouter ici le retour des données pour l'ajouter dans le contrôleur pour le réseau social facebook
+                            }
+                        });
 
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "first_name,last_name,id");
+                request.setParameters(parameters);
+                request.executeAsync();
+                Intent intent = new Intent(MainActivity.this,MainAppActivity.class);
             }
 
             @Override
@@ -61,6 +83,24 @@ public class MainActivity extends AppCompatActivity {
                 exception.printStackTrace();
             }
         });
+
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Intent intent = new Intent(MainActivity.this, MainAppActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+
+            }
+        });
     }
 
     public void initTwitterLogInButton(){
@@ -69,10 +109,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void initGoogleLogInButton(){
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        SignInButton googleSignInButton = findViewById(R.id.googleLoginButton);
+        TextView googleSignInButtonText = (TextView)googleSignInButton.getChildAt(0);
+        googleSignInButtonText.setText("Se connecter avec Google");
 
         if(account!= null){
             Intent intent = new Intent(MainActivity.this,MainAppActivity.class);
-            startActivity(intent);
+            //startActivity(intent);
         }else{
             SignInButton signInButton = findViewById(R.id.googleLoginButton);
             signInButton.setSize(SignInButton.SIZE_STANDARD);
@@ -86,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
                     mGoogleSignInClient = GoogleSignIn.getClient(MainActivity.this, gso);
                     Intent signInIntent = mGoogleSignInClient.getSignInIntent();
                     startActivityForResult(signInIntent,RC_SIGN_IN);
+            startActivity(new Intent(MainActivity.this,MainAppActivity.class));
                 }
             });
         }

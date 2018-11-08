@@ -1,9 +1,7 @@
-package com.pokeapi.lpiem.pokeapiandroid.Model;
+package com.pokeapi.lpiem.pokeapiandroid.Model.SocialNetworks;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class FacebookProfile {
     private int userId;
