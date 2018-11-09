@@ -1,4 +1,4 @@
-package com.pokeapi.lpiem.pokeapiandroid.Provider;
+package com.pokeapi.lpiem.pokeapiandroid.Provider.SocialNetworks;
 
 import android.os.Bundle;
 

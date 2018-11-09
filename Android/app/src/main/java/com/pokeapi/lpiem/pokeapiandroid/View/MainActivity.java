@@ -1,5 +1,6 @@
 package com.pokeapi.lpiem.pokeapiandroid.View;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,11 +34,13 @@ import org.json.JSONArray;
 public class MainActivity extends AppCompatActivity {
     private AppProviderSingleton singleton;
     public final static int RC_SIGN_IN = 1;
+    private static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.context = this;
         this.setTitle("PokeCard - Connexion à l'application");
         this.singleton = AppProviderSingleton.getInstance();
 
@@ -108,31 +111,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void initGoogleLogInButton(){
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        SignInButton googleSignInButton = findViewById(R.id.googleLoginButton);
-        TextView googleSignInButtonText = (TextView)googleSignInButton.getChildAt(0);
-        googleSignInButtonText.setText("Se connecter avec Google");
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
 
-        if(account!= null){
-            Intent intent = new Intent(MainActivity.this,MainAppActivity.class);
-            //startActivity(intent);
-        }else{
-            SignInButton signInButton = findViewById(R.id.googleLoginButton);
-            signInButton.setSize(SignInButton.SIZE_STANDARD);
-            signInButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                            .requestEmail()
-                            .build();
-                    GoogleSignInClient mGoogleSignInClient;
-                    mGoogleSignInClient = GoogleSignIn.getClient(MainActivity.this, gso);
-                    Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-                    startActivityForResult(signInIntent,RC_SIGN_IN);
-            startActivity(new Intent(MainActivity.this,MainAppActivity.class));
-                }
-            });
-        }
+        final GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        SignInButton signInButton = findViewById(R.id.googleLoginButton);
+        signInButton.setSize(SignInButton.SIZE_STANDARD);
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+                startActivityForResult(signInIntent, RC_SIGN_IN);
+            }
+        });
+
     }
 
     @Override
@@ -151,15 +145,26 @@ public class MainActivity extends AppCompatActivity {
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            Intent intent = new Intent(MainActivity.this, MainAppActivity.class);
+            startActivity(intent);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w("Google", "signInResult:failed code=" + e.getStatusCode());
+            e.printStackTrace();
         }
     }
 
     public void launchActivity(){
         Intent intent = new Intent(MainActivity.this,MainAppActivity.class);
         startActivity(intent);
+    }
+
+    public static GoogleSignInClient initGoogleSignInApi(){
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(context, gso);
+        return googleSignInClient;
     }
 }

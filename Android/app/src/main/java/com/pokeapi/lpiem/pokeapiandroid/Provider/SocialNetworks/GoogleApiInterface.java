@@ -1,4 +1,4 @@
-package com.pokeapi.lpiem.pokeapiandroid.Provider;
+package com.pokeapi.lpiem.pokeapiandroid.Provider.SocialNetworks;
 
 public interface GoogleApiInterface {
 

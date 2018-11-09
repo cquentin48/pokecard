@@ -1,4 +1,4 @@
-package com.pokeapi.lpiem.pokeapiandroid.Provider;
+package com.pokeapi.lpiem.pokeapiandroid.Provider.SocialNetworks;
 
 import com.facebook.AccessToken;
 import com.facebook.login.LoginResult;
