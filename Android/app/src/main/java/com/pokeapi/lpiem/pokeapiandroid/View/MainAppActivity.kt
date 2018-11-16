@@ -24,7 +24,7 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any> {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val menuInflater = menuInflater
-        menuInflater.inflate(R.menu.option_menu_main_windows, menu)
+        menuInflater.inflate(R.menu.main_menu, menu)
         return true
     }
 }

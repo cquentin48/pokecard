@@ -5,6 +5,8 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
 
 import com.facebook.AccessToken
 import com.facebook.FacebookCallback
@@ -36,8 +38,14 @@ class MainActivity : AppCompatActivity() {
 
 
         this.initGoogleLogInButton()
-        //this.initFacebookLogInButton();
+        this.initFacebookLogInButton()
         this.initTwitterLogInButton()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.login_menu, menu)
+        return true
     }
 
     fun initFacebookLogInButton() {

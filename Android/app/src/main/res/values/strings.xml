@@ -14,4 +14,6 @@
     <string name="toogleOptionsSubMenuTitle">Options</string>
     <string name="aboutSubMenuTitle">Options</string>
     <string name="logoutSubMenuTitle">Se déconnecter</string>
+    <string name="aboutMenu">A propos</string>
+    <string name="mapMenu">Carte</string>
 </resources>
