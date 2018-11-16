@@ -3,30 +3,23 @@ package com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class Type {
-    @SerializedName("name")
+class Sprite {
+    @SerializedName("front_default")
     @Expose
-    var typeName: String? = null
-
-    @SerializedName("url")
-    @Expose
-    var url: String? = null
+    var backDefault: String = ""
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as Type
+        other as Sprite
 
-        if (typeName != other.typeName) return false
-        if (url != other.url) return false
+        if (backDefault != other.backDefault) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        var result = typeName?.hashCode() ?: 0
-        result = 31 * result + (url?.hashCode() ?: 0)
-        return result
+        return backDefault.hashCode()
     }
 }

@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/mapOrPokedexMenu"
-        android:title="@string/mapMenu" />
+        android:title="@string/Pokedex" />
     <item
         android:id="@+id/profile"
         android:title="@string/profileSubMenuTitle"></item>
@@ -11,7 +11,7 @@
         android:title="@string/toogleCollectionSubMenuTitle"></item>
     <item
         android:id="@+id/options"
-        android:title="@string/aboutSubMenuTitle"></item>
+        android:title="@string/toogleOptionsSubMenuTitle"></item>
     <item
         android:id="@+id/about"
         android:title="@string/aboutMenu" />

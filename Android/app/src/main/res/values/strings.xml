@@ -12,8 +12,10 @@
     <string name="profileSubMenuTitle">Gestion du profil</string>
     <string name="toogleCollectionSubMenuTitle">Gestion des collections</string>
     <string name="toogleOptionsSubMenuTitle">Options</string>
-    <string name="aboutSubMenuTitle">Options</string>
+    <string name="aboutSubMenuTitle">A propos de</string>
     <string name="logoutSubMenuTitle">Se déconnecter</string>
     <string name="aboutMenu">A propos</string>
     <string name="mapMenu">Carte</string>
+    <string name="pokedexTitle">Pokédex Mondial</string>
+    <string name="Pokedex">Pokedex Mondial</string>
 </resources>

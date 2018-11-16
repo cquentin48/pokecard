@@ -29,6 +29,8 @@ import com.pokeapi.lpiem.pokeapiandroid.R
 class MainActivity : AppCompatActivity() {
     private var singleton: AppProviderSingleton? = null
     private var context:Context?= null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -81,8 +83,7 @@ class MainActivity : AppCompatActivity() {
 
         LoginManager.getInstance().registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(loginResult: LoginResult) {
-                val intent = Intent(this@MainActivity, MainAppActivity::class.java)
-                startActivity(intent)
+                launchActivity()
             }
 
             override fun onCancel() {
