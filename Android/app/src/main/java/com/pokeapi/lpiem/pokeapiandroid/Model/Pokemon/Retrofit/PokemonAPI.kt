@@ -15,4 +15,7 @@ interface PokemonAPI {
     fun getPokemonSpecies(
             @Path("id") id: Int
     ): Call<Species>
+
+    @GET("/api/v2/pokemon")
+    fun getPokemonListData(): Call<PokeApiInfos>
 }

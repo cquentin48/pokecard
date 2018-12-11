@@ -30,7 +30,7 @@ class PokemonProvider : Callback<PokemonRetrofit> {
                     val pokemonRetrofitResulted = response.body()
                     pokemonName = "Nom du pokémon : " + pokemonRetrofitResulted!!.name!!
                     setPokemon(pokemonRetrofitResulted)
-                    googleConnexionResult.showPokemon(pokemonRetrofitResulted)
+                    googleConnexionResult.addPokemonToList(pokemonRetrofitResulted)
                 } else {
                     Log.d("Erreur", "Erreur de connexion")
                 }

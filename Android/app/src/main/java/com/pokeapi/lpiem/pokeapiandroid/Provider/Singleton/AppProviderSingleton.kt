@@ -2,6 +2,8 @@ package com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton
 
 import android.util.Log
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Model.PokemonData
+import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokeApiInfos
+import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonPokeApiPageUrl
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonRetrofit
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.Species
 import com.pokeapi.lpiem.pokeapiandroid.Model.SocialNetworks.Profile
@@ -18,12 +20,19 @@ class AppProviderSingleton private constructor() {
     var googleApiProvider: GoogleApiProvider? = null
     var twitterApiProvider: TwitterApiProvider? = null
     var userProfile: Profile = Profile()
+    private var pokemonCount: Int = 0;
 
-    var pokemonList:MutableList<PokemonData> ?= mutableListOf<PokemonData>()
+    var pokemonList:MutableList<PokemonData> ?
+
+    fun addPokemonToList(newPokemon : PokemonData){
+        pokemonList!!.add(newPokemon)
+    }
 
     init {
         facebookApiProvider = FacebookApiProvider()
-    }    val listPokemon:MutableList<PokemonData> = mutableListOf<PokemonData>()
+        pokemonList = mutableListOf()
+    }
+
 
 
     fun getPokeInfos(mainAppActivity: MainAppActivity, pokeIndex:Int){
@@ -42,19 +51,56 @@ class AppProviderSingleton private constructor() {
                     pokemon.species = pokemonDataReturned!!.species
                     pokemon.typeList = pokemonDataReturned!!.typeList
 
-                    mainAppActivity.showPokemon(pokemon)
+                    mainAppActivity.addPokemonToList(pokemon)
+                    mainAppActivity.Singleton!!.getPokemonSpecies(mainAppActivity,pokeIndex-1)
+                    mainAppActivity.Singleton!!.getPokedexEntry(mainAppActivity,pokeIndex-1)
                 } else {
-                    Log.d("Erreur", "Erreur de connexion")
+                    Log.d("Error", "Error while fetching data")
                 }
             }
 
             override fun onFailure(call: Call<PokemonRetrofit>, t: Throwable) {
-                Log.e("Erreur", t.localizedMessage)
+                Log.e("Error", t.localizedMessage)
                 t.printStackTrace()
             }
         })
     }
 
+    /**
+     * Fetch api infos from main page
+     */
+    fun getPokeApiInfos(mainAppActivity: MainAppActivity){
+        val pokemonAPI = RetrofitSingleton.getInstance()
+
+        val callPokemon = pokemonAPI!!.getPokemonListData()
+        
+        callPokemon.enqueue(object : Callback<PokeApiInfos>{
+            override fun onResponse(call: Call<PokeApiInfos>, response: Response<PokeApiInfos>) {
+
+                var returnedData = response.body()
+                val pokeInformations = PokeApiInfos()
+
+                pokeInformations.PokeCount = returnedData!!.PokeCount
+                pokeInformations.PokemonPageViewList = cloneElement(returnedData.PokemonPageViewList)
+
+                Log.d("Infotest", pokeInformations.toString())
+
+                for(i in 1..pokeInformations.PokeCount-1){
+                    Log.d("Nom du pokémon n°"+i,pokeInformations.PokemonPageViewList[i].PokemonName)
+                    Log.d("Url du pokémon n°"+i,pokeInformations.PokemonPageViewList[i].PokemonPageView)
+                }
+
+            }
+            override fun onFailure(call: Call<PokeApiInfos>, t: Throwable) {
+                Log.e("Error","Error while fetching data")
+                Log.e("Error message", t.localizedMessage)
+            }
+        })
+    }
+
+    /**
+     * Fetch pokedex entry of a pokemon
+     */
     fun getPokedexEntry(mainAppActivity: MainAppActivity, pokeIndex:Int){
         val pokemonAPI = RetrofitSingleton.getInstance()
 
@@ -71,14 +117,14 @@ class AppProviderSingleton private constructor() {
 
 
 
-                    mainAppActivity.showPokemon(pokemon)
+                    mainAppActivity.addPokemonToList(pokemon)
                 } else {
-                    Log.d("Erreur", "Erreur de connexion")
+                    Log.d("Error", "Error de connexion")
                 }
             }
 
             override fun onFailure(call: Call<Species>, t: Throwable) {
-                Log.e("Erreur", t.localizedMessage)
+                Log.e("Error", t.localizedMessage)
                 t.printStackTrace()
             }
         })
@@ -95,17 +141,31 @@ class AppProviderSingleton private constructor() {
                 if (response.isSuccessful()) {
                     var returnedData = response.body()!!
 
-                    mainAppActivity.updatePokemonData(pokeIndex,returnedData)
+                    mainAppActivity.addPokemonSpecies(pokeIndex-1,returnedData)
                 } else {
-                    Log.d("Erreur", "Erreur de connexion")
+                    Log.d("Error", "Error de connexion")
                 }
             }
 
             override fun onFailure(call: Call<Species>, t: Throwable) {
-                Log.e("Erreur", t.localizedMessage)
+                Log.e("Error", t.localizedMessage)
                 t.printStackTrace()
             }
         })
+    }
+
+    /**
+     * Find the pokemon Id by its name
+     * @return id pokemonId || 0 if it's not found
+     */
+    fun findPokemonByName(pokeName: String):Int{
+        var pokemonIdFound = 0
+        this.pokemonList!!.forEach {
+            if(it.PokemonName.equals(pokeName)){
+                pokemonIdFound = it.PokemonId;
+            }
+        }
+        return pokemonIdFound
     }
 
     companion object {
@@ -123,5 +183,13 @@ class AppProviderSingleton private constructor() {
             }
             return instanceProvider
         }
+    }
+
+    fun cloneElement(rawElement:MutableList<PokemonPokeApiPageUrl>):MutableList<PokemonPokeApiPageUrl>{
+        val newList:MutableList<PokemonPokeApiPageUrl> = mutableListOf()
+        rawElement.forEach {
+            newList.add(PokemonPokeApiPageUrl(it.PokemonName, it.PokemonPageView))
+        }
+        return newList
     }
 }
