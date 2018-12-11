@@ -1,12 +1,11 @@
 package com.pokeapi.lpiem.pokeapiandroid.View
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Model.PokemonData
-
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonRetrofit
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.Species
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Pokemon.InterfaceCallBackController
@@ -14,30 +13,29 @@ import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
 import com.pokeapi.lpiem.pokeapiandroid.R
 
 class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any> {
-    val singleton: AppProviderSingleton?= AppProviderSingleton.getInstance()
+    private var singleton: AppProviderSingleton?= AppProviderSingleton.getInstance()
+    var Singleton: AppProviderSingleton = singleton!!
+        get() = this.singleton!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        for(i in 1..19){
-            singleton!!.getPokeInfos(this,i)
-        }
-        for(i in 1..19){
-            singleton!!.getPokemonSpecies(this,i)
-        }
         setContentView(R.layout.activity_main_app)
+        singleton!!.getPokeApiInfos(this);
     }
 
-    override fun updatePokemonData(i: Int, s: Species) {
-        singleton!!.listPokemon.get(i).pokemonSpecies=s
+    override fun addPokemonSpecies(i: Int, s: Species) {
+        singleton!!.pokemonList!!.get(i).PokemonSpecies = s
     }
 
-    override fun updatePokedexEntry(i: Int, p: String) {
-        singleton!!.listPokemon.get(i).pokemonPokedexEntry = p
+    override fun addPokedexEntry(i: Int, p: String) {
+        singleton!!.pokemonList!!.get(i).PokemonPokedexEntry = p
     }
 
-    override fun showPokemon(p: PokemonRetrofit) {
-        val pokemon = PokemonData()
-        singleton!!.listPokemon.add(pokemon)
+    override fun addPokemonToList(p: PokemonRetrofit) {
+        Singleton!!.addPokemonToList(PokemonData(p.name!!,
+                p.species!!,
+                p.typeList!!.toMutableList(),
+                p.id))
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

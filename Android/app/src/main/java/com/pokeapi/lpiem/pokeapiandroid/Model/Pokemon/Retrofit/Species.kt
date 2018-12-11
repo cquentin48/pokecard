@@ -2,12 +2,16 @@ package com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit
 
 import com.google.gson.annotations.SerializedName
 
-class Species {
+class Species() {
     @SerializedName("name")
     var name: String? = null
 
     @SerializedName("url")
     var url: String? = null
+
+    companion object Factory{
+        fun create(): Species = Species()
+    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

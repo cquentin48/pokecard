@@ -1,13 +1,14 @@
 package com.pokeapi.lpiem.pokeapiandroid.View
 
-import android.content.Context
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuInflater
-import android.widget.ListView
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
 import com.pokeapi.lpiem.pokeapiandroid.R
+import kotlinx.android.synthetic.main.fragment_pokedex_letter.*
 
 class PokedexPokemonView : AppCompatActivity() {
     val singleton: AppProviderSingleton?= AppProviderSingleton.getInstance()
@@ -15,8 +16,8 @@ class PokedexPokemonView : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pokedex_pokemon_view)
-        setTitle("PokeCard : Pokédex Mondial")
-        afficheList()
+        setTitle("Pokédex Mondial")
+        displayList()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -25,10 +26,12 @@ class PokedexPokemonView : AppCompatActivity() {
         return true
     }
 
-    private fun afficheList(){
-        var listView: ListView = findViewById(R.id.pokedexListListView)
-        val context: Context = this
-        val adapter = PokedexAdapter(context, singleton!!.listPokemon)
-        listView.adapter = adapter
+    private fun displayList(){
+        val recyclerView = pokemonListLetterRecyclerView
+        recyclerView.layoutManager(GridLayoutManager(this,3))
     }
+}
+
+private operator fun RecyclerView.LayoutManager?.invoke(gridLayoutManager: GridLayoutManager) {
+
 }

@@ -29,4 +29,16 @@ class Type {
         result = 31 * result + (url?.hashCode() ?: 0)
         return result
     }
+
+    /**
+     * Cloning function for the {Type} class
+     */
+    fun clone(): Type{
+        var newType: Type?= Type()
+
+        newType!!.typeName = this.typeName
+        newType!!.url = this.url
+
+        return newType
+    }
 }

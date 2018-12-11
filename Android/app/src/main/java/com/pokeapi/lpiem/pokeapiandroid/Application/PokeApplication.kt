@@ -1,9 +1,7 @@
 package com.pokeapi.lpiem.pokeapiandroid.Application
 
 import android.app.Application
-
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Model.PokemonData
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton

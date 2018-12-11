@@ -44,7 +44,8 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".View.pokedexListView" />
-        <activity android:name=".View.PokedexPokemonView"></activity>
+        <activity android:name=".View.PokedexPokemonView" />
+        <activity android:name=".View.PokedexLetterRessourceActivity"></activity>
     </application>
 
 </manifest>

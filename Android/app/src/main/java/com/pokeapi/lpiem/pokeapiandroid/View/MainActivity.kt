@@ -2,8 +2,8 @@ package com.pokeapi.lpiem.pokeapiandroid.View
 
 import android.content.Context
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
@@ -27,7 +27,7 @@ import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
 import com.pokeapi.lpiem.pokeapiandroid.R
 
 class MainActivity : AppCompatActivity() {
-    private var singleton: AppProviderSingleton? = null
+    private var singleton: AppProviderSingleton? = AppProviderSingleton.getInstance()
     private var context:Context?= null
 
 
@@ -37,7 +37,6 @@ class MainActivity : AppCompatActivity() {
         this.context = this
         this.title = "PokeCard - Connexion à l'application"
         this.singleton = AppProviderSingleton.getInstance()
-
 
         this.initGoogleLogInButton()
         this.initFacebookLogInButton()

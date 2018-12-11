@@ -4,7 +4,7 @@ import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonRetrofit
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.Species
 
 interface InterfaceCallBackController<T> {
-    fun updatePokemonData(i: Int, s:Species)
-    fun showPokemon(p: PokemonRetrofit)
-    fun updatePokedexEntry(i: Int, s:String)
+    fun addPokemonSpecies(i: Int, s:Species)
+    fun addPokemonToList(p: PokemonRetrofit)
+    fun addPokedexEntry(i: Int, s:String)
 }

@@ -1,6 +1,6 @@
 package com.pokeapi.lpiem.pokeapiandroid.Model.SocialNetworks
 
-import java.util.ArrayList
+import java.util.*
 
 class FacebookProfile {
     var userId: Int = 0

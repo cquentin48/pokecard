@@ -1,17 +1,9 @@
 package com.pokeapi.lpiem.pokeapiandroid.Provider.SocialNetworks
 
-import android.os.Bundle
-
 import com.facebook.AccessToken
 import com.facebook.CallbackManager
-import com.facebook.GraphRequest
-import com.facebook.GraphResponse
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
-import com.pokeapi.lpiem.pokeapiandroid.Model.SocialNetworks.FacebookProfile
-import com.pokeapi.lpiem.pokeapiandroid.View.MainActivity
-
-import org.json.JSONArray
 
 class FacebookApiProvider : FacebookApiInterface {
     val callbackManager: CallbackManager
