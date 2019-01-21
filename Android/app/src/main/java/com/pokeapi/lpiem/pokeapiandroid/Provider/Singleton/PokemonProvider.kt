@@ -13,9 +13,7 @@ import retrofit2.Response
 
 class PokemonProvider : Callback<PokemonRetrofit> {
     var pokemonRetrofitInput: PokemonRetrofit? = null
-        private set
     var pokemonName: String? = null
-    private val nextId = 1
     private var message: String? = null
     private val interfaceCallBackController: InterfaceCallBackController<*>? = null
 
@@ -28,12 +26,11 @@ class PokemonProvider : Callback<PokemonRetrofit> {
         callPokemon.enqueue(object : Callback<PokemonRetrofit> {
 
             override fun onResponse(call: Call<PokemonRetrofit>, response: Response<PokemonRetrofit>) {
-                //                Log.d("Reponse","Réponse");
                 if (response.isSuccessful) {
                     val pokemonRetrofitResulted = response.body()
                     pokemonName = "Nom du pokémon : " + pokemonRetrofitResulted!!.name!!
                     setPokemon(pokemonRetrofitResulted)
-                    googleConnexionResult.showPokemon(pokemonRetrofitResulted)
+                    googleConnexionResult.addPokemonToList(pokemonRetrofitResulted)
                 } else {
                     Log.d("Erreur", "Erreur de connexion")
                 }
@@ -47,11 +44,6 @@ class PokemonProvider : Callback<PokemonRetrofit> {
         //        Log.d("Nom du pokémon",this.pokemonName+"");
     }
 
-    private fun getNextPokemon() {
-        /*Call<PokemonRetrofit>nextPokemon = this.interfaceAPI.getPokemonById(nextId);
-        nextPokemon.enqueue(this);*/
-    }
-
     fun setPokemon(poke: PokemonRetrofit?) {
         this.pokemonRetrofitInput = poke
     }
@@ -60,11 +52,9 @@ class PokemonProvider : Callback<PokemonRetrofit> {
     private fun fetchData(response: Response<PokemonRetrofit>) {
         val rawPokemonRetrofit = response.body()
 
-        val formList = rawPokemonRetrofit!!.formsList
-        message += "list people : \n\n"
+        message += "pokemonList people : \n\n"
         // changesList.forEach(people -> System.out.println(people.name));  // lambda expression (enable java 1.8 in project structure  - available only since AP 24...
-        Log.d("Nom du pokémon", rawPokemonRetrofit.name)
-        interfaceCallBackController!!.onWorkDone()
+        Log.d("Nom du pokémon", rawPokemonRetrofit!!.name)
     }
 
 
@@ -79,14 +69,6 @@ class PokemonProvider : Callback<PokemonRetrofit> {
 
     override fun onFailure(call: Call<PokemonRetrofit>, t: Throwable) {
         t.printStackTrace()
-    }
-
-    constructor(result: PokemonRetrofit) {
-        this.pokemonRetrofitInput = result
-    }
-
-    constructor() {
-        this.pokemonRetrofitInput = PokemonRetrofit()
     }
 }
 

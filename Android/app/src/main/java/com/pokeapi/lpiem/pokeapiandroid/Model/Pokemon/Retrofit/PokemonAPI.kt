@@ -10,4 +10,12 @@ interface PokemonAPI {
     fun getPokemonById(
             @Path("id") id: Int
     ): Call<PokemonRetrofit>
+
+    @GET("/api/v2/pokemon-species/{id}")
+    fun getPokemonSpecies(
+            @Path("id") id: Int
+    ): Call<Species>
+
+    @GET("/api/v2/pokemon")
+    fun getPokemonListData(): Call<PokeApiInfos>
 }

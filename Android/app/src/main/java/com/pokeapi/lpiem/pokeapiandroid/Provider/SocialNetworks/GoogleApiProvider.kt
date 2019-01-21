@@ -1,8 +1,6 @@
 package com.pokeapi.lpiem.pokeapiandroid.Provider.SocialNetworks
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.pokeapi.lpiem.pokeapiandroid.View.MainActivity
 
 class GoogleApiProvider : GoogleApiInterface {

@@ -31,4 +31,28 @@ class PokemonRetrofit {
     fun getFormListIndexI(i: Int): Forms {
         return formsList!![i]
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as PokemonRetrofit
+
+        if (name != other.name) return false
+        if (typeList != other.typeList) return false
+        if (id != other.id) return false
+        if (species != other.species) return false
+        if (formsList != other.formsList) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name?.hashCode() ?: 0
+        result = 31 * result + (typeList?.hashCode() ?: 0)
+        result = 31 * result + id
+        result = 31 * result + (species?.hashCode() ?: 0)
+        result = 31 * result + (formsList?.hashCode() ?: 0)
+        return result
+    }
 }
