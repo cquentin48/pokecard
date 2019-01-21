@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">PokeApiAndroid</string>
     <string name="withPokeAccount">Avec un compte PokeCard</string>
-    <string name="throughSocialNetWorksAccounts">A travers les comptes des réseaux sociaux</string>
+    <string name="throughSocialNetWorksAccounts">A travers les comptes\ndes réseaux sociaux</string>
     <string name="connectWithPokeAccount">Se connecter avec un compte PokeCard</string>
     <string name="facebook_app_id">770236446650561</string>
     <string name="profileSubMenuTitle">Gestion du profil</string>

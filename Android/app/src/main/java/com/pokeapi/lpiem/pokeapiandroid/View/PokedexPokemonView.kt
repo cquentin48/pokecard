@@ -6,6 +6,9 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuInflater
+/*import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView*/
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Model.PokemonData
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
 import com.pokeapi.lpiem.pokeapiandroid.R
@@ -30,8 +33,8 @@ class PokedexPokemonView : AppCompatActivity() {
     private fun displayList(){
         val recyclerView = recyclerViewPokedexList
         recyclerView.layoutManager(GridLayoutManager(this,3))
-        val tmpMutableList:MutableList<PokemonData> = MutableList(1)
-        recyclerView.adapter = PokemonLetterRecyclerView(tmpMutableList,this,"A")
+        //val tmpMutableList:MutableList<PokemonData> = MutableList(1)
+        //recyclerView.adapter = PokemonLetterRecyclerView(tmpMutableList,this,"A")
     }
 }
 
