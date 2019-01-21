@@ -2,7 +2,7 @@ package com.pokeapi.lpiem.pokeapiandroid.View
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Model.PokemonData
@@ -41,7 +41,7 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any> {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item!!.itemId){
             R.id.mapOrPokedexMenu ->{
-                val intent = Intent(this,PokedexPokemonView::class.java)
+                val intent = Intent(this,pokedexListView::class.java)
                 startActivity(intent)
                 return true
             }

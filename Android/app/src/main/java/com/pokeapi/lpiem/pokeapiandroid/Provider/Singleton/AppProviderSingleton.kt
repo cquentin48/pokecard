@@ -85,8 +85,8 @@ class AppProviderSingleton private constructor() {
 
                 Log.d("Infotest", pokeInformations.toString())
 
-                for(i in 1..pokeInformations.PokeCount-1){
-                    Log.d("Nom du pokémon n°"+i,pokeInformations.PokemonPageViewList[i].PokemonName)
+                for(i in 1 until pokeInformations.PokemonPageViewList.size){
+                  Log.d("Nom du pokémon n°"+i,pokeInformations.PokemonPageViewList[i].PokemonName)
                     Log.d("Url du pokémon n°"+i,pokeInformations.PokemonPageViewList[i].PokemonPageView)
                 }
 

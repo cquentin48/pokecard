@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 class PokeApiInfos {
     @SerializedName("count")
     @Expose
-    private var pokemonCount: Int = 0;
+    private var pokemonCount: Int = 0
 
     @SerializedName("results")
     @Expose

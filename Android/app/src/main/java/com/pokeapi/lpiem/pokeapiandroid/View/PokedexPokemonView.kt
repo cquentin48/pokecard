@@ -1,14 +1,9 @@
 package com.pokeapi.lpiem.pokeapiandroid.View
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuInflater
-/*import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView*/
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Model.PokemonData
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
 import com.pokeapi.lpiem.pokeapiandroid.R
@@ -20,7 +15,7 @@ class PokedexPokemonView : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pokedex_pokemon_view)
-        setTitle("Pokédex Mondial")
+        title = "Pokémon n° - "
         displayList()
     }
 
@@ -31,13 +26,14 @@ class PokedexPokemonView : AppCompatActivity() {
     }
 
     private fun displayList(){
-        val recyclerView = recyclerViewPokedexList
-        recyclerView.layoutManager(GridLayoutManager(this,3))
-        //val tmpMutableList:MutableList<PokemonData> = MutableList(1)
-        //recyclerView.adapter = PokemonLetterRecyclerView(tmpMutableList,this,"A")
+        /*val recyclerView = recyclerViewPokedexList
+        val tmpMutableList:MutableList<PokemonData> = arrayListOf()
+        tmpMutableList.add(0,PokemonData())
+        recyclerView.adapter = PokemonLetterRecyclerView(tmpMutableList,this,"A")
+        recyclerView.layoutManager(androidx.recyclerview.widget.GridLayoutManager(this, 3))*/
     }
 }
 
-private operator fun RecyclerView.LayoutManager?.invoke(gridLayoutManager: GridLayoutManager) {
+private operator fun androidx.recyclerview.widget.RecyclerView.LayoutManager?.invoke(gridLayoutManager: androidx.recyclerview.widget.GridLayoutManager) {
 
 }
