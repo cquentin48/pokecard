@@ -22,7 +22,7 @@ class PokedexLetterRecyclerView(newListPokemon : MutableList<PokemonData>?, cont
     private var letter:String = letter
 
     class ViewHolder(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view){
-        val pokemonLetterTextView = view.pokedexLetter!!
+        val pokemonLetterTextView = view.pokemonNamePokedexRessourceTextView!!
         val pokemonSpriteRessource = view.pokemonSpritePokedexImageViewRessource!!
     }
 
@@ -33,7 +33,7 @@ class PokedexLetterRecyclerView(newListPokemon : MutableList<PokemonData>?, cont
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, pokemonPosition: Int) {
-        viewHolder.pokemonLetterTextView.text = letter
+        viewHolder.pokemonLetterTextView.text = listPokemon[pokemonPosition].PokemonName
         Glide.with(context).load(listPokemon[pokemonPosition].PokemonSprite).into(viewHolder.pokemonSpriteRessource)
     }
 }

@@ -2,6 +2,7 @@ package com.pokeapi.lpiem.pokeapiandroid.View
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Model.PokemonData
 import kotlinx.android.synthetic.main.activity_pokedex_list_view.*
 import kotlin.collections.HashMap
@@ -33,10 +34,12 @@ class PokedexListView : AppCompatActivity(),PokedexFunctionInterface {
         pokemonReturnList["A"] = mutableList
         mutableList = arrayListOf()
         mutableList.add(PokemonData())
+        mutableList[0].PokemonName = ""
         pokemonReturnList["B"] = mutableList
-        val layoutManager = FlexboxLayoutManager(this)
-        layoutManager.flexDirection = FlexDirection.COLUMN
-        layoutManager.justifyContent = JustifyContent.FLEX_END
+        pokemonReturnList["B"]!![0].PokemonName = "Bulbizarre"
+        pokemonReturnList["A"]!![0].PokemonName = "Rattatac"
+        pokemonReturnList["A"]!![0].PokemonSprite = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/20.png"
+        val layoutManager = LinearLayoutManager(this)
         recyclerViewPokedexList.layoutManager = layoutManager
         recyclerViewPokedexList.adapter = PokedexLineAdapter(pokemonReturnList,this)
     }
