@@ -20,7 +20,7 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any> {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_app)
-        singleton!!.getPokeApiInfos(this);
+        //singleton!!.getPokeApiInfos(this)
     }
 
     override fun addPokemonSpecies(i: Int, s: Species) {
@@ -41,7 +41,7 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any> {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item!!.itemId){
             R.id.mapOrPokedexMenu ->{
-                val intent = Intent(this,pokedexListView::class.java)
+                val intent = Intent(this,PokedexListView::class.java)
                 startActivity(intent)
                 return true
             }

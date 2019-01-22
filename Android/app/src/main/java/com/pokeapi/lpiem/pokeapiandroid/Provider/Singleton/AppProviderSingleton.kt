@@ -2,15 +2,13 @@ package com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton
 
 import android.util.Log
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Model.PokemonData
-import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokeApiInfos
-import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonPokeApiPageUrl
-import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonRetrofit
-import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.Species
+import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.*
 import com.pokeapi.lpiem.pokeapiandroid.Model.SocialNetworks.Profile
 import com.pokeapi.lpiem.pokeapiandroid.Provider.SocialNetworks.FacebookApiProvider
 import com.pokeapi.lpiem.pokeapiandroid.Provider.SocialNetworks.GoogleApiProvider
 import com.pokeapi.lpiem.pokeapiandroid.Provider.SocialNetworks.TwitterApiProvider
 import com.pokeapi.lpiem.pokeapiandroid.View.MainAppActivity
+import com.pokeapi.lpiem.pokeapiandroid.View.PokedexListView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,67 +33,32 @@ class AppProviderSingleton private constructor() {
 
 
 
-    fun getPokeInfos(mainAppActivity: MainAppActivity, pokeIndex:Int){
+    fun getPokeList(pokedexView: PokedexListView){
         val pokemonAPI = RetrofitSingleton.getInstance()
 
-        val callPokemon = pokemonAPI!!.getPokemonById(pokeIndex)
+        val callPokemon = pokemonAPI!!.getPokemonListData()
 
-        callPokemon.enqueue(object : Callback<PokemonRetrofit> {
+        callPokemon.enqueue(object : Callback<PokemonList> {
 
-            override fun onResponse(call: Call<PokemonRetrofit>, response: Response<PokemonRetrofit>) {
+            override fun onResponse(call: Call<PokemonList>, response: Response<PokemonList>) {
                 if (response.isSuccessful()) {
-                    var pokemonDataReturned = response.body()
-                    var pokemon = PokemonRetrofit()
-                    pokemon.name = pokemonDataReturned!!.name
-                    pokemon.id = pokeIndex
-                    pokemon.species = pokemonDataReturned!!.species
-                    pokemon.typeList = pokemonDataReturned!!.typeList
-
-                    mainAppActivity.addPokemonToList(pokemon)
-                    mainAppActivity.Singleton!!.getPokemonSpecies(mainAppActivity,pokeIndex-1)
-                    mainAppActivity.Singleton!!.getPokedexEntry(mainAppActivity,pokeIndex-1)
+                    val returnedData = response.body()
+                    val pokemonImportData = cloneList(returnedData!!.PokemonList)
+                    pokedexView.initAdapter()
                 } else {
                     Log.d("Error", "Error while fetching data")
                 }
             }
 
-            override fun onFailure(call: Call<PokemonRetrofit>, t: Throwable) {
+            override fun onFailure(call: Call<PokemonList>, t: Throwable) {
                 Log.e("Error", t.localizedMessage)
                 t.printStackTrace()
             }
         })
     }
 
-    /**
-     * Fetch api infos from main page
-     */
-    fun getPokeApiInfos(mainAppActivity: MainAppActivity){
-        val pokemonAPI = RetrofitSingleton.getInstance()
-
-        val callPokemon = pokemonAPI!!.getPokemonListData()
-        
-        callPokemon.enqueue(object : Callback<PokeApiInfos>{
-            override fun onResponse(call: Call<PokeApiInfos>, response: Response<PokeApiInfos>) {
-
-                var returnedData = response.body()
-                val pokeInformations = PokeApiInfos()
-
-                pokeInformations.PokeCount = returnedData!!.PokeCount
-                pokeInformations.PokemonPageViewList = cloneElement(returnedData.PokemonPageViewList)
-
-                Log.d("Infotest", pokeInformations.toString())
-
-                for(i in 1 until pokeInformations.PokemonPageViewList.size){
-                  Log.d("Nom du pokémon n°"+i,pokeInformations.PokemonPageViewList[i].PokemonName)
-                    Log.d("Url du pokémon n°"+i,pokeInformations.PokemonPageViewList[i].PokemonPageView)
-                }
-
-            }
-            override fun onFailure(call: Call<PokeApiInfos>, t: Throwable) {
-                Log.e("Error","Error while fetching data")
-                Log.e("Error message", t.localizedMessage)
-            }
-        })
+    fun cloneList(originalHashMap: List<PokemonRetrofit>):List<PokemonRetrofit>{
+        return originalHashMap.toMutableList()
     }
 
     /**

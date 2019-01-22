@@ -9,6 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitSingleton {
     private var instance: PokemonAPI? = null
     val POKEMONBASEURL = "https://pokeapi.co/"
+    val OWNAPIBASEURL = "http://walkemon.herokuapp.com/"
 
     fun getInstance(): PokemonAPI? {
         if (instance == null) {
@@ -19,7 +20,7 @@ object RetrofitSingleton {
 
     private fun buildInstance(): PokemonAPI {
         val gson = GsonBuilder().setLenient().create()
-        val retrofit = Retrofit.Builder().baseUrl(POKEMONBASEURL).addConverterFactory(GsonConverterFactory.create(gson)).build()
+        val retrofit = Retrofit.Builder().baseUrl(OWNAPIBASEURL).addConverterFactory(GsonConverterFactory.create(gson)).build()
         return retrofit.create(PokemonAPI::class.java)
     }
 }
