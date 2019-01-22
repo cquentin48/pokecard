@@ -13,11 +13,11 @@ import kotlinx.android.synthetic.main.pokedex_letter_recycler_view.view.*
 class PokedexLetterRecyclerView(newListPokemon : MutableList<PokemonData>?, context: Context, letter:String) : androidx.recyclerview.widget.RecyclerView.Adapter<PokedexLetterRecyclerView.ViewHolder>() {
     //private val singleton
 
-    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(context).inflate(R.layout.pokedex_entry_ressource_layout, p0, false))
+    override fun onCreateViewHolder(viewGroup: ViewGroup, index: Int): ViewHolder {
+        return ViewHolder(LayoutInflater.from(context).inflate(R.layout.pokedex_entry_ressource_layout, viewGroup, false))
     }
 
-    private var listPokemon:MutableList<PokemonData> = newListPokemon!!
+    private var listPokemon:MutableList<PokemonData> = this!!.initList(newListPokemon)!!
     private var context:Context = context
     private var letter:String = letter
 
@@ -27,6 +27,10 @@ class PokedexLetterRecyclerView(newListPokemon : MutableList<PokemonData>?, cont
     }
 
     override fun getItemCount() = listPokemon.size
+
+    fun initList(newListPokemon : MutableList<PokemonData>?):MutableList<PokemonData>?{
+        return newListPokemon!!
+    }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, pokemonPosition: Int) {
         viewHolder.pokemonLetterTextView.text = letter

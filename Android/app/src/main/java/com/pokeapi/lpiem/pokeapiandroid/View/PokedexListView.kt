@@ -23,10 +23,17 @@ class PokedexListView : AppCompatActivity(),PokedexFunctionInterface {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.pokeapi.lpiem.pokeapiandroid.R.layout.activity_pokedex_list_view)
+        initAdapter()
     }
 
     fun initAdapter(){
         val pokemonReturnList = filterPokemonListByFirstLetter(arrayListOf())
+        var mutableList: MutableList<PokemonData> = arrayListOf()
+        mutableList.add(PokemonData())
+        pokemonReturnList["A"] = mutableList
+        mutableList = arrayListOf()
+        mutableList.add(PokemonData())
+        pokemonReturnList["B"] = mutableList
         val layoutManager = FlexboxLayoutManager(this)
         layoutManager.flexDirection = FlexDirection.COLUMN
         layoutManager.justifyContent = JustifyContent.FLEX_END
