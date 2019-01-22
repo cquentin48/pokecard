@@ -10,16 +10,19 @@ import com.google.android.flexbox.JustifyContent
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonRetrofit
+import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.RetrofitSingleton
 import retrofit2.Call
 
 
 class PokedexListView : AppCompatActivity(),PokedexFunctionInterface {
 
-    override fun initPokedex() {
-        initAdapter()
+    override fun initPokedex(pokemonImportData) {
+        val layoutManager = LinearLayoutManager(this)
+        recyclerViewPokedexList.layoutManager = layoutManager
+        recyclerViewPokedexList.adapter = PokedexLineAdapter(pokemonReturnList,this)
     }
-    val pokemonAPI = RetrofitSingleton.getInstance()
+    val pokemonAPI = AppProviderSingleton.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,20 +31,7 @@ class PokedexListView : AppCompatActivity(),PokedexFunctionInterface {
     }
 
     fun initAdapter(){
-        val pokemonReturnList = filterPokemonListByFirstLetter(arrayListOf())
-        var mutableList: MutableList<PokemonData> = arrayListOf()
-        mutableList.add(PokemonData())
-        pokemonReturnList["A"] = mutableList
-        mutableList = arrayListOf()
-        mutableList.add(PokemonData())
-        mutableList[0].PokemonName = ""
-        pokemonReturnList["B"] = mutableList
-        pokemonReturnList["B"]!![0].PokemonName = "Bulbizarre"
-        pokemonReturnList["A"]!![0].PokemonName = "Rattatac"
-        pokemonReturnList["A"]!![0].PokemonSprite = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/20.png"
-        val layoutManager = LinearLayoutManager(this)
-        recyclerViewPokedexList.layoutManager = layoutManager
-        recyclerViewPokedexList.adapter = PokedexLineAdapter(pokemonReturnList,this)
+        pokemonAPI.getPokeList(this)
     }
 
     /**

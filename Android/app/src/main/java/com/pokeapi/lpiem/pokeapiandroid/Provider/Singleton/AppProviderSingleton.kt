@@ -44,7 +44,7 @@ class AppProviderSingleton private constructor() {
                 if (response.isSuccessful()) {
                     val returnedData = response.body()
                     val pokemonImportData = cloneList(returnedData!!.PokemonList)
-                    pokedexView.initAdapter()
+                    pokedexView.initAdapter(pokemonImportData)
                 } else {
                     Log.d("Error", "Error while fetching data")
                 }
