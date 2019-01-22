@@ -21,4 +21,5 @@
     <string name="pokedexActivityHeightText">Taille : </string>
     <string name="pokedexActivityTypesText">Type : </string>
     <string name="pokedexActivityPokemonNumberText">Pokémon n°</string>
+    <string name="pokemap_Menu">PokéMap</string>
 </resources>

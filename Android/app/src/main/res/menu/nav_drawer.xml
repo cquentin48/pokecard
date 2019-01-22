@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navPokeMap"
+            android:title="@string/pokemap_Menu" />
+        <item
+            android:id="@+id/navPokedex"
+            android:title="Pokédex" />
+        <item
+            android:id="@+id/navProfile"
+            android:title="Mon Pc" />
+        <item
+            android:id="@+id/navExchange"
+            android:title="PC de Léo" />
+        <item
+            android:id="@+id/navSignOut"
+            android:title="Déconnexion" />
+    </group>
+</menu>

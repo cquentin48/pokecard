@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.Task
 import com.pokeapi.lpiem.pokeapiandroid.Model.SocialNetworks.FacebookProfile
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
 import com.pokeapi.lpiem.pokeapiandroid.R
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     private var singleton: AppProviderSingleton? = AppProviderSingleton.getInstance()
@@ -41,6 +42,13 @@ class MainActivity : AppCompatActivity() {
         this.initGoogleLogInButton()
         this.initFacebookLogInButton()
         this.initTwitterLogInButton()
+        this.loginPokeApiButton()
+    }
+
+    private fun loginPokeApiButton(){
+        connectWithPokeAccount.setOnClickListener {
+            startActivity(Intent(this, MainAppActivity::class.java))
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
