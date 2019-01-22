@@ -18,7 +18,7 @@ class AppProviderSingleton private constructor() {
     var googleApiProvider: GoogleApiProvider? = null
     var twitterApiProvider: TwitterApiProvider? = null
     var userProfile: Profile = Profile()
-    private var pokemonCount: Int = 0;
+    private var pokemonCount: Int = 0
 
     var pokemonList:MutableList<PokemonData> ?
 
