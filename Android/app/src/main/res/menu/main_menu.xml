@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/mapOrPokedexMenu"
+        android:id="@+id/pokedexMenu"
         android:title="@string/Pokedex" />
+    <item
+        android:id="@+id/pokeMap"
+        android:title="@string/pokemapMenu" />
     <item
         android:id="@+id/profile"
         android:title="@string/profileSubMenuTitle"></item>

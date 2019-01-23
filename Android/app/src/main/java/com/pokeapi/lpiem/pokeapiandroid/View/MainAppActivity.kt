@@ -1,7 +1,9 @@
 package com.pokeapi.lpiem.pokeapiandroid.View
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -14,6 +16,7 @@ import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.Species
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Pokemon.InterfaceCallBackController
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
 import com.pokeapi.lpiem.pokeapiandroid.R
+import kotlinx.android.synthetic.main.activity_main_app.*
 
 
 class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
@@ -30,12 +33,45 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
 
         //singleton!!.getPokeApiInfos(this)
 
-        val navigationView: NavigationView = findViewById(R.id.navigationView)
         navigationView.setNavigationItemSelectedListener { menuItem ->
             // set item as selected to persist highlight
             menuItem.isChecked = true
             // close drawer when item is tapped
             mDrawerLayout.closeDrawers()
+
+            // Add code here to update the UI based on the item selected
+            // For example, swap UI fragments here
+            // set item as selected to persist highlight
+            when(menuItem.itemId){
+
+                R.id.pokedexMenu ->{
+                    startActivity(Intent(this,PokedexPokemonView::class.java))
+                    navigationView.menu.getItem(0).isChecked = true
+                }
+                R.id.pokeMap ->{
+                    Toast.makeText(this,getString(R.string.NotYetImplemented),Toast.LENGTH_LONG).show()
+
+                }
+                R.id.profile ->{
+                    Toast.makeText(this,getString(R.string.NotYetImplemented),Toast.LENGTH_LONG).show()
+
+                }
+                R.id.collections ->{
+                    Toast.makeText(this,getString(R.string.NotYetImplemented),Toast.LENGTH_LONG).show()
+                }
+                R.id.options ->{
+                    Toast.makeText(this,getString(R.string.NotYetImplemented),Toast.LENGTH_LONG).show()
+
+                }
+                R.id.about ->{
+                    Toast.makeText(this,getString(R.string.NotYetImplemented),Toast.LENGTH_LONG).show()
+
+                }
+                R.id.logOut ->{
+                    startActivity(Intent(this,MainActivity::class.java))
+                }
+            }
+            // close drawer when item is tapped
 
             // Add code here to update the UI based on the item selected
             // For example, swap UI fragments here
@@ -69,12 +105,12 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
+        when (item.itemId) {
             android.R.id.home -> {
                 mDrawerLayout.openDrawer(GravityCompat.START)
-                true
             }
             else -> super.onOptionsItemSelected(item)
         }
+        return true
     }
 }

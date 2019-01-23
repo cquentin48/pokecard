@@ -3,19 +3,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/navPokeMap"
-            android:title="@string/pokemap_Menu" />
+            android:id="@+id/pokedexMenu"
+            android:title="@string/Pokedex" />
         <item
-            android:id="@+id/navPokedex"
-            android:title="Pokédex" />
+            android:id="@+id/pokeMap"
+            android:title="@string/pokemapMenu" />
         <item
-            android:id="@+id/navProfile"
-            android:title="Mon Pc" />
+            android:id="@+id/profile"
+            android:title="@string/profileSubMenuTitle"></item>
         <item
-            android:id="@+id/navExchange"
-            android:title="PC de Léo" />
+            android:id="@+id/collections"
+            android:title="@string/toogleCollectionSubMenuTitle"></item>
         <item
-            android:id="@+id/navSignOut"
-            android:title="Déconnexion" />
+            android:id="@+id/options"
+            android:title="@string/toogleOptionsSubMenuTitle"/>
+        <item
+            android:id="@+id/about"
+            android:title="@string/aboutMenu" />
+        <item
+            android:id="@+id/logOut"
+            android:title="@string/logoutSubMenuTitle"></item>
     </group>
 </menu>
