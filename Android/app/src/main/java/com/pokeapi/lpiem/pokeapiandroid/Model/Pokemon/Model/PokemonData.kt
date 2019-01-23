@@ -48,7 +48,7 @@ class PokemonData (pokemonName: String, pokemonSprite: String, pokemonPokedexEnt
     /**
      * Constructeur par défaut
      */
-    constructor():this("A","","A",mutableListOf<Types>(),Species(),0)
+    constructor():this("A","https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png","A",mutableListOf<Types>(),Species(),0)
 
     /**
      * Constructeur avec données de retrofit

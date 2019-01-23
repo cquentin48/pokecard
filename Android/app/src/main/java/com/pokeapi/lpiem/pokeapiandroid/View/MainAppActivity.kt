@@ -2,6 +2,7 @@ package com.pokeapi.lpiem.pokeapiandroid.View
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
@@ -45,8 +46,7 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
             when(menuItem.itemId){
 
                 R.id.pokedexMenu ->{
-                    startActivity(Intent(this,pokedexListView::class.java))
-                    navigationView.menu.getItem(0).isChecked = true
+                    startActivity(Intent(this,PokedexListView::class.java))
                 }
                 R.id.pokeMap ->{
                     Toast.makeText(this,getString(R.string.NotYetImplemented),Toast.LENGTH_LONG).show()

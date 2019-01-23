@@ -9,6 +9,9 @@ class PokemonRetrofit {
     @Expose
     var name: String? = null
 
+    @SerializedName("sprite")
+    var sprite: String? = null
+
     @SerializedName("types")
     @Expose
     var typeList: List<Types>? = null
@@ -39,6 +42,7 @@ class PokemonRetrofit {
         other as PokemonRetrofit
 
         if (name != other.name) return false
+        if (sprite != other.sprite) return false
         if (typeList != other.typeList) return false
         if (id != other.id) return false
         if (species != other.species) return false
@@ -49,10 +53,12 @@ class PokemonRetrofit {
 
     override fun hashCode(): Int {
         var result = name?.hashCode() ?: 0
+        result = 31 * result + (sprite?.hashCode() ?: 0)
         result = 31 * result + (typeList?.hashCode() ?: 0)
         result = 31 * result + id
         result = 31 * result + (species?.hashCode() ?: 0)
         result = 31 * result + (formsList?.hashCode() ?: 0)
         return result
     }
+
 }

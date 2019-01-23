@@ -23,4 +23,5 @@
     <string name="pokedexActivityTypesText">Type : </string>
     <string name="pokedexActivityPokemonNumberText">Pokémon n°</string>
     <string name="pokemapMenu">PokéMap</string>
+    <string name="pokedexSearchText">Rechercher</string>
 </resources>
