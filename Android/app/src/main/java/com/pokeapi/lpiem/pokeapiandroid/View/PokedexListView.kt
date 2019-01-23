@@ -3,7 +3,6 @@ package com.pokeapi.lpiem.pokeapiandroid.View
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Model.PokemonData
 import kotlinx.android.synthetic.main.activity_pokedex_list_view.*
 import kotlin.collections.HashMap
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonRetrofit

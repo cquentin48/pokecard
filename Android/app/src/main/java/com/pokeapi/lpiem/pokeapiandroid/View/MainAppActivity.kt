@@ -2,34 +2,91 @@ package com.pokeapi.lpiem.pokeapiandroid.View
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationView
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Model.PokemonData
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonRetrofit
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.Species
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Pokemon.InterfaceCallBackController
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
-import android.R
+import com.pokeapi.lpiem.pokeapiandroid.R
 import kotlinx.android.synthetic.main.activity_main_app.*
 
 
-class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any> {
+class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
     private var singleton: AppProviderSingleton?= AppProviderSingleton.getInstance()
+    private lateinit var mDrawerLayout: DrawerLayout
+
     var Singleton: AppProviderSingleton = singleton!!
         get() = this.singleton!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.pokeapi.lpiem.pokeapiandroid.R.layout.activity_main_app)
-        buttonListener()
-    }
+        setContentView(R.layout.activity_main_app)
+        mDrawerLayout = findViewById(R.id.drawer_layout)
 
-    private fun buttonListener(){
-        pokedexButton.setOnClickListener {
-            val intent = Intent(this, PokedexListView::class.java)
-            startActivity(intent)
+        //singleton!!.getPokeApiInfos(this)
+
+        navigationView.setNavigationItemSelectedListener { menuItem ->
+            // set item as selected to persist highlight
+            menuItem.isChecked = true
+            // close drawer when item is tapped
+            mDrawerLayout.closeDrawers()
+
+            // Add code here to update the UI based on the item selected
+            // For example, swap UI fragments here
+            // set item as selected to persist highlight
+            when(menuItem.itemId){
+
+                R.id.pokedexMenu ->{
+                    startActivity(Intent(this,PokedexListView::class.java))
+                }
+                R.id.pokeMap ->{
+                    Toast.makeText(this,getString(R.string.NotYetImplemented),Toast.LENGTH_LONG).show()
+
+                }
+                R.id.profile ->{
+                    Toast.makeText(this,getString(R.string.NotYetImplemented),Toast.LENGTH_LONG).show()
+
+                }
+                R.id.collections ->{
+                    Toast.makeText(this,getString(R.string.NotYetImplemented),Toast.LENGTH_LONG).show()
+                }
+                R.id.options ->{
+                    Toast.makeText(this,getString(R.string.NotYetImplemented),Toast.LENGTH_LONG).show()
+
+                }
+                R.id.about ->{
+                    Toast.makeText(this,getString(R.string.NotYetImplemented),Toast.LENGTH_LONG).show()
+
+                }
+                R.id.logOut ->{
+                    startActivity(Intent(this,MainActivity::class.java))
+                }
+            }
+            // close drawer when item is tapped
+
+            // Add code here to update the UI based on the item selected
+            // For example, swap UI fragments here
+
+            true
         }
+
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        val actionbar: ActionBar? = supportActionBar
+        actionbar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.ic_settings_black_24dp)
+        }
+
     }
 
     override fun addPokemonSpecies(i: Int, s: Species) {
@@ -47,20 +104,13 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any> {
                 p.id))
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item!!.itemId){
-            com.pokeapi.lpiem.pokeapiandroid.R.id.mapOrPokedexMenu ->{
-                val intent = Intent(this,PokedexListView::class.java)
-                startActivity(intent)
-                return true
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                mDrawerLayout.openDrawer(GravityCompat.START)
             }
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val menuInflater = menuInflater
-        menuInflater.inflate(com.pokeapi.lpiem.pokeapiandroid.R.menu.main_menu, menu)
         return true
     }
 }
