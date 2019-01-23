@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 class PokemonList{
-    @SerializedName("count")
+    @SerializedName("pokemonList")
     @Expose
     private lateinit var pokemonList : List<PokemonRetrofit>
 

@@ -11,6 +11,7 @@
     <string name="aboutMenu">A propos</string>
     <string name="pokedexTitle">Pokédex Mondial</string>
     <string name="Pokedex">Pokedex Mondial</string>
+    <string name="NotYetImplemented">Pas encore implémenté!</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -21,4 +22,6 @@
     <string name="pokedexActivityHeightText">Taille : </string>
     <string name="pokedexActivityTypesText">Type : </string>
     <string name="pokedexActivityPokemonNumberText">Pokémon n°</string>
+    <string name="pokemapMenu">PokéMap</string>
+    <string name="pokedexSearchText">Rechercher</string>
 </resources>

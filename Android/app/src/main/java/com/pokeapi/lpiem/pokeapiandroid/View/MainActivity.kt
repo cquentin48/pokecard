@@ -42,9 +42,12 @@ class MainActivity : AppCompatActivity() {
         this.initGoogleLogInButton()
         this.initFacebookLogInButton()
         this.initTwitterLogInButton()
+        this.loginPokeApiButton()
+    }
+
+    private fun loginPokeApiButton(){
         connectWithPokeAccount.setOnClickListener {
-            val intent = Intent(this, MainAppActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, MainAppActivity::class.java))
         }
     }
 

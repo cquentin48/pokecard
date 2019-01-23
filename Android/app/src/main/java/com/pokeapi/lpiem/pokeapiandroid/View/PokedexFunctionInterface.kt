@@ -6,5 +6,5 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface PokedexFunctionInterface {
-    fun initPokedex()
+    fun initPokedex(pokemonImportData : List<PokemonRetrofit>)
 }
