@@ -10,7 +10,9 @@ import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonRetrofit
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.Species
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Pokemon.InterfaceCallBackController
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
-import com.pokeapi.lpiem.pokeapiandroid.R
+import android.R
+import kotlinx.android.synthetic.main.activity_main_app.*
+
 
 class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any> {
     private var singleton: AppProviderSingleton?= AppProviderSingleton.getInstance()
@@ -19,8 +21,15 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any> {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_app)
-        singleton!!.getPokeApiInfos(this);
+        setContentView(com.pokeapi.lpiem.pokeapiandroid.R.layout.activity_main_app)
+        buttonListener()
+    }
+
+    private fun buttonListener(){
+        pokedexButton.setOnClickListener {
+            val intent = Intent(this, PokedexListView::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun addPokemonSpecies(i: Int, s: Species) {
@@ -40,8 +49,8 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any> {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item!!.itemId){
-            R.id.mapOrPokedexMenu ->{
-                val intent = Intent(this,pokedexListView::class.java)
+            com.pokeapi.lpiem.pokeapiandroid.R.id.mapOrPokedexMenu ->{
+                val intent = Intent(this,PokedexListView::class.java)
                 startActivity(intent)
                 return true
             }
@@ -51,7 +60,7 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any> {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val menuInflater = menuInflater
-        menuInflater.inflate(R.menu.main_menu, menu)
+        menuInflater.inflate(com.pokeapi.lpiem.pokeapiandroid.R.menu.main_menu, menu)
         return true
     }
 }

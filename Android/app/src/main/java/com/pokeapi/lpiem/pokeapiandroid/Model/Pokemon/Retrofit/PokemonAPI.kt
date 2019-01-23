@@ -16,6 +16,9 @@ interface PokemonAPI {
             @Path("id") id: Int
     ): Call<Species>
 
-    @GET("/api/v2/pokemon")
-    fun getPokemonListData(): Call<PokeApiInfos>
+    @GET("/public/index.php/pokemon/")
+    fun getPokemonListData(): Call<PokemonList>
+
+    @GET("/pokemon/")
+    fun getPokemonById(): Call<PokemonRetrofit>
 }

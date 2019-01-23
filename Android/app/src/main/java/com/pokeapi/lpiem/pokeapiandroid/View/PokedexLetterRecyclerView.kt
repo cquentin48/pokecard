@@ -4,29 +4,34 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Model.PokemonData
+import com.bumptech.glide.Glide
+import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonRetrofit
 import com.pokeapi.lpiem.pokeapiandroid.R
-import kotlinx.android.synthetic.main.pokedex_letter_recycler_view.view.*
+import kotlinx.android.synthetic.main.pokedex_entry_ressource_layout.view.*
 
-class PokemonLetterRecyclerView(newListPokemon : MutableList<PokemonData>?, context: Context, letter:String) : androidx.recyclerview.widget.RecyclerView.Adapter<PokemonLetterRecyclerView.ViewHolder>() {
+class PokedexLetterRecyclerView(newListPokemon: MutableList<PokemonRetrofit>?, context: Context, letter:String) : androidx.recyclerview.widget.RecyclerView.Adapter<PokedexLetterRecyclerView.ViewHolder>() {
+    //private val singleton
 
-    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(context).inflate(R.layout.pokedex_entry_ressource_layout, p0, false))
+    override fun onCreateViewHolder(viewGroup: ViewGroup, index: Int): ViewHolder {
+        return ViewHolder(LayoutInflater.from(context).inflate(R.layout.pokedex_entry_ressource_layout, viewGroup, false))
     }
 
-    private var listPokemon:MutableList<PokemonData> = newListPokemon!!
-    private var context:Context? = null
-    private var letter:String = letter
+    private var listPokemon:MutableList<PokemonRetrofit> = this!!.initList(newListPokemon)!!
+    private var context:Context = context
 
     class ViewHolder(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view){
-        val pokemonLetterTextView = view.pokedexLetter
-        val pokemonListRecyclerView = view.pokedexListRecyclerView
+        val pokemonLetterTextView = view.pokemonNamePokedexRessourceTextView!!
+        val pokemonSpriteRessource = view.pokemonSpritePokedexImageViewRessource!!
     }
 
     override fun getItemCount() = listPokemon.size
 
-    override fun onBindViewHolder(holder: ViewHolder, pokemonPosition: Int) {
-        holder.pokemonLetterTextView.text = letter
-        holder.pokemonListRecyclerView.adapter = PokedexLineAdapter(listPokemon,context!!)
+    fun initList(newListPokemon : MutableList<PokemonRetrofit>?):MutableList<PokemonRetrofit>?{
+        return newListPokemon!!
+    }
+
+    override fun onBindViewHolder(viewHolder: ViewHolder, pokemonPosition: Int) {
+        viewHolder.pokemonLetterTextView.text = listPokemon[pokemonPosition].name
+        Glide.with(context).load(listPokemon[pokemonPosition].sprite).into(viewHolder.pokemonSpriteRessource)
     }
 }
