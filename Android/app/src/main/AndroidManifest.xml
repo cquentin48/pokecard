@@ -44,8 +44,9 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".View.PokedexListView" />
-        <activity android:name=".View.PokedexPokemonView" />
-        <activity android:name=".View.PokedexLetterRessourceActivity"></activity>
+        <activity android:theme="@style/ThemeOverlay.AppCompat.Light"
+            android:name=".View.PokedexPokemonView"/>
+        <activity android:name=".View.PokedexLetterRecyclerView"></activity>
     </application>
 
 </manifest>
