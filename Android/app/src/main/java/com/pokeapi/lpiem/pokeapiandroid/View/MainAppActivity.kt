@@ -17,6 +17,9 @@ import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.Species
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Pokemon.InterfaceCallBackController
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
 import com.pokeapi.lpiem.pokeapiandroid.R
+import android.location.LocationManager
+import android.provider.Settings
+import android.view.View
 import kotlinx.android.synthetic.main.activity_main_app.*
 
 
@@ -49,7 +52,7 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
                     startActivity(Intent(this,PokedexListView::class.java))
                 }
                 R.id.pokeMap ->{
-                    Toast.makeText(this,getString(R.string.NotYetImplemented),Toast.LENGTH_LONG).show()
+                    startActivity(Intent(this,LocalizationActivity::class.java))
 
                 }
                 R.id.profile ->{
@@ -112,5 +115,21 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
             else -> super.onOptionsItemSelected(item)
         }
         return true
+    }
+
+    fun goToLocalization(view:View) {
+
+        val service = getSystemService(LOCATION_SERVICE) as LocationManager
+        val enabled = service
+                .isProviderEnabled(LocationManager.GPS_PROVIDER)
+
+        if (!enabled) run {
+            val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+            startActivity(intent)
+        }
+        else {
+            val myIntent = Intent(this, LocalizationActivity::class.java)
+            startActivity(myIntent)
+        }
     }
 }
