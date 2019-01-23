@@ -45,7 +45,7 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
             when(menuItem.itemId){
 
                 R.id.pokedexMenu ->{
-                    startActivity(Intent(this,PokedexPokemonView::class.java))
+                    startActivity(Intent(this,pokedexListView::class.java))
                     navigationView.menu.getItem(0).isChecked = true
                 }
                 R.id.pokeMap ->{
