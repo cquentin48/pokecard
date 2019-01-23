@@ -57,6 +57,8 @@ class LocalizationActivity : AppCompatActivity(), MapFragment.OnFragmentInteract
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
+            mMapFragment  = MapFragment.newInstance(10.0,10.0)
+            addFragment()
             return
         }
         val location = locationManager!!.getLastKnownLocation(provider)
@@ -101,8 +103,8 @@ class LocalizationActivity : AppCompatActivity(), MapFragment.OnFragmentInteract
     override fun onLocationChanged(location: Location) {
         lat = location.latitude
         lon = location.longitude
-        latituteField!!.text = lat.toString()
-        longitudeField!!.text = lon.toString()
+        latituteField!!.text = "latitude: " + lat.toString()
+        longitudeField!!.text = "longitude: " +lon.toString()
         //val detailgetter = DetailsGetter()
         // detailsfield!!.text = detailgetter.getData()
     }

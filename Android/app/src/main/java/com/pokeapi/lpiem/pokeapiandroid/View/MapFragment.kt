@@ -46,14 +46,14 @@ class MapFragment : Fragment() {
 
             mMap.clear() //clear old markers
 
-          /*  val googlePlex = CameraPosition.builder()
-                    .target(LatLng(37.4219999, -122.0862462))
-                    .zoom(10f)
+            val googlePlex = CameraPosition.builder()
+                    .target(LatLng(latitude, longitude))
+                    .zoom(19f)
                     .bearing(0f)
-                    .tilt(45f)
-                    .build()*/
+                    .tilt(70f)
+                    .build()
 
-            //mMap.animateCamera(CameraUpdateFactory.newCameraPosition(googlePlex), 10000, null)
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(googlePlex), 2500, null)
 
             mMap.addMarker(MarkerOptions()
                     .position(LatLng(latitude, longitude))

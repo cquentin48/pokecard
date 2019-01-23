@@ -17,7 +17,6 @@ import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.Species
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Pokemon.InterfaceCallBackController
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
 import com.pokeapi.lpiem.pokeapiandroid.R
-import android.R
 import android.location.LocationManager
 import android.provider.Settings
 import android.view.View
@@ -53,7 +52,7 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
                     startActivity(Intent(this,PokedexListView::class.java))
                 }
                 R.id.pokeMap ->{
-                    Toast.makeText(this,getString(R.string.NotYetImplemented),Toast.LENGTH_LONG).show()
+                    startActivity(Intent(this,LocalizationActivity::class.java))
 
                 }
                 R.id.profile ->{
