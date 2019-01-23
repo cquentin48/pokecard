@@ -6,21 +6,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Model.PokemonData
 import kotlinx.android.synthetic.main.activity_pokedex_list_view.*
 import kotlin.collections.HashMap
-import com.google.android.flexbox.JustifyContent
-import com.google.android.flexbox.FlexDirection
-import com.google.android.flexbox.FlexboxLayoutManager
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonRetrofit
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
-import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.RetrofitSingleton
-import retrofit2.Call
 
 
 class PokedexListView : AppCompatActivity(),PokedexFunctionInterface {
 
-    override fun initPokedex(pokemonImportData) {
-        val layoutManager = LinearLayoutManager(this)
-        recyclerViewPokedexList.layoutManager = layoutManager
-        recyclerViewPokedexList.adapter = PokedexLineAdapter(pokemonReturnList,this)
+    override fun initPokedex(pokemonImportData : List<PokemonRetrofit>) {
+        recyclerViewPokedexList.layoutManager = LinearLayoutManager(this)
+        val data = (pokemonImportData).toMutableList()
+        recyclerViewPokedexList.adapter = PokedexLineAdapter(filterPokemonListByFirstLetter(data),this)
     }
     val pokemonAPI = AppProviderSingleton.getInstance()
 
@@ -37,14 +32,14 @@ class PokedexListView : AppCompatActivity(),PokedexFunctionInterface {
     /**
      * Filter pokemonList by regrouping them through the first letter
      */
-    private fun filterPokemonListByFirstLetter(pokemonList : MutableList<PokemonData>):HashMap<String,MutableList<PokemonData>>{
-        val pokemonReturnList:HashMap<String,MutableList<PokemonData>> = HashMap()
+    private fun filterPokemonListByFirstLetter(pokemonList : MutableList<PokemonRetrofit>):HashMap<String,MutableList<PokemonRetrofit>>{
+        val pokemonReturnList:HashMap<String,MutableList<PokemonRetrofit>> = HashMap()
         for(i in 0 until pokemonList.size){
-            if(!pokemonReturnList.containsKey(Character.toString(pokemonList[i].PokemonName[0].toUpperCase()))){
-                pokemonReturnList[Character.toString(pokemonList[i].PokemonName[0].toUpperCase())] = arrayListOf()
+            if(!pokemonReturnList.containsKey(Character.toString(pokemonList[i].name!![0].toUpperCase()))){
+                pokemonReturnList[Character.toString(pokemonList[i].name!![0].toUpperCase())] = arrayListOf()
             }
-            pokemonReturnList[Character.toString(pokemonList[i].PokemonName[0].toUpperCase())]?.
-                    add(pokemonReturnList[Character.toString(pokemonList[i].PokemonName[0].toUpperCase())]!!.size,pokemonList[i])
+            pokemonReturnList[Character.toString(pokemonList[i].name!![0].toUpperCase())]?.
+                    add(pokemonReturnList[Character.toString(pokemonList[i].name!![0].toUpperCase())]!!.size,pokemonList[i])
         }
         return pokemonReturnList
     }

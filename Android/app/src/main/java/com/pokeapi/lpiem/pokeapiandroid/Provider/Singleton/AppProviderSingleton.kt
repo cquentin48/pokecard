@@ -41,10 +41,9 @@ class AppProviderSingleton private constructor() {
         callPokemon.enqueue(object : Callback<PokemonList> {
 
             override fun onResponse(call: Call<PokemonList>, response: Response<PokemonList>) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful) {
                     val returnedData = response.body()
-                    val pokemonImportData = cloneList(returnedData!!.PokemonList)
-                    pokedexView.initAdapter(pokemonImportData)
+                    pokedexView.initPokedex(returnedData!!.PokemonList)
                 } else {
                     Log.d("Error", "Error while fetching data")
                 }

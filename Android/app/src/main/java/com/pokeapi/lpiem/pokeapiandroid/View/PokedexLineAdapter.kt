@@ -7,21 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.flexbox.FlexDirection
-import com.google.android.flexbox.FlexboxLayoutManager
-import com.google.android.flexbox.JustifyContent
-import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Model.PokemonData
-import kotlinx.android.synthetic.main.activity_pokedex_list_view.*
+import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonRetrofit
 import kotlinx.android.synthetic.main.pokedex_letter_recycler_view.view.*
 
 
-class PokedexLineAdapter(newListPokemon : HashMap<String,MutableList<PokemonData>>?, context: Context) : androidx.recyclerview.widget.RecyclerView.Adapter<PokedexLineAdapter.ViewHolder>() {
+class PokedexLineAdapter(newListPokemon: HashMap<String, MutableList<PokemonRetrofit>>, context: Context) : androidx.recyclerview.widget.RecyclerView.Adapter<PokedexLineAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, position: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(context).inflate(com.pokeapi.lpiem.pokeapiandroid.R.layout.pokedex_letter_recycler_view, viewGroup, false))
     }
 
-    private val listPokemon:HashMap<String,MutableList<PokemonData>> = this!!.initData(newListPokemon)!!
+    private val listPokemon:HashMap<String,MutableList<PokemonRetrofit>> = this!!.initData(newListPokemon)!!
     private var context:Context = context
 
     class ViewHolder(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view){
@@ -39,7 +35,7 @@ class PokedexLineAdapter(newListPokemon : HashMap<String,MutableList<PokemonData
                                                                        getCharacterFromIndex(pokemonPosition))
     }
 
-    fun initData(newListPokemon : HashMap<String,MutableList<PokemonData>>?):HashMap<String,MutableList<PokemonData>>?{
+    fun initData(newListPokemon: HashMap<String, MutableList<PokemonRetrofit>>):HashMap<String,MutableList<PokemonRetrofit>>?{
         return newListPokemon
     }
 
