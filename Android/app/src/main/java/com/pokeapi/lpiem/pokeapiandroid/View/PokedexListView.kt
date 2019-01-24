@@ -1,27 +1,39 @@
 package com.pokeapi.lpiem.pokeapiandroid.View
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_pokedex_list_view.*
-import kotlin.collections.HashMap
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonRetrofit
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
-import com.xwray.groupie.GroupAdapter
 import android.text.Editable
 import android.text.TextWatcher
-
-
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 
 
 class PokedexListView : AppCompatActivity(),PokedexFunctionInterface {
+    private lateinit var data:MutableList<PokemonRetrofit>
+    private lateinit var backupData:MutableList<PokemonRetrofit>
+    private lateinit var adapter:GridLayoutManager
 
+    @SuppressLint("WrongConstant")
     override fun initPokedex(pokemonImportData : List<PokemonRetrofit>) {
-        //val adapter = GroupAdapter()
-        recyclerViewPokedexList.layoutManager = GridLayoutManager(this,3,GridLayoutManager.VERTICAL,false)
-        val data = (pokemonImportData).toMutableList()
+        val groupAdapter = GroupAdapter<ViewHolder>().apply {
+            spanCount = 3
+        }
+        recyclerViewPokedexList.apply {
+            layoutManager = GridLayoutManager(this@PokedexListView, groupAdapter.spanCount).apply {
+                spanSizeLookup = groupAdapter.spanSizeLookup
+            }
+        }
+        adapter = GridLayoutManager(this,3,GridLayoutManager.VERTICAL,false)
+        recyclerViewPokedexList.layoutManager = adapter
+        data = (pokemonImportData).toMutableList()
+        backupData = (pokemonImportData).toMutableList()
         recyclerViewPokedexList.adapter = PokedexLineAdapter(data,this)
+        pokedexSearchChangedListener()
     }
     val pokemonAPI = AppProviderSingleton.getInstance()
 
@@ -31,14 +43,31 @@ class PokedexListView : AppCompatActivity(),PokedexFunctionInterface {
         initAdapter()
     }
 
-    fun pokedexSearchChanged(){
+    private fun filterData(searchString:String):MutableList<PokemonRetrofit>{
+        val pokemonRetrofitListFiltered = arrayListOf<PokemonRetrofit>()
+        data.forEach {
+            if(it.name!!.contains(searchString,true)){
+                data.add(it)
+            }
+        }
+        recyclerViewPokedexList.adapter!!.notifyDataSetChanged()
+        return data
+    }
+
+    /**
+     * Listener function about smart research
+     */
+    fun pokedexSearchChangedListener(){
         pokemonSearchName.addTextChangedListener(object : TextWatcher {
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int,
                                        count: Int) {
                 if (s != "") {
-                    notifyData()
+                    data = filterData(s.toString())
+                }else{
+                    data = backupData.toMutableList()
                 }
+                notifyData()
             }
 
 
@@ -48,8 +77,7 @@ class PokedexListView : AppCompatActivity(),PokedexFunctionInterface {
             }
 
             override fun afterTextChanged(s: Editable) {
-                //If nothing : displayAllPokemons
-                notifyData()
+                //Nothing
             }
 
             fun notifyData(){
