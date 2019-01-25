@@ -9,7 +9,11 @@ import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonRetrofit
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
 import android.text.Editable
 import android.text.TextWatcher
+import com.pokeapi.lpiem.pokeapiandroid.View.Adapter.AdapterHeader
+import com.pokeapi.lpiem.pokeapiandroid.View.Adapter.PokedexItem
+import com.xwray.groupie.ExpandableGroup
 import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.Section
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 
 
@@ -17,6 +21,10 @@ class PokedexListView : AppCompatActivity(),PokedexFunctionInterface {
     private lateinit var data:MutableList<PokemonRetrofit>
     private lateinit var backupData:MutableList<PokemonRetrofit>
     private lateinit var adapter:GridLayoutManager
+    private val pokemonAPI = AppProviderSingleton.getInstance()
+
+    private val pokemonSectionList = Section()
+
 
     @SuppressLint("WrongConstant")
     override fun initPokedex(pokemonImportData : List<PokemonRetrofit>) {
@@ -35,7 +43,13 @@ class PokedexListView : AppCompatActivity(),PokedexFunctionInterface {
         recyclerViewPokedexList.adapter = PokedexLineAdapter(data,this)
         pokedexSearchChangedListener()
     }
-    val pokemonAPI = AppProviderSingleton.getInstance()
+
+    private fun createPokemonList(pokemonListByLetter : MutableList<PokemonRetrofit>, pokemonLetter:String,groupAdapter:GroupAdapter<ViewHolder>){
+        ExpandableGroup(AdapterHeader(pokemonLetter), false).apply {
+            pokemonSectionList.addAll(MutableList(pokemonListByLetter.size){pokemonListByLetter})
+            groupAdapter.add(this)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
