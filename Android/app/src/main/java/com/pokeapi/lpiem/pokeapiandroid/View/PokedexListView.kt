@@ -10,6 +10,8 @@ import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
 import android.text.Editable
 import android.text.TextWatcher
 import com.pokeapi.lpiem.pokeapiandroid.View.Adapter.AdapterHeader
+import com.xwray.groupie.ExpandableGroup
+import com.pokeapi.lpiem.pokeapiandroid.View.Adapter.AdapterHeader
 import com.pokeapi.lpiem.pokeapiandroid.View.Adapter.PokedexItem
 import com.xwray.groupie.ExpandableGroup
 import com.xwray.groupie.GroupAdapter
@@ -21,6 +23,7 @@ class PokedexListView : AppCompatActivity(),PokedexFunctionInterface {
     private lateinit var data:MutableList<PokemonRetrofit>
     private lateinit var backupData:MutableList<PokemonRetrofit>
     private lateinit var adapter:GridLayoutManager
+    private lateinit var section:Section
     private val pokemonAPI = AppProviderSingleton.getInstance()
 
     private val pokemonSectionList = Section()
@@ -39,6 +42,7 @@ class PokedexListView : AppCompatActivity(),PokedexFunctionInterface {
         adapter = GridLayoutManager(this,3,GridLayoutManager.VERTICAL,false)
         recyclerViewPokedexList.layoutManager = adapter
         data = (pokemonImportData).toMutableList()
+        createList(filterPokemonListByFirstLetter(data),groupAdapter)
         backupData = (pokemonImportData).toMutableList()
         recyclerViewPokedexList.adapter = PokedexLineAdapter(data,this)
         pokedexSearchChangedListener()
@@ -57,15 +61,44 @@ class PokedexListView : AppCompatActivity(),PokedexFunctionInterface {
         initAdapter()
     }
 
+    /**
+     * Filter pokemon retrofit data by its first letter
+     */
+    private fun filterPokemonListByFirstLetter(pokemonList : MutableList<PokemonRetrofit>):HashMap<String,MutableList<PokemonRetrofit>>{
+        val pokemonReturnList:HashMap<String,MutableList<PokemonRetrofit>> = HashMap()
+        for(i in 0 until pokemonList.size){
+            if(!pokemonReturnList.containsKey(Character.toString(pokemonList[i].name!![0].toUpperCase()))){
+                pokemonReturnList[Character.toString(pokemonList[i].name!![0].toUpperCase())] = arrayListOf()
+            }
+            pokemonReturnList[Character.toString(pokemonList[i].name!![0].toUpperCase())]?.
+                    add(pokemonReturnList[Character.toString(pokemonList[i].name!![0].toUpperCase())]!!.size,pokemonList[i])
+        }
+        return pokemonReturnList
+    }
+
+    private fun createList(rawData:HashMap<String, MutableList<PokemonRetrofit>>, groupAdapter: GroupAdapter<ViewHolder>){
+        for((key,value) in rawData){
+            addListToGroup(key,value,groupAdapter)
+        }
+    }
+
+    private fun addListToGroup(letter:String, rawData: MutableList<PokemonRetrofit>, groupAdapter: GroupAdapter<ViewHolder>){
+        section = Section()
+        ExpandableGroup(AdapterHeader(letter),true).apply {
+            section.addAll(rawData)
+            groupAdapter.add(this)
+        }
+    }
+
     private fun filterData(searchString:String):MutableList<PokemonRetrofit>{
         val pokemonRetrofitListFiltered = arrayListOf<PokemonRetrofit>()
         data.forEach {
             if(it.name!!.contains(searchString,true)){
-                data.add(it)
+                pokemonRetrofitListFiltered.add(it)
             }
         }
         recyclerViewPokedexList.adapter!!.notifyDataSetChanged()
-        return data
+        return pokemonRetrofitListFiltered
     }
 
     /**
