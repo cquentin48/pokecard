@@ -15,7 +15,7 @@ import com.pokeapi.lpiem.pokeapiandroid.View.Adapter.PokedexItem
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Section
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
-
+import java.util.*
 
 class PokedexListView : AppCompatActivity(),PokedexFunctionInterface {
     private lateinit var data:MutableList<PokemonRetrofit>
@@ -38,8 +38,8 @@ class PokedexListView : AppCompatActivity(),PokedexFunctionInterface {
             adapter = groupAdapter
         }
 
-        createList(filterPokemonListByFirstLetter(data),groupAdapter)
-        println("jdflsjfdls")
+        createList((filterPokemonListByFirstLetter(data)),groupAdapter)
+        pokedexSearchChangedListener()
     }
 
     private fun generateListItems(pokemonList:MutableList<PokemonRetrofit>):MutableList<PokedexItem>{
@@ -63,7 +63,7 @@ class PokedexListView : AppCompatActivity(),PokedexFunctionInterface {
     /**
      * Filter pokemon retrofit data by its first letter
      */
-    private fun filterPokemonListByFirstLetter(pokemonList : MutableList<PokemonRetrofit>):HashMap<String,MutableList<PokemonRetrofit>>{
+    private fun filterPokemonListByFirstLetter(pokemonList : MutableList<PokemonRetrofit>):TreeMap<String,MutableList<PokemonRetrofit>>{
         val pokemonReturnList:HashMap<String,MutableList<PokemonRetrofit>> = HashMap()
         for(i in 0 until pokemonList.size){
             if(!pokemonReturnList.containsKey(Character.toString(pokemonList[i].name!![0].toUpperCase()))){
@@ -72,10 +72,10 @@ class PokedexListView : AppCompatActivity(),PokedexFunctionInterface {
             pokemonReturnList[Character.toString(pokemonList[i].name!![0].toUpperCase())]?.
                     add(pokemonReturnList[Character.toString(pokemonList[i].name!![0].toUpperCase())]!!.size,pokemonList[i])
         }
-        return pokemonReturnList
+        return TreeMap(pokemonReturnList)
     }
 
-    private fun createList(rawData:HashMap<String, MutableList<PokemonRetrofit>>, groupAdapter: GroupAdapter<ViewHolder>){
+    private fun createList(rawData: TreeMap<String, MutableList<PokemonRetrofit>>, groupAdapter: GroupAdapter<ViewHolder>){
         for((key,value) in rawData){
             addListToGroup(key,value,groupAdapter)
         }
@@ -108,6 +108,30 @@ class PokedexListView : AppCompatActivity(),PokedexFunctionInterface {
         }
         recyclerViewPokedexList.adapter!!.notifyDataSetChanged()
         return pokemonRetrofitListFiltered
+    }
+
+    private fun filterHashmapByAlphabeticalLetter(data:HashMap<String, MutableList<PokemonRetrofit>>): HashMap<String, MutableList<PokemonRetrofit>> {
+        val map = object : HashMap<String, MutableList<PokemonRetrofit>>() {
+            init {
+                var ch = 'A'
+                while (ch <= 'Z') {
+                    if(getPokemonListByFirstLetter(data,ch.toString()) != null){
+                        put(ch.toString(),data[ch.toString()]!!)
+                    }
+                    ch++
+                }
+            }
+        }
+        return map
+    }
+
+    private fun getPokemonListByFirstLetter(rawData: HashMap<String,MutableList<PokemonRetrofit>>, letter: String):MutableList<PokemonRetrofit>?{
+        for((key,value) in rawData){
+            if(key == letter){
+                return rawData[key]
+            }
+        }
+        return null
     }
 
     /**
