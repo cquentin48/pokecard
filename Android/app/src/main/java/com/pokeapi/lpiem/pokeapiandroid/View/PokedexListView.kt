@@ -11,9 +11,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import com.pokeapi.lpiem.pokeapiandroid.View.Adapter.AdapterHeader
 import com.xwray.groupie.ExpandableGroup
-import com.pokeapi.lpiem.pokeapiandroid.View.Adapter.AdapterHeader
 import com.pokeapi.lpiem.pokeapiandroid.View.Adapter.PokedexItem
-import com.xwray.groupie.ExpandableGroup
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Section
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
@@ -23,14 +21,13 @@ class PokedexListView : AppCompatActivity(),PokedexFunctionInterface {
     private lateinit var data:MutableList<PokemonRetrofit>
     private lateinit var backupData:MutableList<PokemonRetrofit>
     private lateinit var adapter:GridLayoutManager
-    private lateinit var section:Section
     private val pokemonAPI = AppProviderSingleton.getInstance()
-
-    private val pokemonSectionList = Section()
 
 
     @SuppressLint("WrongConstant")
     override fun initPokedex(pokemonImportData : List<PokemonRetrofit>) {
+        data = (pokemonImportData).toMutableList()
+        backupData = (pokemonImportData).toMutableList()
         val groupAdapter = GroupAdapter<ViewHolder>().apply {
             spanCount = 3
         }
@@ -38,21 +35,23 @@ class PokedexListView : AppCompatActivity(),PokedexFunctionInterface {
             layoutManager = GridLayoutManager(this@PokedexListView, groupAdapter.spanCount).apply {
                 spanSizeLookup = groupAdapter.spanSizeLookup
             }
+            adapter = groupAdapter
         }
-        adapter = GridLayoutManager(this,3,GridLayoutManager.VERTICAL,false)
-        recyclerViewPokedexList.layoutManager = adapter
-        data = (pokemonImportData).toMutableList()
+
         createList(filterPokemonListByFirstLetter(data),groupAdapter)
-        backupData = (pokemonImportData).toMutableList()
-        recyclerViewPokedexList.adapter = PokedexLineAdapter(data,this)
-        pokedexSearchChangedListener()
+        println("jdflsjfdls")
     }
 
-    private fun createPokemonList(pokemonListByLetter : MutableList<PokemonRetrofit>, pokemonLetter:String,groupAdapter:GroupAdapter<ViewHolder>){
-        ExpandableGroup(AdapterHeader(pokemonLetter), false).apply {
-            pokemonSectionList.addAll(MutableList(pokemonListByLetter.size){pokemonListByLetter})
-            groupAdapter.add(this)
+    private fun generateListItems(pokemonList:MutableList<PokemonRetrofit>):MutableList<PokedexItem>{
+        val returnedList:MutableList<PokedexItem> = mutableListOf()
+        for(i in 0 until pokemonList.size){
+            returnedList.add(i,PokedexItem(pokemonList[i].sprite!!,pokemonList[i].name!!,this))
         }
+        return returnedList
+    }
+
+    private fun returnItem(pokemon:PokemonRetrofit):PokedexItem{
+        return PokedexItem(pokemon.sprite!!,pokemon.name!!,this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,14 +81,24 @@ class PokedexListView : AppCompatActivity(),PokedexFunctionInterface {
         }
     }
 
+
+    /**
+     * Add the list to the adapter
+     * @param letter alphabetical letter about the first letter in the pokemon name
+     * @param rawData pokemon list starting with the param [letter].
+     * @param groupAdapter adapter about loading the lists
+     */
     private fun addListToGroup(letter:String, rawData: MutableList<PokemonRetrofit>, groupAdapter: GroupAdapter<ViewHolder>){
-        section = Section()
         ExpandableGroup(AdapterHeader(letter),true).apply {
-            section.addAll(rawData)
+            add(Section(generateListItems(rawData)))
             groupAdapter.add(this)
         }
     }
 
+
+    /**
+     * Filter data by the search bar
+     */
     private fun filterData(searchString:String):MutableList<PokemonRetrofit>{
         val pokemonRetrofitListFiltered = arrayListOf<PokemonRetrofit>()
         data.forEach {
@@ -104,7 +113,7 @@ class PokedexListView : AppCompatActivity(),PokedexFunctionInterface {
     /**
      * Listener function about smart research
      */
-    fun pokedexSearchChangedListener(){
+    private fun pokedexSearchChangedListener(){
         pokemonSearchName.addTextChangedListener(object : TextWatcher {
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int,
