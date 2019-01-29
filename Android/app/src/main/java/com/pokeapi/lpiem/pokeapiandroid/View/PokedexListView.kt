@@ -1,31 +1,65 @@
 package com.pokeapi.lpiem.pokeapiandroid.View
 
+import android.content.Context
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_pokedex_list_view.*
 import kotlin.collections.HashMap
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonRetrofit
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
+import com.pokeapi.lpiem.pokeapiandroid.R
 
+private const val ARG_PARAM1 = "param1"
 
-class PokedexListView : AppCompatActivity(),PokedexFunctionInterface {
+class PokedexListView : Fragment(),PokedexFunctionInterface {
+
+    val pokemonAPI = AppProviderSingleton.getInstance()
+    private lateinit var applicationContext: Context
+    private lateinit var param:String
 
     override fun initPokedex(pokemonImportData : List<PokemonRetrofit>) {
-        recyclerViewPokedexList.layoutManager = LinearLayoutManager(this)
         val data = (pokemonImportData).toMutableList()
-        recyclerViewPokedexList.adapter = PokedexLineAdapter(filterPokemonListByFirstLetter(data),this)
+        recyclerViewPokedexList.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        recyclerViewPokedexList.adapter = PokedexLineAdapter(filterPokemonListByFirstLetter(data),activity!!.baseContext)
     }
-    val pokemonAPI = AppProviderSingleton.getInstance()
+
+
+    fun passContext(context: Context){
+        applicationContext = context
+    }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.pokeapi.lpiem.pokeapiandroid.R.layout.activity_pokedex_list_view)
+        arguments?.let {
+            param = it.getString(ARG_PARAM1) as String
+            param
+        }
         initAdapter()
     }
 
     fun initAdapter(){
         pokemonAPI.getPokeList(this)
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance(param1: String) =
+                PokedexListView().apply {
+                    arguments = Bundle().apply {
+                        putString(ARG_PARAM1, param1)
+
+                    }
+                }
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.activity_pokedex_list_view,container,false)
     }
 
     /**
