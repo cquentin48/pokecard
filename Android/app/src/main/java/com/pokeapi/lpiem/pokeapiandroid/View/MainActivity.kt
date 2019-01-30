@@ -23,6 +23,7 @@ import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.pokeapi.lpiem.pokeapiandroid.Model.SocialNetworks.FacebookProfile
+import com.pokeapi.lpiem.pokeapiandroid.Model.SocialNetworks.GoogleProfile
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
 import com.pokeapi.lpiem.pokeapiandroid.R
 import kotlinx.android.synthetic.main.activity_main.*
@@ -30,6 +31,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
     private var singleton: AppProviderSingleton? = AppProviderSingleton.getInstance()
     private var context:Context?= null
+    private var connectionType = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,7 +78,6 @@ class MainActivity : AppCompatActivity() {
                 parameters.putString("fields", "first_name,last_name,id")
                 request.parameters = parameters
                 request.executeAsync()
-                val intent = Intent(this@MainActivity, MainAppActivity::class.java)
             }
 
             override fun onCancel() {
@@ -90,7 +91,7 @@ class MainActivity : AppCompatActivity() {
 
         LoginManager.getInstance().registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(loginResult: LoginResult) {
-                launchActivity()
+                startActivity(Intent(this@MainActivity, MainAppActivity::class.java))
             }
 
             override fun onCancel() {
@@ -114,9 +115,14 @@ class MainActivity : AppCompatActivity() {
 
         val mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
         val account = GoogleSignIn.getLastSignedInAccount(this)
+        getGoogleProfileInfos()
+        if(account != null){
+            startActivity(Intent(this,MainAppActivity::class.java))
+        }
         val signInButton = findViewById<SignInButton>(R.id.googleLoginButton)
         signInButton.setSize(SignInButton.SIZE_STANDARD)
         signInButton.setOnClickListener {
+            connectionType = 0
             val signInIntent = mGoogleSignInClient.signInIntent
             startActivityForResult(signInIntent, RC_SIGN_IN)
         }
@@ -135,11 +141,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun getGoogleProfileInfos(){
+        val acct = GoogleSignIn.getLastSignedInAccount(this)
+        if (acct != null) {
+            singleton!!.Profile = GoogleProfile(
+                    acct.email,
+                    acct.displayName,
+                    acct.familyName,
+                    acct.givenName,
+                    acct.id,
+                    acct.photoUrl)
+        }
+        startActivity(Intent(this, MainAppActivity::class.java))
+    }
+
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account = completedTask.getResult(ApiException::class.java)
-            val intent = Intent(this@MainActivity, MainAppActivity::class.java)
-            startActivity(intent)
+            getGoogleProfileInfos()
         } catch (e: ApiException) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.

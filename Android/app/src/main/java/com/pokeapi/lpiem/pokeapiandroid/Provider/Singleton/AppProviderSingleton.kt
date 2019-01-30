@@ -3,6 +3,8 @@ package com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton
 import android.util.Log
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Model.PokemonData
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.*
+import com.pokeapi.lpiem.pokeapiandroid.Model.SocialNetworks.FacebookProfile
+import com.pokeapi.lpiem.pokeapiandroid.Model.SocialNetworks.GoogleProfile
 import com.pokeapi.lpiem.pokeapiandroid.Model.SocialNetworks.Profile
 import com.pokeapi.lpiem.pokeapiandroid.Provider.SocialNetworks.FacebookApiProvider
 import com.pokeapi.lpiem.pokeapiandroid.Provider.SocialNetworks.GoogleApiProvider
@@ -13,12 +15,16 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AppProviderSingleton private constructor() {
+class AppProviderSingleton() {
     var facebookApiProvider: FacebookApiProvider? = null
     var googleApiProvider: GoogleApiProvider? = null
     var twitterApiProvider: TwitterApiProvider? = null
-    var userProfile: Profile = Profile()
-    private var pokemonCount: Int = 0
+    private lateinit var userProfile:GoogleProfile
+    var Profile:GoogleProfile
+        get() = userProfile
+        set(newValue){
+            userProfile = newValue
+        }
 
     var pokemonList:MutableList<PokemonData> ?
 
@@ -136,14 +142,17 @@ class AppProviderSingleton private constructor() {
         val GOOGLE = 3
         val POKEAPI = 4
 
+        private var initialized = false
         private var instance: AppProviderSingleton? = null
 
         fun getInstance(): AppProviderSingleton {
-            var instanceProvider: AppProviderSingleton = AppProviderSingleton()
-            if (instance == null) {
-                instance = instanceProvider
+            return if (initialized) {
+                instance!!
+            } else {
+                initialized = true
+                instance = AppProviderSingleton()
+                instance!!
             }
-            return instanceProvider
         }
     }
 

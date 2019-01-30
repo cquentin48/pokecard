@@ -21,21 +21,23 @@ import android.location.LocationManager
 import android.provider.Settings
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main_app.*
+import kotlinx.android.synthetic.main.nav_drawer_header_layout.*
 
 
 class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
     private var singleton: AppProviderSingleton?= AppProviderSingleton.getInstance()
     private lateinit var mDrawerLayout: DrawerLayout
 
-    var Singleton: AppProviderSingleton = singleton!!
+    var Singleton: AppProviderSingleton
         get() = this.singleton!!
+        set(value){
+            this.singleton = value
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_app)
         mDrawerLayout = findViewById(R.id.drawer_layout)
-
-        //singleton!!.getPokeApiInfos(this)
 
         navigationView.setNavigationItemSelectedListener { menuItem ->
             // set item as selected to persist highlight
@@ -89,6 +91,8 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.ic_settings_black_24dp)
         }
+
+        Toast.makeText(this,singleton!!.Profile.Email,Toast.LENGTH_LONG).show()
 
     }
 
