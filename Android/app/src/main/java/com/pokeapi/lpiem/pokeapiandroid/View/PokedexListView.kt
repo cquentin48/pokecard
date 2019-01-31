@@ -34,6 +34,7 @@ class PokedexListView : Fragment(),PokedexFunctionInterface {
     private lateinit var backupData:MutableList<PokemonRetrofit>
     private lateinit var adapter: GridLayoutManager
     private val pokemonAPI = AppProviderSingleton.getInstance()
+    private lateinit var myFragmentView: View
 
 
     @SuppressLint("WrongConstant")
@@ -44,7 +45,7 @@ class PokedexListView : Fragment(),PokedexFunctionInterface {
             spanCount = 3
         }
         recyclerViewPokedexList.apply {
-            layoutManager = GridLayoutManager(activity, groupAdapter.spanCount).apply {
+            layoutManager = GridLayoutManager(activity!!.baseContext, groupAdapter.spanCount).apply {
                 spanSizeLookup = groupAdapter.spanSizeLookup
             }
             adapter = groupAdapter
@@ -79,7 +80,6 @@ class PokedexListView : Fragment(),PokedexFunctionInterface {
             param = it.getString(ARG_PARAM1) as String
             param
         }
-        initAdapter()
     }
 
     fun initAdapter(){
@@ -98,6 +98,8 @@ class PokedexListView : Fragment(),PokedexFunctionInterface {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        myFragmentView = inflater.inflate(R.layout.activity_pokedex_list_view,container,false)
+        initAdapter()
         return inflater.inflate(R.layout.activity_pokedex_list_view,container,false)
     }
 
