@@ -7,7 +7,7 @@
     tools:context=".View.PokedexListView">
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/pokemonSearchName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -27,7 +27,7 @@
         android:layout_weight="1"
         android:text="@string/pokedexSearchText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editText" />
+        app:layout_constraintTop_toTopOf="@+id/pokemonSearchName" />
 
 
     <ScrollView
@@ -40,7 +40,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginBottom="62dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/editText"
+        app:layout_constraintTop_toBottomOf="@+id/pokemonSearchName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -55,5 +55,6 @@
         app:layout_constraintTop_toBottomOf="@+id/scroller" />
 
     </ScrollView>
+        app:layout_constraintTop_toBottomOf="@+id/pokemonSearchName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
