@@ -14,6 +14,9 @@ import com.pokeapi.lpiem.pokeapiandroid.View.PokedexListView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import com.facebook.AccessToken
+
+
 
 class AppProviderSingleton() {
     var facebookApiProvider: FacebookApiProvider? = null
@@ -36,8 +39,6 @@ class AppProviderSingleton() {
         facebookApiProvider = FacebookApiProvider()
         pokemonList = mutableListOf()
     }
-
-
 
     fun getPokeList(pokedexView: PokedexListView){
         val pokemonAPI = RetrofitSingleton.getInstance()
