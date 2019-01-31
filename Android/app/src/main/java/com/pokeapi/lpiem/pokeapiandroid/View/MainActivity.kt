@@ -70,24 +70,7 @@ class MainActivity : AppCompatActivity() {
         // Callback registration
         loginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(loginResult: LoginResult) {
-                val request = GraphRequest.newMeRequest(loginResult.accessToken) { `object`, response ->
-                    try {
-                        //here is the data that you want
-                        Log.d("FBLOGIN_JSON_RES", `object`.toString())
-                        singleton!!.Profile = Profile()
-                        singleton!!.Profile.Username = `object`.getString("name")
-                        singleton!!.Profile.Email = `object`.getString("email")
-                        startActivity(Intent(this@MainActivity,MainAppActivity::class.java))
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }
-
-                val parameters = Bundle()
-                parameters.putString("fields", "name,email,id,picture.type(large),friendlists")
-                request.parameters = parameters
-                request.executeAsync()
-                startActivity(Intent(this@MainActivity, MainAppActivity::class.java))
+                fetchFacebookProfile(loginResult.accessToken)
             }
 
             override fun onCancel() {
@@ -105,7 +88,7 @@ class MainActivity : AppCompatActivity() {
                 .requestEmail()
                 .build()
 
-        val mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+        singleton!!.googleApiProvider = GoogleSignIn.getClient(this, gso)
         val account = GoogleSignIn.getLastSignedInAccount(this)
         getGoogleProfileInfos()
         if (account != null) {
@@ -115,7 +98,7 @@ class MainActivity : AppCompatActivity() {
         signInButton.setSize(SignInButton.SIZE_STANDARD)
         signInButton.setOnClickListener {
             connectionType = 0
-            val signInIntent = mGoogleSignInClient.signInIntent
+            val signInIntent = singleton!!.googleApiProvider!!.signInIntent
             startActivityForResult(signInIntent, RC_SIGN_IN)
         }
 
@@ -137,25 +120,33 @@ class MainActivity : AppCompatActivity() {
         val acct = GoogleSignIn.getLastSignedInAccount(this)
         if (acct != null) {
             singleton!!.Profile = Profile()
+            singleton!!.Profile.Id = acct.id!!
             singleton!!.Profile.Email = acct.email.toString()
             singleton!!.Profile.Username = acct.email.toString()
             singleton!!.Profile.AvatarImage = acct.photoUrl.toString()
             singleton!!.ConnectionType = AppProviderSingleton.GOOGLE
-            //startActivity(Intent(this, MainAppActivity::class.java))
+            startActivity(Intent(this, MainAppActivity::class.java))
         }
     }
 
+    /**
+     * Fetch user profile data from facebook api
+     * @param accessToken token used to fetch data
+     */
     private fun fetchFacebookProfile(accessToken: AccessToken) {
-        if (accessToken != null) {
-            val request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken()) { `object`, response ->
+        if (isFacebookAccountSignedIn()) {
+            val request = GraphRequest.newMeRequest(accessToken) { `object`, response ->
                 try {
                     if(`object`.has("id")){
                         singleton!!.Profile = Profile()
                         singleton!!.Profile.Username = `object`.getString("name")
                         singleton!!.Profile.Email = `object`.getString("email")
-                        /*val picture = `object`.getJSONArray("picture")
-                        val pictureData = picture[0]*/
-                        startActivity(Intent(this,MainAppActivity::class.java))
+                        singleton!!.Profile.Id = `object`.getString("id")
+                        val pictureData = `object`.getJSONObject("picture")
+                        val dataList = pictureData.getJSONObject("data")
+                        singleton!!.Profile.AvatarImage = dataList.getString("url")
+                        singleton!!.ConnectionType = AppProviderSingleton.FACEBOOK
+                        startActivity(Intent(this@MainActivity,MainAppActivity::class.java))
                     }
                 } catch (e: java.lang.Exception) {
                     Log.e("Error",e.localizedMessage)
@@ -168,6 +159,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Check if the facebook user is currently logged in
+     */
     private fun isFacebookAccountSignedIn(): Boolean {
         val accessToken = AccessToken.getCurrentAccessToken()
         return accessToken != null && !accessToken.isExpired

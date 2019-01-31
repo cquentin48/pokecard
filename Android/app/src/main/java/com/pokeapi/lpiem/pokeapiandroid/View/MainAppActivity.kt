@@ -21,6 +21,7 @@ import android.location.LocationManager
 import android.provider.Settings
 import android.view.View
 import com.facebook.login.LoginManager
+import com.google.android.gms.auth.api.Auth
 import kotlinx.android.synthetic.main.activity_main_app.*
 import kotlinx.android.synthetic.main.nav_drawer_header_layout.*
 
@@ -74,7 +75,7 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
 
                 }
                 R.id.logOut ->{
-                    singleton!!.googleApiProvider!!.logOut()
+                    loggingOut()
                 }
             }
             // close drawer when item is tapped
@@ -93,14 +94,22 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
             setHomeAsUpIndicator(R.drawable.ic_settings_black_24dp)
         }
 
-        Toast.makeText(this,singleton!!.Profile.Email,Toast.LENGTH_LONG).show()
+        Toast.makeText(this,singleton!!.Profile.Username,Toast.LENGTH_LONG).show()
 
     }
 
     private fun loggingOut(){
         when(singleton!!.ConnectionType){
-            AppProviderSingleton.GOOGLE->singleton!!.googleApiProvider!!.logOut()
+            AppProviderSingleton.GOOGLE->googleSignOut()
             AppProviderSingleton.FACEBOOK->LoginManager.getInstance().logOut()
+        }
+        startActivity(Intent(this, MainActivity::class.java))
+    }
+
+    private fun googleSignOut(){
+        singleton!!.googleApiProvider!!.signOut().addOnCompleteListener {
+            Toast.makeText(this, "Déconnecté",Toast.LENGTH_LONG).show()
+            startActivity(Intent(this, MainActivity::class.java))
         }
     }
 

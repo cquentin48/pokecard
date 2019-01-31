@@ -16,11 +16,12 @@ import retrofit2.Callback
 import retrofit2.Response
 import com.facebook.AccessToken
 import com.facebook.login.LoginManager
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 
 
 class AppProviderSingleton() {
     var facebookApiProvider: FacebookApiProvider? = null
-    var googleApiProvider: GoogleApiProvider? = null
+    var googleApiProvider: GoogleSignInClient? = null
     var twitterApiProvider: TwitterApiProvider? = null
     private var connectionType:Int = -1
     private lateinit var userProfile:Profile
@@ -50,7 +51,6 @@ class AppProviderSingleton() {
 
     init {
         facebookApiProvider = FacebookApiProvider()
-        googleApiProvider = GoogleApiProvider()
         pokemonList = mutableListOf()
     }
 

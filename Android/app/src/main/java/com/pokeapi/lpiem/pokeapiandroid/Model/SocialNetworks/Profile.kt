@@ -14,6 +14,7 @@ open class Profile(_username: String? = "Pseudonyme",
 
     private var username: String? = _username
     private var email: String? = _email
+    private var id: String = ""
     private var pokemonRetrofitOwned: List<PokemonRetrofit>? = _pokemonRetrofitOwnedList
     private var achievementsList: List<Achievement>? = _achievementsList
     private var friendsList: List<Profile>? = _friendsList
@@ -23,6 +24,11 @@ open class Profile(_username: String? = "Pseudonyme",
         get() = this.username!!
         set(value){
             username = value
+        }
+    var Id:String
+        get() = this.id
+        set(value){
+            id = value
         }
     var Email:String
         get() = this.email!!
