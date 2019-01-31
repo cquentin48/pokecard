@@ -24,6 +24,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.pokeapi.lpiem.pokeapiandroid.Model.SocialNetworks.FacebookProfile
 import com.pokeapi.lpiem.pokeapiandroid.Model.SocialNetworks.GoogleProfile
+import com.pokeapi.lpiem.pokeapiandroid.Model.SocialNetworks.Profile
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
 import com.pokeapi.lpiem.pokeapiandroid.R
 import kotlinx.android.synthetic.main.activity_main.*
@@ -32,7 +33,7 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private var singleton: AppProviderSingleton? = AppProviderSingleton.getInstance()
-    private var context:Context?= null
+    private var context: Context? = null
     private var connectionType = 0
 
 
@@ -49,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         this.loginPokeApiButton()
     }
 
-    private fun loginPokeApiButton(){
+    private fun loginPokeApiButton() {
         connectWithPokeAccount.setOnClickListener {
             startActivity(Intent(this, MainAppActivity::class.java))
         }
@@ -73,13 +74,17 @@ class MainActivity : AppCompatActivity() {
                     try {
                         //here is the data that you want
                         Log.d("FBLOGIN_JSON_RES", `object`.toString())
+                        singleton!!.Profile = Profile()
+                        singleton!!.Profile.Username = `object`.getString("name")
+                        singleton!!.Profile.Email = `object`.getString("email")
+                        startActivity(Intent(this@MainActivity,MainAppActivity::class.java))
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
                 }
 
                 val parameters = Bundle()
-                parameters.putString("fields", "name,email,id,picture.friendlists")
+                parameters.putString("fields", "name,email,id,picture.type(large),friendlists")
                 request.parameters = parameters
                 request.executeAsync()
                 startActivity(Intent(this@MainActivity, MainAppActivity::class.java))
@@ -90,7 +95,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onError(exception: FacebookException) {
-                Log.e("Erreur",exception.localizedMessage)
+                Log.e("Erreur", exception.localizedMessage)
             }
         })
     }
@@ -103,7 +108,7 @@ class MainActivity : AppCompatActivity() {
         val mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
         val account = GoogleSignIn.getLastSignedInAccount(this)
         getGoogleProfileInfos()
-        if(account != null){
+        if (account != null) {
             //startActivity(Intent(this,MainAppActivity::class.java))
         }
         val signInButton = findViewById<SignInButton>(R.id.googleLoginButton)
@@ -128,21 +133,42 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getGoogleProfileInfos(){
+    private fun getGoogleProfileInfos() {
         val acct = GoogleSignIn.getLastSignedInAccount(this)
         if (acct != null) {
-            singleton!!.Profile = GoogleProfile(
-                    acct.email,
-                    acct.displayName,
-                    acct.familyName,
-                    acct.givenName,
-                    acct.id,
-                    acct.photoUrl)
+            singleton!!.Profile = Profile()
+            singleton!!.Profile.Email = acct.email.toString()
+            singleton!!.Profile.Username = acct.email.toString()
+            singleton!!.Profile.AvatarImage = acct.photoUrl.toString()
+            singleton!!.ConnectionType = AppProviderSingleton.GOOGLE
+            //startActivity(Intent(this, MainAppActivity::class.java))
         }
-        //startActivity(Intent(this, MainAppActivity::class.java))
     }
 
-    private fun isFacebookAccountSignedIn():Boolean{
+    private fun fetchFacebookProfile(accessToken: AccessToken) {
+        if (accessToken != null) {
+            val request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken()) { `object`, response ->
+                try {
+                    if(`object`.has("id")){
+                        singleton!!.Profile = Profile()
+                        singleton!!.Profile.Username = `object`.getString("name")
+                        singleton!!.Profile.Email = `object`.getString("email")
+                        /*val picture = `object`.getJSONArray("picture")
+                        val pictureData = picture[0]*/
+                        startActivity(Intent(this,MainAppActivity::class.java))
+                    }
+                } catch (e: java.lang.Exception) {
+                    Log.e("Error",e.localizedMessage)
+                }
+            }
+            val parameters = Bundle()
+            parameters.putString("fields", "name,email,id,picture.type(large),friendlists")
+            request.parameters = parameters
+            request.executeAsync()
+        }
+    }
+
+    private fun isFacebookAccountSignedIn(): Boolean {
         val accessToken = AccessToken.getCurrentAccessToken()
         return accessToken != null && !accessToken.isExpired
     }

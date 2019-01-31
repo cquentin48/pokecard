@@ -15,18 +15,31 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.facebook.AccessToken
-
+import com.facebook.login.LoginManager
 
 
 class AppProviderSingleton() {
     var facebookApiProvider: FacebookApiProvider? = null
     var googleApiProvider: GoogleApiProvider? = null
     var twitterApiProvider: TwitterApiProvider? = null
-    private lateinit var userProfile:GoogleProfile
-    var Profile:GoogleProfile
+    private var connectionType:Int = -1
+    private lateinit var userProfile:Profile
+    var Profile:Profile
         get() = userProfile
         set(newValue){
             userProfile = newValue
+        }
+    var ConnectionType:Int
+        get() = connectionType
+        set(value){
+            connectionType = value
+        }
+    private lateinit var logingManager: LoginManager
+
+    var LogingManager:LoginManager
+        get() = logingManager
+        set(value){
+            logingManager = value
         }
 
     var pokemonList:MutableList<PokemonData> ?
@@ -37,6 +50,7 @@ class AppProviderSingleton() {
 
     init {
         facebookApiProvider = FacebookApiProvider()
+        googleApiProvider = GoogleApiProvider()
         pokemonList = mutableListOf()
     }
 

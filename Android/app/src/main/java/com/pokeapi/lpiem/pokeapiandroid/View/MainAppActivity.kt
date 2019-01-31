@@ -20,6 +20,7 @@ import com.pokeapi.lpiem.pokeapiandroid.R
 import android.location.LocationManager
 import android.provider.Settings
 import android.view.View
+import com.facebook.login.LoginManager
 import kotlinx.android.synthetic.main.activity_main_app.*
 import kotlinx.android.synthetic.main.nav_drawer_header_layout.*
 
@@ -73,7 +74,7 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
 
                 }
                 R.id.logOut ->{
-                    startActivity(Intent(this,MainActivity::class.java))
+                    singleton!!.googleApiProvider!!.logOut()
                 }
             }
             // close drawer when item is tapped
@@ -94,6 +95,13 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
 
         Toast.makeText(this,singleton!!.Profile.Email,Toast.LENGTH_LONG).show()
 
+    }
+
+    private fun loggingOut(){
+        when(singleton!!.ConnectionType){
+            AppProviderSingleton.GOOGLE->singleton!!.googleApiProvider!!.logOut()
+            AppProviderSingleton.FACEBOOK->LoginManager.getInstance().logOut()
+        }
     }
 
     override fun addPokemonSpecies(i: Int, s: Species) {
