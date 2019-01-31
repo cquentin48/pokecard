@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun loginPokeApiButton() {
         connectWithPokeAccount.setOnClickListener {
+            singleton!!.Profile = Profile()
             startActivity(Intent(this, MainAppActivity::class.java))
         }
     }
