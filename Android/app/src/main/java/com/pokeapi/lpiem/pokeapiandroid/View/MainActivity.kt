@@ -69,6 +69,19 @@ class MainActivity : AppCompatActivity() {
         // Callback registration
         loginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(loginResult: LoginResult) {
+                val request = GraphRequest.newMeRequest(loginResult.accessToken) { `object`, response ->
+                    try {
+                        //here is the data that you want
+                        Log.d("FBLOGIN_JSON_RES", `object`.toString())
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+                val parameters = Bundle()
+                parameters.putString("fields", "name,email,id,picture.friendlists")
+                request.parameters = parameters
+                request.executeAsync()
                 startActivity(Intent(this@MainActivity, MainAppActivity::class.java))
             }
 
