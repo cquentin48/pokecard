@@ -3,9 +3,9 @@ package com.pokeapi.lpiem.pokeapiandroid.Model.SocialNetworks
 import android.net.Uri
 
 class GoogleProfile(//Pseudo
-        _email: String?, //Prénom
-        _firstName: String?, //Nom de famille
-        _familyName: String?, //Surnom
+        _email: String?, //Email
+        _firstName: String?, //Prénom
+        _familyName: String?, //Nom de famille
         _givenName: String?, //Identifiant
         _id: String?, //URI du compte
         _accountURI: Uri?
