@@ -23,13 +23,18 @@ import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.pokeapi.lpiem.pokeapiandroid.Model.SocialNetworks.FacebookProfile
+import com.pokeapi.lpiem.pokeapiandroid.Model.SocialNetworks.GoogleProfile
+import com.pokeapi.lpiem.pokeapiandroid.Model.SocialNetworks.Profile
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
 import com.pokeapi.lpiem.pokeapiandroid.R
 import kotlinx.android.synthetic.main.activity_main.*
+import org.json.JSONObject
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private var singleton: AppProviderSingleton? = AppProviderSingleton.getInstance()
-    private var context:Context?= null
+    private var context: Context? = null
+    private var connectionType = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,12 +46,13 @@ class MainActivity : AppCompatActivity() {
 
         this.initGoogleLogInButton()
         this.initFacebookLogInButton()
-        this.initTwitterLogInButton()
+        //this.initTwitterLogInButton()
         this.loginPokeApiButton()
     }
 
-    private fun loginPokeApiButton(){
+    private fun loginPokeApiButton() {
         connectWithPokeAccount.setOnClickListener {
+            singleton!!.Profile = Profile()
             startActivity(Intent(this, MainAppActivity::class.java))
         }
     }
@@ -59,24 +65,13 @@ class MainActivity : AppCompatActivity() {
 
     fun initFacebookLogInButton() {
         val callbackManager = this.singleton!!.facebookApiProvider!!.callbackManager
-        val loginButton = findViewById<LoginButton>(R.id.facebookLoginButton)
-        loginButton.setReadPermissions("email")
+        val loginButton = facebookLoginButton
+
 
         // Callback registration
         loginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(loginResult: LoginResult) {
-                val facebookProfile = FacebookProfile()
-                val request = GraphRequest.newMyFriendsRequest(
-                        AccessToken.getCurrentAccessToken()
-                ) { _, _ ->
-                    //Ajouter ici le retour des données pour l'ajouter dans le contrôleur pour le réseau social facebook
-                }
-
-                val parameters = Bundle()
-                parameters.putString("fields", "first_name,last_name,id")
-                request.parameters = parameters
-                request.executeAsync()
-                val intent = Intent(this@MainActivity, MainAppActivity::class.java)
+                fetchFacebookProfile(loginResult.accessToken)
             }
 
             override fun onCancel() {
@@ -84,27 +79,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onError(exception: FacebookException) {
-                exception.printStackTrace()
+                Log.e("Erreur", exception.localizedMessage)
             }
         })
-
-        LoginManager.getInstance().registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
-            override fun onSuccess(loginResult: LoginResult) {
-                launchActivity()
-            }
-
-            override fun onCancel() {
-
-            }
-
-            override fun onError(error: FacebookException) {
-
-            }
-        })
-    }
-
-    fun initTwitterLogInButton() {
-
     }
 
     fun initGoogleLogInButton() {
@@ -112,12 +89,17 @@ class MainActivity : AppCompatActivity() {
                 .requestEmail()
                 .build()
 
-        val mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+        singleton!!.googleApiProvider = GoogleSignIn.getClient(this, gso)
         val account = GoogleSignIn.getLastSignedInAccount(this)
+        getGoogleProfileInfos()
+        if (account != null) {
+            //startActivity(Intent(this,MainAppActivity::class.java))
+        }
         val signInButton = findViewById<SignInButton>(R.id.googleLoginButton)
         signInButton.setSize(SignInButton.SIZE_STANDARD)
         signInButton.setOnClickListener {
-            val signInIntent = mGoogleSignInClient.signInIntent
+            connectionType = 0
+            val signInIntent = singleton!!.googleApiProvider!!.signInIntent
             startActivityForResult(signInIntent, RC_SIGN_IN)
         }
 
@@ -125,7 +107,7 @@ class MainActivity : AppCompatActivity() {
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
+        singleton!!.facebookApiProvider!!.callbackManager.onActivityResult(requestCode, resultCode, data)
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             // The Task returned from this call is always completed, no need to attach
@@ -135,11 +117,61 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun getGoogleProfileInfos() {
+        val acct = GoogleSignIn.getLastSignedInAccount(this)
+        if (acct != null) {
+            singleton!!.Profile = Profile()
+            singleton!!.Profile.Id = acct.id!!
+            singleton!!.Profile.Email = acct.email.toString()
+            singleton!!.Profile.Username = acct.email.toString()
+            singleton!!.Profile.AvatarImage = acct.photoUrl.toString()
+            singleton!!.ConnectionType = AppProviderSingleton.GOOGLE
+            startActivity(Intent(this, MainAppActivity::class.java))
+        }
+    }
+
+    /**
+     * Fetch user profile data from facebook api
+     * @param accessToken token used to fetch data
+     */
+    private fun fetchFacebookProfile(accessToken: AccessToken) {
+        if (isFacebookAccountSignedIn()) {
+            val request = GraphRequest.newMeRequest(accessToken) { `object`, response ->
+                try {
+                    if(`object`.has("id")){
+                        singleton!!.Profile = Profile()
+                        singleton!!.Profile.Username = `object`.getString("name")
+                        singleton!!.Profile.Email = `object`.getString("email")
+                        singleton!!.Profile.Id = `object`.getString("id")
+                        val pictureData = `object`.getJSONObject("picture")
+                        val dataList = pictureData.getJSONObject("data")
+                        singleton!!.Profile.AvatarImage = dataList.getString("url")
+                        singleton!!.ConnectionType = AppProviderSingleton.FACEBOOK
+                        startActivity(Intent(this@MainActivity,MainAppActivity::class.java))
+                    }
+                } catch (e: java.lang.Exception) {
+                    Log.e("Error",e.localizedMessage)
+                }
+            }
+            val parameters = Bundle()
+            parameters.putString("fields", "name,email,id,picture.type(large),friendlists")
+            request.parameters = parameters
+            request.executeAsync()
+        }
+    }
+
+    /**
+     * Check if the facebook user is currently logged in
+     */
+    private fun isFacebookAccountSignedIn(): Boolean {
+        val accessToken = AccessToken.getCurrentAccessToken()
+        return accessToken != null && !accessToken.isExpired
+    }
+
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account = completedTask.getResult(ApiException::class.java)
-            val intent = Intent(this@MainActivity, MainAppActivity::class.java)
-            startActivity(intent)
+            getGoogleProfileInfos()
         } catch (e: ApiException) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
