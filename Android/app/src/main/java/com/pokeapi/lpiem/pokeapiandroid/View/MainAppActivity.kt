@@ -1,7 +1,9 @@
 package com.pokeapi.lpiem.pokeapiandroid.View
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
@@ -18,6 +20,8 @@ import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
 import android.location.LocationManager
 import android.provider.Settings
 import android.view.View
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.Auth
 import com.pokeapi.lpiem.pokeapiandroid.R
@@ -27,7 +31,23 @@ import kotlinx.android.synthetic.main.nav_drawer_header_layout.*
 
 
 
-class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
+class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>, MapFragmentManager{
+    override fun getContext(): Context {
+        return this as Context
+    }
+
+    override fun getContextLocation(): LocationManager {
+        return getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    }
+
+    override fun checkForPermission(): Boolean {
+        return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+    }
+
+    override fun getCoord() {
+
+    }
+
     private var singleton: AppProviderSingleton?= AppProviderSingleton.getInstance()
     private lateinit var mDrawerLayout: DrawerLayout
     private lateinit var pokedexListView: PokedexListView
