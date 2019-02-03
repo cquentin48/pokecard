@@ -1,27 +1,40 @@
 package com.pokeapi.lpiem.pokeapiandroid.View
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.activity_pokedex_list_view.*
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonRetrofit
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
+import com.pokeapi.lpiem.pokeapiandroid.R
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import android.text.Editable
 import android.text.TextWatcher
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.pokeapi.lpiem.pokeapiandroid.View.Adapter.AdapterHeader
 import com.xwray.groupie.ExpandableGroup
 import com.pokeapi.lpiem.pokeapiandroid.View.Adapter.PokedexItem
-import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Section
-import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import java.util.*
 
-class PokedexListView : AppCompatActivity(),PokedexFunctionInterface {
+
+private const val ARG_PARAM1 = "param1"
+
+class PokedexListView : Fragment(),PokedexFunctionInterface {
+
+    private lateinit var applicationContext: Context
+    private lateinit var param:String
     private lateinit var data:MutableList<PokemonRetrofit>
     private lateinit var backupData:MutableList<PokemonRetrofit>
-    private lateinit var adapter:GridLayoutManager
+    private lateinit var adapter: GridLayoutManager
     private val pokemonAPI = AppProviderSingleton.getInstance()
+    private lateinit var myFragmentView: View
 
 
     @SuppressLint("WrongConstant")
@@ -32,7 +45,7 @@ class PokedexListView : AppCompatActivity(),PokedexFunctionInterface {
             spanCount = 3
         }
         recyclerViewPokedexList.apply {
-            layoutManager = GridLayoutManager(this@PokedexListView, groupAdapter.spanCount).apply {
+            layoutManager = GridLayoutManager(activity!!.baseContext, groupAdapter.spanCount).apply {
                 spanSizeLookup = groupAdapter.spanSizeLookup
             }
             adapter = groupAdapter
@@ -42,22 +55,52 @@ class PokedexListView : AppCompatActivity(),PokedexFunctionInterface {
         pokedexSearchChangedListener()
     }
 
+
+    fun passContext(context: Context){
+        applicationContext = context
+    }
+
+
+
     private fun generateListItems(pokemonList:MutableList<PokemonRetrofit>):MutableList<PokedexItem>{
         val returnedList:MutableList<PokedexItem> = mutableListOf()
         for(i in 0 until pokemonList.size){
-            returnedList.add(i,PokedexItem(pokemonList[i].sprite!!,pokemonList[i].name!!,this))
+            returnedList.add(i,PokedexItem(pokemonList[i].sprite!!,pokemonList[i].name!!,applicationContext))
         }
         return returnedList
     }
 
-    private fun returnItem(pokemon:PokemonRetrofit):PokedexItem{
+    /*private fun returnItem(pokemon:PokemonRetrofit):PokedexItem{
         return PokedexItem(pokemon.sprite!!,pokemon.name!!,this)
-    }
+    }*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.pokeapi.lpiem.pokeapiandroid.R.layout.activity_pokedex_list_view)
+        arguments?.let {
+            param = it.getString(ARG_PARAM1) as String
+            param
+        }
+    }
+
+    fun initAdapter(){
+        pokemonAPI.getPokeList(this)
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance(param1: String) =
+                PokedexListView().apply {
+                    arguments = Bundle().apply {
+                        putString(ARG_PARAM1, param1)
+
+                    }
+                }
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        myFragmentView = inflater.inflate(R.layout.activity_pokedex_list_view,container,false)
         initAdapter()
+        return inflater.inflate(R.layout.activity_pokedex_list_view,container,false)
     }
 
     /**
@@ -164,9 +207,5 @@ class PokedexListView : AppCompatActivity(),PokedexFunctionInterface {
                 recyclerViewPokedexList.adapter?.notifyDataSetChanged()
             }
         })
-    }
-
-    fun initAdapter(){
-        pokemonAPI.getPokeList(this)
     }
 }

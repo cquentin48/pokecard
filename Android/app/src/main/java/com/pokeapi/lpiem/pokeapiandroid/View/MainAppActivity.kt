@@ -1,8 +1,8 @@
 package com.pokeapi.lpiem.pokeapiandroid.View
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
@@ -10,25 +10,28 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.material.navigation.NavigationView
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Model.PokemonData
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonRetrofit
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.Species
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Pokemon.InterfaceCallBackController
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
-import com.pokeapi.lpiem.pokeapiandroid.R
 import android.location.LocationManager
 import android.provider.Settings
 import android.view.View
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.Auth
+import com.pokeapi.lpiem.pokeapiandroid.R
 import kotlinx.android.synthetic.main.activity_main_app.*
 import kotlinx.android.synthetic.main.nav_drawer_header_layout.*
+
+
 
 
 class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
     private var singleton: AppProviderSingleton?= AppProviderSingleton.getInstance()
     private lateinit var mDrawerLayout: DrawerLayout
+    private lateinit var pokedexListView: PokedexListView
+    private lateinit var pokeMap: LocalizationActivity
 
     var Singleton: AppProviderSingleton
         get() = this.singleton!!
@@ -36,10 +39,21 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
             this.singleton = value
         }
 
+    /**
+     * Set up fragments
+     */
+    private fun setUpFragment(){
+        pokedexListView = PokedexListView()
+        pokeMap = LocalizationActivity()
+
+        pokedexListView.passContext(applicationContext)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_app)
         mDrawerLayout = findViewById(R.id.drawer_layout)
+        setUpFragment()
 
         navigationView.setNavigationItemSelectedListener { menuItem ->
             // set item as selected to persist highlight
@@ -53,15 +67,13 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
             when(menuItem.itemId){
 
                 R.id.pokedexMenu ->{
-                    startActivity(Intent(this,PokedexListView::class.java))
+                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container,pokedexListView).commit()
                 }
                 R.id.pokeMap ->{
-                    startActivity(Intent(this,LocalizationActivity::class.java))
-
+                    Toast.makeText(this,getString(R.string.NotYetImplemented),Toast.LENGTH_LONG).show()
                 }
                 R.id.profile ->{
                     Toast.makeText(this,getString(R.string.NotYetImplemented),Toast.LENGTH_LONG).show()
-
                 }
                 R.id.collections ->{
                     Toast.makeText(this,getString(R.string.NotYetImplemented),Toast.LENGTH_LONG).show()
