@@ -70,7 +70,7 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
                     supportFragmentManager.beginTransaction().replace(R.id.fragment_container,pokedexListView).commit()
                 }
                 R.id.pokeMap ->{
-                    Toast.makeText(this,getString(R.string.NotYetImplemented),Toast.LENGTH_LONG).show()
+                    startActivity(Intent(this, LocalizationActivity::class.java))
                 }
                 R.id.profile ->{
                     Toast.makeText(this,getString(R.string.NotYetImplemented),Toast.LENGTH_LONG).show()
