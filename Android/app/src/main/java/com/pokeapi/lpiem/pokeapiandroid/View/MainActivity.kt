@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
 
     fun initFacebookLogInButton() {
         val callbackManager = this.singleton!!.facebookApiProvider!!.callbackManager
-        val loginButton = facebookLoginButton
+        val loginButton = facebookLoginButton as LoginButton
 
 
         // Callback registration
@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
         if (account != null) {
             //startActivity(Intent(this,MainAppActivity::class.java))
         }
-        val signInButton = findViewById<SignInButton>(R.id.googleLoginButton)
+        val signInButton = findViewById<SignInButton>(R.id.googleLoginButton) as SignInButton
         signInButton.setSize(SignInButton.SIZE_STANDARD)
         signInButton.setOnClickListener {
             connectionType = 0

@@ -2,7 +2,7 @@
     <string name="app_name">PokeApiAndroid</string>
     <string name="withPokeAccount">Avec un compte PokeCard</string>
     <string name="throughSocialNetWorksAccounts">A travers les comptes\ndes réseaux sociaux</string>
-    <string name="connectWithPokeAccount">Se connecter avec un compte PokeCard</string>
+    <string name="connectWithPokeAccount">Compte PokeCard</string>
     <string name="facebook_app_id">770236446650561</string>
     <string name="profileSubMenuTitle">Gestion du profil</string>
     <string name="toogleCollectionSubMenuTitle">Gestion des collections</string>
@@ -12,6 +12,9 @@
     <string name="pokedexTitle">Pokédex Mondial</string>
     <string name="Pokedex">Pokedex Mondial</string>
     <string name="NotYetImplemented">Pas encore implémenté!</string>
+    <string name="FacebookLoginButton">Compte facebook</string>
+    <string name="googleAccount">Compte Google</string>
+    <string name="twitterAccount">Compte Twitter</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

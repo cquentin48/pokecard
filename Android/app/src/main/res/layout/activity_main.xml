@@ -6,70 +6,65 @@
     android:layout_height="match_parent"
     tools:context=".View.MainActivity">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/withPokeAccount"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="0dp"
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:gravity="center"
-        android:lines="2"
-        android:text="@string/throughSocialNetWorksAccounts"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toTopOf="@+id/textView2" />
+        android:layout_marginTop="36dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/walkemon_logo" />
 
     <Button
         android:id="@+id/connectWithPokeAccount"
+        style="@style/PokeApiLoginButton"
         android:layout_width="200dp"
-        android:layout_height="52dp"
         android:layout_marginStart="105dp"
-        android:layout_marginTop="103dp"
+        android:layout_marginTop="62dp"
         android:layout_marginEnd="106dp"
+        android:background="@drawable/rounded_corners_walkemon"
         android:text="@string/connectWithPokeAccount"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <com.twitter.sdk.android.core.identity.TwitterLoginButton
-        android:id="@+id/loginButtonTwitter"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="105dp"
-        android:layout_marginTop="73dp"
-        android:layout_marginEnd="106dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/facebookLoginButton" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/facebookLoginButton"
-        android:layout_width="200dp"
-        android:layout_height="0dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginStart="105dp"
-        android:layout_marginTop="51dp"
-        android:layout_marginEnd="106dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="48dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        style="@style/FacebookLoginButton"
+        android:text="@string/FacebookLoginButton"
+        android:background="@drawable/rounded_corners_facebook"
+        app:layout_constraintEnd_toEndOf="@+id/connectWithPokeAccount"
+        app:layout_constraintStart_toStartOf="@+id/connectWithPokeAccount"
         app:layout_constraintTop_toBottomOf="@+id/connectWithPokeAccount" />
+
+    <Button
+        android:id="@+id/loginButtonTwitter"
+        android:layout_width="0dp"
+        android:background="@drawable/rounded_corners_twitter"
+        android:layout_marginTop="48dp"
+        style="@style/TwitterLogInButton"
+        android:text="@string/twitterAccount"
+        app:layout_constraintEnd_toEndOf="@+id/facebookLoginButton"
+        app:layout_constraintStart_toStartOf="@+id/facebookLoginButton"
+        app:layout_constraintTop_toBottomOf="@+id/facebookLoginButton" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/googleLoginButton"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="105dp"
-        android:layout_marginTop="67dp"
-        android:layout_marginEnd="106dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="-8dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="-8dp"
+        android:gravity="center_vertical"
+        app:layout_constraintEnd_toEndOf="@+id/loginButtonTwitter"
+        app:layout_constraintStart_toStartOf="@+id/loginButtonTwitter"
         app:layout_constraintTop_toBottomOf="@+id/loginButtonTwitter" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

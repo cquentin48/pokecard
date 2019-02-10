@@ -13,5 +13,34 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <style name="LoginButton">
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:drawablePadding">8dp</item>
+        <item name="android:gravity">left|center_vertical</item>
+    </style>
+    <style name="PokeApiLoginButton" parent="LoginButton">
+        <item name="android:drawableLeft">@drawable/walkemon_signin_button</item>
+        <item name="android:background">@color/com_facebook_button_text_color</item>
+        <item name="android:textColor">@color/com_facebook_blue</item>
+    </style>
+    <style name="GoogleApiLoginButton" parent="LoginButton">
+        <item name="android:drawableLeft">@drawable/common_google_signin_btn_icon_dark</item>
+        <item name="android:text">@string/googleAccount</item>
+        <item name="android:background">#FFFFFF</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+    <style name="FacebookLoginButton" parent="LoginButton">
+        <item name="android:background">@color/com_facebook_blue</item>
+        <item name="android:textColor">@color/com_facebook_button_text_color</item>
+        <item name="android:text">@string/com_facebook_loginview_log_in_button</item>
+        <item name="android:drawableLeft">@drawable/com_facebook_button_icon</item>
+    </style>
+    <style name="TwitterLogInButton" parent="LoginButton">
+        <item name="android:drawableLeft">@drawable/twitter_logo</item>
+        <item name="android:background">@color/tw__composer_white</item>
+        <item name="android:textColor">@color/tw__composer_blue_text</item>
+    </style>
 
 </resources>
