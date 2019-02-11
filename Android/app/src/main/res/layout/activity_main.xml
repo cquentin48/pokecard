@@ -12,59 +12,42 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
+        android:layout_marginBottom="36dp"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/walkemon_logo" />
 
-    <Button
-        android:id="@+id/connectWithPokeAccount"
-        style="@style/PokeApiLoginButton"
-        android:layout_width="200dp"
-        android:layout_marginStart="105dp"
-        android:layout_marginTop="62dp"
-        android:layout_marginEnd="106dp"
-        android:background="@drawable/rounded_corners_walkemon"
-        android:text="@string/connectWithPokeAccount"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="172dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3">
 
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/facebookLoginButton"
-        android:layout_width="0dp"
-        android:layout_height="36dp"
-        android:layout_marginTop="48dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        style="@style/FacebookLoginButton"
-        android:text="@string/FacebookLoginButton"
-        android:background="@drawable/rounded_corners_facebook"
-        app:layout_constraintEnd_toEndOf="@+id/connectWithPokeAccount"
-        app:layout_constraintStart_toStartOf="@+id/connectWithPokeAccount"
-        app:layout_constraintTop_toBottomOf="@+id/connectWithPokeAccount" />
+        <Button
+            android:id="@+id/signInButton"
+            style="@style/PokeApiLoginButton"
+            android:layout_width="200dp"
+            android:background="@drawable/rounded_corners_walkemon"
+            android:text="@string/signIn"
+            app:layout_constraintBottom_toTopOf="@+id/registerButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/loginButtonTwitter"
-        android:layout_width="0dp"
-        android:background="@drawable/rounded_corners_twitter"
-        android:layout_marginTop="48dp"
-        style="@style/TwitterLogInButton"
-        android:text="@string/twitterAccount"
-        app:layout_constraintEnd_toEndOf="@+id/facebookLoginButton"
-        app:layout_constraintStart_toStartOf="@+id/facebookLoginButton"
-        app:layout_constraintTop_toBottomOf="@+id/facebookLoginButton" />
-
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/googleLoginButton"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="-8dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="-8dp"
-        android:gravity="center_vertical"
-        app:layout_constraintEnd_toEndOf="@+id/loginButtonTwitter"
-        app:layout_constraintStart_toStartOf="@+id/loginButtonTwitter"
-        app:layout_constraintTop_toBottomOf="@+id/loginButtonTwitter" />
+        <Button
+            android:id="@+id/registerButton"
+            style="@style/PokeApiLoginButton"
+            android:layout_width="200dp"
+            android:background="@drawable/rounded_corners_walkemon"
+            android:text="@string/register"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/signInButton"
+            app:layout_constraintStart_toStartOf="@+id/signInButton"
+            app:layout_constraintTop_toBottomOf="@+id/signInButton" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
