@@ -16,6 +16,7 @@
     <string name="FacebookLoginButton">Compte facebook</string>
     <string name="googleAccount">Compte Google</string>
     <string name="twitterAccount">Compte Twitter</string>
+    <string name="emailAccount">Se connecter avec un compte pokéapi</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -36,6 +37,8 @@
     <!-- Twitter consumer key and secret -->
     <string name="twitter_consumer_key" translatable="false">yv2RilFDBf8eSJfzofv4lJVSM</string>
     <string name="twitter_consumer_secret" translatable="false">vSNPQ7mP0SgLnsDG4226gGtZdDtZ7P4Mqxo22mie4nLhCJlNsw</string>
+    <!--Firebase Website-->
+    <string name="firebase_web_host" translatable="false">pokeapi-1541497105412.firebaseapp.com</string>
 
     <!--Error messages-->
     <string name="sign_in_cancelled">Connection annulée</string>
