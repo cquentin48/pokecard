@@ -58,6 +58,7 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(
                     AuthUI.getInstance()
                             .createSignInIntentBuilder()
+                            .setTheme(R.style.firebaseAuthUI)
                             .setLogo(R.drawable.walkemon_logo)
                             .setAvailableProviders(providers)
                             .build(),
