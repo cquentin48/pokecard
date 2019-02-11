@@ -113,7 +113,7 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
 
     private fun loggingOut(){
         AuthUI.getInstance()
-                .delete(this)
+                .signOut(this)
                 .addOnCompleteListener {
                     startActivity(Intent(this, MainActivity::class.java))
                 }
