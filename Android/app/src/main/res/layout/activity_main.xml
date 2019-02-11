@@ -9,45 +9,29 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="339dp"
+        android:layout_height="0dp"
         android:layout_marginTop="36dp"
         android:layout_marginBottom="36dp"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout4"
+        app:layout_constraintBottom_toTopOf="@+id/signInButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/walkemon_logo" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout4"
-        android:layout_width="match_parent"
-        android:layout_height="172dp"
+    <Button
+        android:id="@+id/signInButton"
+        style="@style/PokeApiLoginButton"
+        android:layout_width="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="32dp"
+        android:background="@drawable/rounded_corners_walkemon"
+        android:text="@string/signIn"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3">
-
-        <Button
-            android:id="@+id/signInButton"
-            style="@style/PokeApiLoginButton"
-            android:layout_width="200dp"
-            android:background="@drawable/rounded_corners_walkemon"
-            android:text="@string/signIn"
-            app:layout_constraintBottom_toTopOf="@+id/registerButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/registerButton"
-            style="@style/PokeApiLoginButton"
-            android:layout_width="200dp"
-            android:background="@drawable/rounded_corners_walkemon"
-            android:text="@string/register"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/signInButton"
-            app:layout_constraintStart_toStartOf="@+id/signInButton"
-            app:layout_constraintTop_toBottomOf="@+id/signInButton" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintEnd_toEndOf="@+id/imageView3"
+        app:layout_constraintStart_toStartOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

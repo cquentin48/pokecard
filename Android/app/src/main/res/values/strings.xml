@@ -3,7 +3,7 @@
     <string name="withPokeAccount">Avec un compte PokeCard</string>
     <string name="throughSocialNetWorksAccounts">A travers les comptes\ndes réseaux sociaux</string>
     <string name="signIn">Se connecter</string>
-    <string name="register">S\'inscrire</string>
+    <string name="register">S\'inscrire !</string>
     <string name="facebook_app_id">770236446650561</string>
     <string name="profileSubMenuTitle">Gestion du profil</string>
     <string name="toogleCollectionSubMenuTitle">Gestion des collections</string>
@@ -28,4 +28,30 @@
     <string name="pokedexActivityPokemonNumberText">Pokémon n°</string>
     <string name="pokemapMenu">PokéMap</string>
     <string name="pokedexSearchText">Rechercher</string>
+
+    <!--Firebase Authentification-->
+    <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
+    <string name="facebook_application_id" translatable="false">770236446650561</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb770236446650561</string>
+    <!-- Twitter consumer key and secret -->
+    <string name="twitter_consumer_key" translatable="false">yv2RilFDBf8eSJfzofv4lJVSM</string>
+    <string name="twitter_consumer_secret" translatable="false">vSNPQ7mP0SgLnsDG4226gGtZdDtZ7P4Mqxo22mie4nLhCJlNsw</string>
+
+    <!--Error messages-->
+    <string name="sign_in_cancelled">Connection annulée</string>
+    <string name="no_internet_connection">Pas d\'accès à internet</string>
+    <string name="unknown_error">Erreur inconnue</string>
+
+    <!--Default Values-->
+    <string name="defaultPhoneValue">01-02-03-04-05</string>
+    <string name="default_password_value">password</string>
+    <string name="default_username_value">Pseudonyme</string>
+    <string name="default_email_value">examplemail@mail.com</string>
+
+    <!--Labels-->
+    <string name="emailLabel">Email : </string>
+    <string name="passwordLabel">Mot de passe : </string>
+    <string name="usernameLabel">Pseudonyme : </string>
+    <string name="phoneNumberLabel">N° de téléphone : </string>
+    <string name="avatarSelect">Choix de l\'avatart</string>
 </resources>

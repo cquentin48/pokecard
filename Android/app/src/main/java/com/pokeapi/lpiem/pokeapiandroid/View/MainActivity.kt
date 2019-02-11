@@ -1,12 +1,16 @@
 package com.pokeapi.lpiem.pokeapiandroid.View
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.Menu
-import android.view.MenuInflater
+import android.view.View
+import com.firebase.ui.auth.AuthUI
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -17,8 +21,14 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
-import com.pokeapi.lpiem.pokeapiandroid.R
 import kotlinx.android.synthetic.main.activity_main.*
+import com.firebase.ui.auth.ErrorCodes
+import com.firebase.ui.auth.IdpResponse
+import android.view.ViewGroup
+import android.widget.PopupWindow
+import android.widget.Toast
+import com.pokeapi.lpiem.pokeapiandroid.R
+
 
 class MainActivity : AppCompatActivity() {
     private var singleton: AppProviderSingleton? = AppProviderSingleton.getInstance()
@@ -34,37 +44,61 @@ class MainActivity : AppCompatActivity() {
         this.singleton = AppProviderSingleton.getInstance()
         FirebaseApp.initializeApp(this@MainActivity)
         mAuth = FirebaseAuth.getInstance(FirebaseApp.initializeApp(this@MainActivity)!!)
-        register()
         signIn()
-    }
-
-    private fun register(){
-        registerButton.setOnClickListener {
-
-        }
     }
 
     private fun signIn(){
         signInButton.setOnClickListener {
+            val providers = arrayListOf(
+                    AuthUI.IdpConfig.EmailBuilder().build(),
+                    AuthUI.IdpConfig.PhoneBuilder().build(),
+                    AuthUI.IdpConfig.GoogleBuilder().build(),
+                    AuthUI.IdpConfig.FacebookBuilder().build(),
+                    AuthUI.IdpConfig.TwitterBuilder().build())
 
+            startActivityForResult(
+                    AuthUI.getInstance()
+                            .createSignInIntentBuilder()
+                            .setLogo(R.drawable.twitter_logo)
+                            .setAvailableProviders(providers)
+                            .build(),
+                    RC_SIGN_IN)
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.login_menu, menu)
+        /*val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.login_menu, menu)*/
         return true
     }
 
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        singleton!!.facebookApiProvider!!.callbackManager.onActivityResult(requestCode, resultCode, data)
-        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+        // RC_SIGN_IN is the request code you passed into startActivityForResult(...) when starting the sign in flow.
         if (requestCode == RC_SIGN_IN) {
-            // The Task returned from this call is always completed, no need to attach
-            // a listener.
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            handleSignInResult(task)
+            val response = IdpResponse.fromResultIntent(data)
+
+            // Successfully signed in
+            if (resultCode == Activity.RESULT_OK) {
+                singleton!!.User = FirebaseAuth.getInstance().currentUser!!
+                startActivity(Intent(this@MainActivity, MainAppActivity::class.java))
+                finish()
+            } else {
+                // Sign in failed
+                if (response == null) {
+                    // User pressed back button
+                    Toast.makeText(this@MainActivity,R.string.sign_in_cancelled,Toast.LENGTH_LONG).show()
+                    return
+                }
+
+                if (response.error!!.errorCode == ErrorCodes.NO_NETWORK) {
+                    Toast.makeText(this@MainActivity,R.string.no_internet_connection,Toast.LENGTH_LONG).show()
+                    return
+                }
+
+                Toast.makeText(this@MainActivity,R.string.unknown_error,Toast.LENGTH_LONG).show()
+                Log.e("Error", "Sign-in error: ", response.error)
+            }
         }
     }
 

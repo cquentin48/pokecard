@@ -19,6 +19,7 @@ import android.location.LocationManager
 import android.provider.Settings
 import android.view.View
 import com.facebook.login.LoginManager
+import com.firebase.ui.auth.AuthUI
 import com.google.android.gms.auth.api.Auth
 import com.pokeapi.lpiem.pokeapiandroid.R
 import kotlinx.android.synthetic.main.activity_main_app.*
@@ -106,23 +107,16 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
             setHomeAsUpIndicator(R.drawable.ic_settings_black_24dp)
         }
 
-        Toast.makeText(this,singleton!!.Profile.Username,Toast.LENGTH_LONG).show()
+        //Toast.makeText(this,singleton!!.Profile.Username,Toast.LENGTH_LONG).show()
 
     }
 
     private fun loggingOut(){
-        when(singleton!!.ConnectionType){
-            AppProviderSingleton.GOOGLE->googleSignOut()
-            AppProviderSingleton.FACEBOOK->LoginManager.getInstance().logOut()
-        }
-        startActivity(Intent(this, MainActivity::class.java))
-    }
-
-    private fun googleSignOut(){
-        singleton!!.googleApiProvider!!.signOut().addOnCompleteListener {
-            Toast.makeText(this, "Déconnecté",Toast.LENGTH_LONG).show()
-            startActivity(Intent(this, MainActivity::class.java))
-        }
+        AuthUI.getInstance()
+                .delete(this)
+                .addOnCompleteListener {
+                    startActivity(Intent(this, MainActivity::class.java))
+                }
     }
 
     override fun addPokemonSpecies(i: Int, s: Species) {
