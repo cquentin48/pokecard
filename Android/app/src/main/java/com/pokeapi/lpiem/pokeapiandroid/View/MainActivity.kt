@@ -50,16 +50,15 @@ class MainActivity : AppCompatActivity() {
     private fun signIn(){
         signInButton.setOnClickListener {
             val providers = arrayListOf(
-                    AuthUI.IdpConfig.EmailBuilder().build(),
-                    AuthUI.IdpConfig.PhoneBuilder().build(),
                     AuthUI.IdpConfig.GoogleBuilder().build(),
                     AuthUI.IdpConfig.FacebookBuilder().build(),
-                    AuthUI.IdpConfig.TwitterBuilder().build())
+                    AuthUI.IdpConfig.TwitterBuilder().build(),
+                    AuthUI.IdpConfig.EmailBuilder().build())
 
             startActivityForResult(
                     AuthUI.getInstance()
                             .createSignInIntentBuilder()
-                            .setLogo(R.drawable.twitter_logo)
+                            .setLogo(R.drawable.walkemon_logo)
                             .setAvailableProviders(providers)
                             .build(),
                     RC_SIGN_IN)
@@ -102,32 +101,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
-        try {
-            val account = completedTask.getResult(ApiException::class.java)
-        } catch (e: ApiException) {
-            // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.w("Google", "signInResult:failed code=" + e.statusCode)
-            e.printStackTrace()
-        }
-
-    }
-
-    fun launchActivity() {
-        val intent = Intent(this@MainActivity, MainAppActivity::class.java)
-        startActivity(intent)
-    }
-
     companion object {
         val RC_SIGN_IN = 1
         private var context: Context? = null
-
-        fun initGoogleSignInApi(): GoogleSignInClient {
-            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestEmail()
-                    .build()
-            return GoogleSignIn.getClient(context!!, gso)
-        }
     }
 }
