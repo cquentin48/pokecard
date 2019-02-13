@@ -161,7 +161,7 @@ class PokedexListView : Fragment(),PokedexFunctionInterface {
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int,
                                        count: Int) {
-                data = if (s != "") {
+                data = if (s != activity!!.getString(R.string.nothingInput)) {
                     filterData(s.toString())
                 }else{
                     backupData.toMutableList()

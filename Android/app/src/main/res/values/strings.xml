@@ -24,6 +24,7 @@
 
     <!--Pokedex List Fragment-->
     <string name="pokedexSearchText">Rechercher</string>
+    <string name="nothingInput"></string>
 
     <!-- Login Activity -->
     <string name="signIn">Se connecter</string>
