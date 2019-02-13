@@ -1,6 +1,5 @@
 package com.pokeapi.lpiem.pokeapiandroid.View
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -19,14 +18,9 @@ import android.location.LocationManager
 import android.provider.Settings
 import android.view.View
 import androidx.fragment.app.Fragment
-import com.facebook.login.LoginManager
 import com.firebase.ui.auth.AuthUI
-import com.google.android.gms.auth.api.Auth
 import com.pokeapi.lpiem.pokeapiandroid.R
 import kotlinx.android.synthetic.main.activity_main_app.*
-import kotlinx.android.synthetic.main.nav_drawer_header_layout.*
-
-
 
 
 class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
@@ -54,11 +48,17 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
         profileView.passContext(applicationContext)
     }
 
+    private fun addAdditionnalInformations(){
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_app)
         mDrawerLayout = findViewById(R.id.drawer_layout)
         setUpFragment()
+
+        addAdditionnalInformations()
 
         navigationView.setNavigationItemSelectedListener { menuItem ->
             // set item as selected to persist highlight

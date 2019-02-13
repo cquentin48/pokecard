@@ -51,6 +51,9 @@
     <string name="default_username_value">Pseudonyme</string>
     <string name="default_email_value">examplemail@mail.com</string>
 
+    <!--Fragments Titles-->
+    <string name="ProfileTitle">Profil de </string>
+
     <!--Labels-->
     <string name="emailLabel">Email : </string>
     <string name="passwordLabel">Mot de passe : </string>

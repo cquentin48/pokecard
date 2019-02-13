@@ -1,3 +1,4 @@
+
 package com.pokeapi.lpiem.pokeapiandroid.View.Adapter
 
 import com.pokeapi.lpiem.pokeapiandroid.R
@@ -7,10 +8,10 @@ import com.xwray.groupie.kotlinandroidextensions.Item
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import kotlinx.android.synthetic.main.adapter_header.*
 
-class AdapterHeader(private val letterString:String): Item(), ExpandableItem {
+class ProfileAdapterHeader(private val sectionTitle:String): Item(), ExpandableItem{
     private lateinit var expandableGroup: ExpandableGroup
     override fun bind(viewHolder: ViewHolder, position: Int) {
-        viewHolder.profileSectionLetter.text = letterString
+        viewHolder.profileSectionLetter.text = sectionTitle
         viewHolder.headerExpandableIconProfile.setImageResource(getRotatedIconResId())
 
         viewHolder.headerExpandableIconProfile.setOnClickListener{
@@ -19,7 +20,7 @@ class AdapterHeader(private val letterString:String): Item(), ExpandableItem {
         }
     }
 
-    override fun getLayout(): Int = R.layout.adapter_header
+    override fun getLayout(): Int = R.layout.adapter_header_profile
 
     override fun setExpandableGroup(onToggleListener: ExpandableGroup) {
         expandableGroup = onToggleListener
@@ -30,5 +31,4 @@ class AdapterHeader(private val letterString:String): Item(), ExpandableItem {
     }else{
         R.drawable.ic_keyboard_arrow_up_black_24dp
     }
-
 }

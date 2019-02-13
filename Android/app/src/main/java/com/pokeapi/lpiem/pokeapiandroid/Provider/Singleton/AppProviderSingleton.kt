@@ -56,6 +56,10 @@ class AppProviderSingleton() {
         return originalHashMap.toMutableList()
     }
 
+    fun isNewUser():Boolean{
+        return firebaseUser.metadata!!.creationTimestamp == firebaseUser.metadata!!.lastSignInTimestamp
+    }
+
     /**
      * Fetch pokedex entry of a pokemon
      */

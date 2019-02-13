@@ -8,11 +8,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonRetrofit
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
 
 import com.pokeapi.lpiem.pokeapiandroid.R
+import com.pokeapi.lpiem.pokeapiandroid.View.Adapter.AdapterHeader
+import com.xwray.groupie.ExpandableGroup
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.Section
+import com.xwray.groupie.kotlinandroidextensions.ViewHolder
+import kotlinx.android.synthetic.main.activity_pokedex_list_view.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -60,12 +69,14 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        activity!!.title = activity!!.getString(R.string.ProfileTitle)+" "+singleton!!.User.displayName
         initProfileFragment()
     }
 
     private fun initProfileFragment() {
         initProfileBasicInformations()
         initResumeSection()
+        Toast.makeText(activity,if(singleton!!.isNewUser())"Nouvel utilisateur" else "Ancien utilisateur",Toast.LENGTH_LONG).show()
     }
 
     private fun initProfileBasicInformations() {
@@ -87,6 +98,39 @@ class ProfileFragment : Fragment() {
                 .apply(RequestOptions().override(300, 300).circleCrop())
                 .into(avatarImageView)
     }
+
+    /*private fun initOtherSections(){
+        val groupAdapter = GroupAdapter<ViewHolder>().apply {
+            spanCount = 3
+        }
+        recyclerViewPokedexList.apply {
+            layoutManager = GridLayoutManager(activity!!.baseContext, groupAdapter.spanCount).apply {
+                spanSizeLookup = groupAdapter.spanSizeLookup
+            }
+            adapter = groupAdapter
+        }
+        initOtherSectionsContent()
+    }
+
+    private fun createList(rawData: TreeMap<String, MutableList<PokemonRetrofit>>, groupAdapter: GroupAdapter<ViewHolder>){
+        for((key,value) in rawData){
+            addListToGroup(key,value,groupAdapter)
+        }
+    }
+
+
+    /**
+     * Add the list to the adapter
+     * @param letter alphabetical letter about the first letter in the pokemon name
+     * @param rawData pokemon list starting with the param [letter].
+     * @param groupAdapter adapter about loading the lists
+     */
+    private fun addListToGroup(letter:String, rawData: MutableList<PokemonRetrofit>, groupAdapter: GroupAdapter<ViewHolder>){
+        ExpandableGroup(AdapterHeader(letter),true).apply {
+            add(Section(generateListItems(rawData)))
+            groupAdapter.add(this)
+        }
+    }*/
 
     private fun initTextView(textView: TextView, text:String, ressourceId:Int) {
         textView.text = text
