@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "767822180766",
+    "firebase_url": "https://pokeapi-1541497105412.firebaseio.com",
+    "project_id": "pokeapi-1541497105412",
+    "storage_bucket": "pokeapi-1541497105412.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:767822180766:android:d342d9430a0798bb",
+        "android_client_info": {
+          "package_name": "com.pokeapi.lpiem.pokeapiandroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "767822180766-q1jq23qv18l90827dkd36tkr0qgme5cc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pokeapi.lpiem.pokeapiandroid",
+            "certificate_hash": "e58cb792625f6363c68566fef356068d98f6050b"
+          }
+        },
+        {
+          "client_id": "767822180766-bdjo7ig8bi7c8tklu2tv2lvbd4a1ieei.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pokeapi.lpiem.pokeapiandroid",
+            "certificate_hash": "60264f5362838b46d0598e6c47e6a7a64ff202ca"
+          }
+        },
+        {
+          "client_id": "767822180766-mm4ik9551k9ucfuofv05fe4sb0h5v5j8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3iMS5FV0lEaC4_turppjv-CevDvyfx9M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "767822180766-7fdsf5vrncru6tbq4peshh8snau9ammq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

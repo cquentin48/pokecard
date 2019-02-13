@@ -1,40 +1,39 @@
 package com.pokeapi.lpiem.pokeapiandroid.View
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.Menu
-import android.view.MenuInflater
+import android.view.View
+import com.firebase.ui.auth.AuthUI
 
-import com.facebook.AccessToken
-import com.facebook.FacebookCallback
-import com.facebook.FacebookException
-import com.facebook.GraphRequest
-import com.facebook.login.LoginManager
-import com.facebook.login.LoginResult
-import com.facebook.login.widget.LoginButton
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
-import com.pokeapi.lpiem.pokeapiandroid.Model.SocialNetworks.FacebookProfile
-import com.pokeapi.lpiem.pokeapiandroid.Model.SocialNetworks.GoogleProfile
-import com.pokeapi.lpiem.pokeapiandroid.Model.SocialNetworks.Profile
+import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
-import com.pokeapi.lpiem.pokeapiandroid.R
 import kotlinx.android.synthetic.main.activity_main.*
-import org.json.JSONObject
-import java.util.*
+import com.firebase.ui.auth.ErrorCodes
+import com.firebase.ui.auth.IdpResponse
+import android.view.ViewGroup
+import android.widget.PopupWindow
+import android.widget.Toast
+import com.pokeapi.lpiem.pokeapiandroid.R
+
 
 class MainActivity : AppCompatActivity() {
     private var singleton: AppProviderSingleton? = AppProviderSingleton.getInstance()
     private var context: Context? = null
-    private var connectionType = 0
+    private lateinit var mAuth: FirebaseAuth
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,158 +42,75 @@ class MainActivity : AppCompatActivity() {
         this.context = this
         this.title = "PokeCard - Connexion à l'application"
         this.singleton = AppProviderSingleton.getInstance()
-
-        this.initGoogleLogInButton()
-        this.initFacebookLogInButton()
-        //this.initTwitterLogInButton()
-        this.loginPokeApiButton()
+        FirebaseApp.initializeApp(this@MainActivity)
+        mAuth = FirebaseAuth.getInstance(FirebaseApp.initializeApp(this@MainActivity)!!)
+        startActivity()
+        signIn()
     }
 
-    private fun loginPokeApiButton() {
-        connectWithPokeAccount.setOnClickListener {
-            singleton!!.Profile = Profile()
-            startActivity(Intent(this, MainAppActivity::class.java))
+    private fun signIn(){
+        signInButton.setOnClickListener {
+            val providers = arrayListOf(
+                    AuthUI.IdpConfig.GoogleBuilder().build(),
+                    AuthUI.IdpConfig.FacebookBuilder().build(),
+                    AuthUI.IdpConfig.TwitterBuilder().build(),
+                    AuthUI.IdpConfig.EmailBuilder().build())
+
+            startActivityForResult(
+                    AuthUI.getInstance()
+                            .createSignInIntentBuilder()
+                            .setTheme(R.style.firebaseAuthUI)
+                            .setLogo(R.drawable.walkemon_logo)
+                            .setAvailableProviders(providers)
+                            .build(),
+                    RC_SIGN_IN)
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.login_menu, menu)
+        /*val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.login_menu, menu)*/
         return true
     }
 
-    fun initFacebookLogInButton() {
-        val callbackManager = this.singleton!!.facebookApiProvider!!.callbackManager
-        val loginButton = facebookLoginButton as LoginButton
-
-
-        // Callback registration
-        loginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
-            override fun onSuccess(loginResult: LoginResult) {
-                fetchFacebookProfile(loginResult.accessToken)
-            }
-
-            override fun onCancel() {
-                Log.d("Facebook", "Connexion annulée")
-            }
-
-            override fun onError(exception: FacebookException) {
-                Log.e("Erreur", exception.localizedMessage)
-            }
-        })
-    }
-
-    fun initGoogleLogInButton() {
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build()
-
-        singleton!!.googleApiProvider = GoogleSignIn.getClient(this, gso)
-        val account = GoogleSignIn.getLastSignedInAccount(this)
-        getGoogleProfileInfos()
-        if (account != null) {
-            //startActivity(Intent(this,MainAppActivity::class.java))
-        }
-        val signInButton = findViewById<SignInButton>(R.id.googleLoginButton) as SignInButton
-        signInButton.setSize(SignInButton.SIZE_STANDARD)
-        signInButton.setOnClickListener {
-            connectionType = 0
-            val signInIntent = singleton!!.googleApiProvider!!.signInIntent
-            startActivityForResult(signInIntent, RC_SIGN_IN)
-        }
-
-    }
-
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        singleton!!.facebookApiProvider!!.callbackManager.onActivityResult(requestCode, resultCode, data)
-        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+        // RC_SIGN_IN is the request code you passed into startActivityForResult(...) when starting the sign in flow.
         if (requestCode == RC_SIGN_IN) {
-            // The Task returned from this call is always completed, no need to attach
-            // a listener.
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            handleSignInResult(task)
-        }
-    }
+            val response = IdpResponse.fromResultIntent(data)
 
-    private fun getGoogleProfileInfos() {
-        val acct = GoogleSignIn.getLastSignedInAccount(this)
-        if (acct != null) {
-            singleton!!.Profile = Profile()
-            singleton!!.Profile.Id = acct.id!!
-            singleton!!.Profile.Email = acct.email.toString()
-            singleton!!.Profile.Username = acct.email.toString()
-            singleton!!.Profile.AvatarImage = acct.photoUrl.toString()
-            singleton!!.ConnectionType = AppProviderSingleton.GOOGLE
-            startActivity(Intent(this, MainAppActivity::class.java))
-        }
-    }
-
-    /**
-     * Fetch user profile data from facebook api
-     * @param accessToken token used to fetch data
-     */
-    private fun fetchFacebookProfile(accessToken: AccessToken) {
-        if (isFacebookAccountSignedIn()) {
-            val request = GraphRequest.newMeRequest(accessToken) { `object`, response ->
-                try {
-                    if(`object`.has("id")){
-                        singleton!!.Profile = Profile()
-                        singleton!!.Profile.Username = `object`.getString("name")
-                        singleton!!.Profile.Email = `object`.getString("email")
-                        singleton!!.Profile.Id = `object`.getString("id")
-                        val pictureData = `object`.getJSONObject("picture")
-                        val dataList = pictureData.getJSONObject("data")
-                        singleton!!.Profile.AvatarImage = dataList.getString("url")
-                        singleton!!.ConnectionType = AppProviderSingleton.FACEBOOK
-                        startActivity(Intent(this@MainActivity,MainAppActivity::class.java))
-                    }
-                } catch (e: java.lang.Exception) {
-                    Log.e("Error",e.localizedMessage)
+            // Successfully signed in
+            if (resultCode == Activity.RESULT_OK) {
+                startActivity()
+                finish()
+            } else {
+                // Sign in failed
+                if (response == null) {
+                    // User pressed back button
+                    Toast.makeText(this@MainActivity,R.string.sign_in_cancelled,Toast.LENGTH_LONG).show()
+                    return
                 }
+
+                if (response.error!!.errorCode == ErrorCodes.NO_NETWORK) {
+                    Toast.makeText(this@MainActivity,R.string.no_internet_connection,Toast.LENGTH_LONG).show()
+                    return
+                }
+
+                Toast.makeText(this@MainActivity,R.string.unknown_error,Toast.LENGTH_LONG).show()
+                Log.e("Error", "Sign-in error: ", response.error)
             }
-            val parameters = Bundle()
-            parameters.putString("fields", "name,email,id,picture.type(large),friendlists")
-            request.parameters = parameters
-            request.executeAsync()
         }
     }
 
-    /**
-     * Check if the facebook user is currently logged in
-     */
-    private fun isFacebookAccountSignedIn(): Boolean {
-        val accessToken = AccessToken.getCurrentAccessToken()
-        return accessToken != null && !accessToken.isExpired
-    }
-
-    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
-        try {
-            val account = completedTask.getResult(ApiException::class.java)
-            getGoogleProfileInfos()
-        } catch (e: ApiException) {
-            // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.w("Google", "signInResult:failed code=" + e.statusCode)
-            e.printStackTrace()
+    private fun startActivity() {
+        if(FirebaseAuth.getInstance().currentUser!=null){
+            singleton!!.User = FirebaseAuth.getInstance().currentUser!!
+            startActivity(Intent(this@MainActivity, MainAppActivity::class.java))
         }
-
-    }
-
-    fun launchActivity() {
-        val intent = Intent(this@MainActivity, MainAppActivity::class.java)
-        startActivity(intent)
     }
 
     companion object {
         val RC_SIGN_IN = 1
         private var context: Context? = null
-
-        fun initGoogleSignInApi(): GoogleSignInClient {
-            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestEmail()
-                    .build()
-            return GoogleSignIn.getClient(context!!, gso)
-        }
     }
 }

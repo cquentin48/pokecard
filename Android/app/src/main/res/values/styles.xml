@@ -7,6 +7,35 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+    <style name="firebaseAuthUI" parent="FirebaseUI">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="colorPrimary">@color/backgroundColor</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="FirebaseUI.Button.AccountChooser">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:drawablePadding">@dimen/fui_auth_method_button_drawablePadding</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:layout_marginTop">@dimen/fui_auth_method_button_margin</item>
+        <item name="android:layout_marginBottom">@dimen/fui_auth_method_button_margin</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:typeface">normal</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+    </style>
+
+    <style name="FirebaseUI.Button.AccountChooser.EmailButton">
+        <item name="drawableStartCompat">@drawable/fui_ic_mail_white_24dp</item>
+        <item name="android:background">@drawable/fui_idp_button_background_email</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
     <style name="PokedexTheme" parent="Theme.MaterialComponents.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/cardview_light_background</item>
@@ -24,23 +53,6 @@
         <item name="android:drawableLeft">@drawable/walkemon_signin_button</item>
         <item name="android:background">@color/com_facebook_button_text_color</item>
         <item name="android:textColor">@color/com_facebook_blue</item>
-    </style>
-    <style name="GoogleApiLoginButton" parent="LoginButton">
-        <item name="android:drawableLeft">@drawable/common_google_signin_btn_icon_dark</item>
-        <item name="android:text">@string/googleAccount</item>
-        <item name="android:background">#FFFFFF</item>
-        <item name="android:textColor">#000000</item>
-    </style>
-    <style name="FacebookLoginButton" parent="LoginButton">
-        <item name="android:background">@color/com_facebook_blue</item>
-        <item name="android:textColor">@color/com_facebook_button_text_color</item>
-        <item name="android:text">@string/com_facebook_loginview_log_in_button</item>
-        <item name="android:drawableLeft">@drawable/com_facebook_button_icon</item>
-    </style>
-    <style name="TwitterLogInButton" parent="LoginButton">
-        <item name="android:drawableLeft">@drawable/twitter_logo</item>
-        <item name="android:background">@color/tw__composer_white</item>
-        <item name="android:textColor">@color/tw__composer_blue_text</item>
     </style>
 
 </resources>

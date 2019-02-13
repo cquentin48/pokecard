@@ -3,44 +3,20 @@ package com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton
 import android.util.Log
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Model.PokemonData
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.*
-import com.pokeapi.lpiem.pokeapiandroid.Model.SocialNetworks.FacebookProfile
-import com.pokeapi.lpiem.pokeapiandroid.Model.SocialNetworks.GoogleProfile
-import com.pokeapi.lpiem.pokeapiandroid.Model.SocialNetworks.Profile
-import com.pokeapi.lpiem.pokeapiandroid.Provider.SocialNetworks.FacebookApiProvider
-import com.pokeapi.lpiem.pokeapiandroid.Provider.SocialNetworks.GoogleApiProvider
-import com.pokeapi.lpiem.pokeapiandroid.Provider.SocialNetworks.TwitterApiProvider
 import com.pokeapi.lpiem.pokeapiandroid.View.MainAppActivity
 import com.pokeapi.lpiem.pokeapiandroid.View.PokedexListView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import com.facebook.AccessToken
-import com.facebook.login.LoginManager
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.firebase.auth.FirebaseUser
 
 
 class AppProviderSingleton() {
-    var facebookApiProvider: FacebookApiProvider? = null
-    var googleApiProvider: GoogleSignInClient? = null
-    var twitterApiProvider: TwitterApiProvider? = null
-    private var connectionType:Int = -1
-    private lateinit var userProfile:Profile
-    var Profile:Profile
-        get() = userProfile
+    private lateinit var firebaseUser:FirebaseUser
+    var User:FirebaseUser
+        get() = firebaseUser
         set(newValue){
-            userProfile = newValue
-        }
-    var ConnectionType:Int
-        get() = connectionType
-        set(value){
-            connectionType = value
-        }
-    private lateinit var logingManager: LoginManager
-
-    var LogingManager:LoginManager
-        get() = logingManager
-        set(value){
-            logingManager = value
+            firebaseUser = newValue
         }
 
     var pokemonList:MutableList<PokemonData> ?
@@ -50,7 +26,6 @@ class AppProviderSingleton() {
     }
 
     init {
-        facebookApiProvider = FacebookApiProvider()
         pokemonList = mutableListOf()
     }
 
