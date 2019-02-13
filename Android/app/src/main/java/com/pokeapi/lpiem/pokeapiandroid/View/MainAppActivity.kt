@@ -118,8 +118,6 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
         val navigationViewUserProfileImage = headerView.findViewById(R.id.userProfileNavigationImage) as ImageView
         navigationViewUsername.text = singleton!!.fetchDisplayName()
 
-        //Toast.makeText(this@MainAppActivity,singleton!!.User.providerId,Toast.LENGTH_LONG).show() -> firebase
-        Toast.makeText(this@MainAppActivity,singleton!!.fetchDisplayName(),Toast.LENGTH_LONG).show()
         Glide
                 .with(this@MainAppActivity)
                 .load(singleton!!.fetchDisplayAvatarUri(this@MainAppActivity))
