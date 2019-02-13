@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         this.singleton = AppProviderSingleton.getInstance()
         FirebaseApp.initializeApp(this@MainActivity)
         mAuth = FirebaseAuth.getInstance(FirebaseApp.initializeApp(this@MainActivity)!!)
+        startActivity()
         signIn()
     }
 
@@ -80,8 +81,7 @@ class MainActivity : AppCompatActivity() {
 
             // Successfully signed in
             if (resultCode == Activity.RESULT_OK) {
-                singleton!!.User = FirebaseAuth.getInstance().currentUser!!
-                startActivity(Intent(this@MainActivity, MainAppActivity::class.java))
+                startActivity()
                 finish()
             } else {
                 // Sign in failed
@@ -99,6 +99,13 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity,R.string.unknown_error,Toast.LENGTH_LONG).show()
                 Log.e("Error", "Sign-in error: ", response.error)
             }
+        }
+    }
+
+    private fun startActivity() {
+        if(FirebaseAuth.getInstance().currentUser!=null){
+            singleton!!.User = FirebaseAuth.getInstance().currentUser!!
+            startActivity(Intent(this@MainActivity, MainAppActivity::class.java))
         }
     }
 
