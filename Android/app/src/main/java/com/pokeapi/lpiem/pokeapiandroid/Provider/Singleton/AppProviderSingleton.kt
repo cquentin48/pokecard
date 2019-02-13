@@ -2,6 +2,9 @@ package com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton
 
 import android.content.Context
 import android.util.Log
+import android.widget.ImageView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Model.PokemonData
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.*
 import com.pokeapi.lpiem.pokeapiandroid.View.MainAppActivity
@@ -64,6 +67,14 @@ class AppProviderSingleton() {
 
     fun cloneList(originalHashMap: List<PokemonRetrofit>):List<PokemonRetrofit>{
         return originalHashMap.toMutableList()
+    }
+
+    fun displayAvatar(context:Context, imageView: ImageView){
+        Glide
+                .with(context)
+                .load(fetchDisplayAvatarUri(context))
+                .apply(RequestOptions().override(300, 300).circleCrop())
+                .into(imageView)
     }
 
     /**

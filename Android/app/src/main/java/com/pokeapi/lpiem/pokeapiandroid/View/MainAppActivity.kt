@@ -118,11 +118,7 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
         val navigationViewUserProfileImage = headerView.findViewById(R.id.userProfileNavigationImage) as ImageView
         navigationViewUsername.text = singleton!!.fetchDisplayName()
 
-        Glide
-                .with(this@MainAppActivity)
-                .load(singleton!!.fetchDisplayAvatarUri(this@MainAppActivity))
-                .apply(RequestOptions().override(300, 300).circleCrop())
-                .into(navigationViewUserProfileImage)
+        singleton!!.displayAvatar(this@MainAppActivity,navigationViewUserProfileImage)
     }
 
     private fun loggingOut(){
