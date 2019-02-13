@@ -64,6 +64,7 @@ class LogInActivity : AppCompatActivity() {
      */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        startActivity()
         if (requestCode == RC_SIGN_IN) {
             val response = IdpResponse.fromResultIntent(data)
 
@@ -87,6 +88,8 @@ class LogInActivity : AppCompatActivity() {
                 Toast.makeText(this@LogInActivity,R.string.unknown_error,Toast.LENGTH_LONG).show()
                 Log.e(getString(R.string.error_tag), getString(R.string.sign_in_error_prefix), response.error)
             }
+        }else{
+            Log.e("Error",requestCode.toString()+" "+resultCode.toString())
         }
     }
 
