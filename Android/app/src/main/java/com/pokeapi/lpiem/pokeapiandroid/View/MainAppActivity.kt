@@ -1,6 +1,5 @@
 package com.pokeapi.lpiem.pokeapiandroid.View
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -18,12 +17,13 @@ import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
 import android.location.LocationManager
 import android.provider.Settings
 import android.view.View
-import com.facebook.login.LoginManager
+import android.widget.ImageView
 import com.firebase.ui.auth.AuthUI
-import com.google.android.gms.auth.api.Auth
 import com.pokeapi.lpiem.pokeapiandroid.R
 import kotlinx.android.synthetic.main.activity_main_app.*
-import kotlinx.android.synthetic.main.nav_drawer_header_layout.*
+import android.widget.TextView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 
 
 
@@ -107,8 +107,24 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
             setHomeAsUpIndicator(R.drawable.ic_settings_black_24dp)
         }
 
-        //Toast.makeText(this,singleton!!.Profile.Username,Toast.LENGTH_LONG).show()
+        updateNavigationHeader()
 
+    }
+
+    private fun updateNavigationHeader(){
+        val navigationView = navigationView
+        val headerView = navigationView.getHeaderView(0)
+        val navigationViewUsername = headerView.findViewById(R.id.userNameNavigationView) as TextView
+        val navigationViewUserProfileImage = headerView.findViewById(R.id.userProfileNavigationImage) as ImageView
+        navigationViewUsername.text = singleton!!.fetchDisplayName()
+
+        //Toast.makeText(this@MainAppActivity,singleton!!.User.providerId,Toast.LENGTH_LONG).show() -> firebase
+        Toast.makeText(this@MainAppActivity,singleton!!.fetchDisplayName(),Toast.LENGTH_LONG).show()
+        Glide
+                .with(this@MainAppActivity)
+                .load(singleton!!.fetchDisplayAvatarUri(this@MainAppActivity))
+                .apply(RequestOptions().override(300, 300).circleCrop())
+                .into(navigationViewUserProfileImage)
     }
 
     private fun loggingOut(){
