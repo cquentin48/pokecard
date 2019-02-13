@@ -32,7 +32,6 @@ class PokedexListView : Fragment(),PokedexFunctionInterface {
     private lateinit var param:String
     private lateinit var data:MutableList<PokemonRetrofit>
     private lateinit var backupData:MutableList<PokemonRetrofit>
-    private lateinit var adapter: GridLayoutManager
     private val pokemonAPI = AppProviderSingleton.getInstance()
     private lateinit var myFragmentView: View
 
