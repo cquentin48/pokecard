@@ -18,6 +18,7 @@ import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
 import android.location.LocationManager
 import android.provider.Settings
 import android.view.View
+import androidx.fragment.app.Fragment
 import com.facebook.login.LoginManager
 import com.firebase.ui.auth.AuthUI
 import com.google.android.gms.auth.api.Auth
@@ -32,6 +33,7 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
     private var singleton: AppProviderSingleton?= AppProviderSingleton.getInstance()
     private lateinit var mDrawerLayout: DrawerLayout
     private lateinit var pokedexListView: PokedexListView
+    private lateinit var profileView: ProfileFragment
     private lateinit var pokeMap: LocalizationActivity
 
     var Singleton: AppProviderSingleton
@@ -45,9 +47,11 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
      */
     private fun setUpFragment(){
         pokedexListView = PokedexListView()
+        profileView = ProfileFragment()
         pokeMap = LocalizationActivity()
 
         pokedexListView.passContext(applicationContext)
+        profileView.passContext(applicationContext)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,13 +72,13 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
             when(menuItem.itemId){
 
                 R.id.pokedexMenu ->{
-                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container,pokedexListView).commit()
+                    startFragment(pokedexListView)
                 }
                 R.id.pokeMap ->{
                     startActivity(Intent(this, LocalizationActivity::class.java))
                 }
                 R.id.profile ->{
-                    Toast.makeText(this,getString(R.string.NotYetImplemented),Toast.LENGTH_LONG).show()
+                    startFragment(profileView)
                 }
                 R.id.collections ->{
                     Toast.makeText(this,getString(R.string.NotYetImplemented),Toast.LENGTH_LONG).show()
@@ -109,6 +113,10 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
 
         //Toast.makeText(this,singleton!!.Profile.Username,Toast.LENGTH_LONG).show()
 
+    }
+
+    private fun startFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
     }
 
     private fun loggingOut(){
