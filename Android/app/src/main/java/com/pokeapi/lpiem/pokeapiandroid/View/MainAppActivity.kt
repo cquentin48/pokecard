@@ -37,13 +37,7 @@ class MainAppActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setUpFragment()
-
         navigationDrawerItemManagment()
-
-
-
-        //Toast.makeText(this,singleton!!.Profile.Username,Toast.LENGTH_LONG).show()
-
     }
 
     /**
@@ -99,11 +93,6 @@ class MainAppActivity : AppCompatActivity(){
                     loggingOut()
                 }
             }
-            // close drawer when item is tapped
-
-            // Add code here to update the UI based on the item selected
-            // For example, swap UI fragments here
-
             true
         }
         managingToolbar()
