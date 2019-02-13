@@ -1,4 +1,4 @@
-package com.pokeapi.lpiem.pokeapiandroid.View
+package com.pokeapi.lpiem.pokeapiandroid.View.Fragment
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -19,6 +19,7 @@ import android.text.TextWatcher
 import com.pokeapi.lpiem.pokeapiandroid.View.Adapter.AdapterHeader
 import com.xwray.groupie.ExpandableGroup
 import com.pokeapi.lpiem.pokeapiandroid.View.Adapter.PokedexItem
+import com.pokeapi.lpiem.pokeapiandroid.View.Interface.PokedexFunctionInterface
 import com.xwray.groupie.Section
 import java.util.*
 
@@ -28,7 +29,7 @@ import java.util.*
 
 private const val ARG_PARAM1 = "param1"
 
-class PokedexListView : Fragment(),PokedexFunctionInterface {
+class PokedexListView : Fragment(), PokedexFunctionInterface {
 
     private lateinit var applicationContext: Context
     private lateinit var param:String

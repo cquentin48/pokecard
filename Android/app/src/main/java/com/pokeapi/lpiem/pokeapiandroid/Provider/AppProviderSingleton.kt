@@ -3,7 +3,7 @@ package com.pokeapi.lpiem.pokeapiandroid.Provider
 import android.util.Log
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Model.PokemonData
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.*
-import com.pokeapi.lpiem.pokeapiandroid.View.PokedexListView
+import com.pokeapi.lpiem.pokeapiandroid.View.Fragment.PokedexListView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

@@ -1,4 +1,4 @@
-package com.pokeapi.lpiem.pokeapiandroid.View
+package com.pokeapi.lpiem.pokeapiandroid.View.Activity
 
 import android.app.Activity
 import android.content.Context
@@ -16,6 +16,7 @@ import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
 import android.widget.Toast
 import com.pokeapi.lpiem.pokeapiandroid.R
+
 const val RC_SIGN_IN = 1
 
 class LogInActivity : AppCompatActivity() {
@@ -95,7 +96,7 @@ class LogInActivity : AppCompatActivity() {
     private fun startActivity() {
         if(FirebaseAuth.getInstance().currentUser!=null){
             singleton!!.User = FirebaseAuth.getInstance().currentUser!!
-            startActivity(Intent(this@LogInActivity, MainAppActivity::class.java))
+            startActivity(Intent(this@LogInActivity, MainActivity::class.java))
         }
     }
 }

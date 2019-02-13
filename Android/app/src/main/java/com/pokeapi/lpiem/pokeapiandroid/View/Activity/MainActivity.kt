@@ -1,4 +1,4 @@
-package com.pokeapi.lpiem.pokeapiandroid.View
+package com.pokeapi.lpiem.pokeapiandroid.View.Activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -15,9 +15,11 @@ import android.provider.Settings
 import android.view.View
 import com.firebase.ui.auth.AuthUI
 import com.pokeapi.lpiem.pokeapiandroid.R
+import com.pokeapi.lpiem.pokeapiandroid.View.Fragment.PokedexListView
+import com.pokeapi.lpiem.pokeapiandroid.View.LocalizationActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainAppActivity : AppCompatActivity(){
+class MainActivity : AppCompatActivity(){
     private var singleton: AppProviderSingleton?= AppProviderSingleton.getInstance()
     private lateinit var mDrawerLayout: DrawerLayout
     private lateinit var pokedexListView: PokedexListView

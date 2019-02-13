@@ -1,4 +1,4 @@
-package com.pokeapi.lpiem.pokeapiandroid.View
+package com.pokeapi.lpiem.pokeapiandroid.View.Activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
