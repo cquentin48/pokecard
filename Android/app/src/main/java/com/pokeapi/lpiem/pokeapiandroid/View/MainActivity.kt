@@ -84,7 +84,7 @@ class LogInActivity : AppCompatActivity() {
                 }
 
                 Toast.makeText(this@LogInActivity,R.string.unknown_error,Toast.LENGTH_LONG).show()
-                Log.e("Error", getString(R.string.sign_in_error_prefix), response.error)
+                Log.e(getString(R.string.error_tag), getString(R.string.sign_in_error_prefix), response.error)
             }
         }
     }
