@@ -1,4 +1,4 @@
-package com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton
+package com.pokeapi.lpiem.pokeapiandroid.Provider
 
 import android.util.Log
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Model.PokemonData
@@ -19,10 +19,6 @@ class AppProviderSingleton {
         }
 
     var pokemonList:MutableList<PokemonData> ? = mutableListOf()
-
-    fun addPokemonToList(newPokemon : PokemonData){
-        pokemonList!!.add(newPokemon)
-    }
 
     fun getPokeList(pokedexView: PokedexListView){
         val pokemonAPI = RetrofitSingleton.getInstance()

@@ -3,29 +3,18 @@ package com.pokeapi.lpiem.pokeapiandroid.View
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.Menu
-import android.view.View
 import com.firebase.ui.auth.AuthUI
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
-import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
+import com.pokeapi.lpiem.pokeapiandroid.Provider.AppProviderSingleton
 import kotlinx.android.synthetic.main.activity_main.*
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
-import android.view.ViewGroup
-import android.widget.PopupWindow
 import android.widget.Toast
 import com.pokeapi.lpiem.pokeapiandroid.R
 
