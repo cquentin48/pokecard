@@ -15,7 +15,7 @@ import android.provider.Settings
 import android.view.View
 import com.firebase.ui.auth.AuthUI
 import com.pokeapi.lpiem.pokeapiandroid.R
-import kotlinx.android.synthetic.main.activity_main_app.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainAppActivity : AppCompatActivity(){
     private var singleton: AppProviderSingleton?= AppProviderSingleton.getInstance()
@@ -35,7 +35,7 @@ class MainAppActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_app)
+        setContentView(R.layout.activity_main)
         setUpFragment()
 
         navigationDrawerItemManagment()

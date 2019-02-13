@@ -23,8 +23,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".View.ActivityRegister"></activity>
-        <activity android:name=".View.MainActivity">
+        <activity android:name=".View.LogInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

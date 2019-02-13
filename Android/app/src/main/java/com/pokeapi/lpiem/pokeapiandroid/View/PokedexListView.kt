@@ -22,6 +22,9 @@ import com.pokeapi.lpiem.pokeapiandroid.View.Adapter.PokedexItem
 import com.xwray.groupie.Section
 import java.util.*
 
+/**
+ * TODO Implementing retrofit paging and updating groupie
+ */
 
 private const val ARG_PARAM1 = "param1"
 

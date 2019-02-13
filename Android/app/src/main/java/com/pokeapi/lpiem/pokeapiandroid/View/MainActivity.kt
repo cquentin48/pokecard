@@ -11,7 +11,7 @@ import com.firebase.ui.auth.AuthUI
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.pokeapi.lpiem.pokeapiandroid.Provider.AppProviderSingleton
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_log_in.*
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
 import android.widget.Toast
@@ -26,7 +26,7 @@ class LogInActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_log_in)
         this.context = this
         this.title = getString(R.string.poke_card_log_in_title)
         this.singleton = AppProviderSingleton.getInstance()
