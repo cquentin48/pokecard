@@ -116,7 +116,7 @@ class MainAppActivity : AppCompatActivity(){
         AuthUI.getInstance()
                 .signOut(this)
                 .addOnCompleteListener {
-                    startActivity(Intent(this, MainActivity::class.java))
+                    startActivity(Intent(this, LogInActivity::class.java))
                 }
     }
 

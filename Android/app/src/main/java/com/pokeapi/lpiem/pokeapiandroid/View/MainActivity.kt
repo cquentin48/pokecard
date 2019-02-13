@@ -16,9 +16,9 @@ import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
 import android.widget.Toast
 import com.pokeapi.lpiem.pokeapiandroid.R
+const val RC_SIGN_IN = 1
 
-
-class MainActivity : AppCompatActivity() {
+class LogInActivity : AppCompatActivity() {
     private var singleton: AppProviderSingleton? = AppProviderSingleton.getInstance()
     private var context: Context? = null
     private lateinit var mAuth: FirebaseAuth
@@ -30,8 +30,8 @@ class MainActivity : AppCompatActivity() {
         this.context = this
         this.title = getString(R.string.poke_card_log_in_title)
         this.singleton = AppProviderSingleton.getInstance()
-        FirebaseApp.initializeApp(this@MainActivity)
-        mAuth = FirebaseAuth.getInstance(FirebaseApp.initializeApp(this@MainActivity)!!)
+        FirebaseApp.initializeApp(this@LogInActivity)
+        mAuth = FirebaseAuth.getInstance(FirebaseApp.initializeApp(this@LogInActivity)!!)
         startActivity()
         signIn()
     }
@@ -74,16 +74,16 @@ class MainActivity : AppCompatActivity() {
                 // Sign in failed
                 if (response == null) {
                     // User pressed back button
-                    Toast.makeText(this@MainActivity,R.string.sign_in_cancelled,Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@LogInActivity,R.string.sign_in_cancelled,Toast.LENGTH_LONG).show()
                     return
                 }
 
                 if (response.error!!.errorCode == ErrorCodes.NO_NETWORK) {
-                    Toast.makeText(this@MainActivity,R.string.no_internet_connection,Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@LogInActivity,R.string.no_internet_connection,Toast.LENGTH_LONG).show()
                     return
                 }
 
-                Toast.makeText(this@MainActivity,R.string.unknown_error,Toast.LENGTH_LONG).show()
+                Toast.makeText(this@LogInActivity,R.string.unknown_error,Toast.LENGTH_LONG).show()
                 Log.e("Error", getString(R.string.sign_in_error_prefix), response.error)
             }
         }
@@ -95,11 +95,7 @@ class MainActivity : AppCompatActivity() {
     private fun startActivity() {
         if(FirebaseAuth.getInstance().currentUser!=null){
             singleton!!.User = FirebaseAuth.getInstance().currentUser!!
-            startActivity(Intent(this@MainActivity, MainAppActivity::class.java))
+            startActivity(Intent(this@LogInActivity, MainAppActivity::class.java))
         }
-    }
-
-    companion object {
-        const val RC_SIGN_IN = 1
     }
 }
