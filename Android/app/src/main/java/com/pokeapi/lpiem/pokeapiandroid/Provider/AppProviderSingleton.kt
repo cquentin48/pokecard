@@ -8,6 +8,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.google.firebase.auth.FirebaseUser
+import com.pokeapi.lpiem.pokeapiandroid.R
 
 
 class AppProviderSingleton {
@@ -32,12 +33,12 @@ class AppProviderSingleton {
                     val returnedData = response.body()
                     pokedexView.initPokedex(returnedData!!.PokemonList)
                 } else {
-                    Log.d("Error", "Error while fetching data")
+                    Log.d(pokedexView.context!!.getString(R.string.error_tag), pokedexView.context!!.getString(R.string.fetching_data_error))
                 }
             }
 
             override fun onFailure(call: Call<PokemonList>, t: Throwable) {
-                Log.e("Error", t.localizedMessage)
+                Log.e(pokedexView.context!!.getString(R.string.error_tag), t.localizedMessage)
                 t.printStackTrace()
             }
         })

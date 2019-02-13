@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
-import android.view.Menu
 import com.firebase.ui.auth.AuthUI
 
 import com.google.firebase.FirebaseApp
@@ -29,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         this.context = this
-        this.title = "PokeCard - Connexion à l'application"
+        this.title = getString(R.string.poke_card_log_in_title)
         this.singleton = AppProviderSingleton.getInstance()
         FirebaseApp.initializeApp(this@MainActivity)
         mAuth = FirebaseAuth.getInstance(FirebaseApp.initializeApp(this@MainActivity)!!)
@@ -37,6 +36,9 @@ class MainActivity : AppCompatActivity() {
         signIn()
     }
 
+    /**
+     * Sign in session managment
+     */
     private fun signIn(){
         signInButton.setOnClickListener {
             val providers = arrayListOf(
@@ -56,15 +58,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        /*val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.login_menu, menu)*/
-        return true
-    }
-
+    /**
+     * Result of the sign in intent
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        // RC_SIGN_IN is the request code you passed into startActivityForResult(...) when starting the sign in flow.
         if (requestCode == RC_SIGN_IN) {
             val response = IdpResponse.fromResultIntent(data)
 
@@ -86,11 +84,14 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 Toast.makeText(this@MainActivity,R.string.unknown_error,Toast.LENGTH_LONG).show()
-                Log.e("Error", "Sign-in error: ", response.error)
+                Log.e("Error", getString(R.string.sign_in_error_prefix), response.error)
             }
         }
     }
 
+    /**
+     * Launch mainActivity after successfull login
+     */
     private fun startActivity() {
         if(FirebaseAuth.getInstance().currentUser!=null){
             singleton!!.User = FirebaseAuth.getInstance().currentUser!!
@@ -99,7 +100,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        val RC_SIGN_IN = 1
-        private var context: Context? = null
+        const val RC_SIGN_IN = 1
     }
 }

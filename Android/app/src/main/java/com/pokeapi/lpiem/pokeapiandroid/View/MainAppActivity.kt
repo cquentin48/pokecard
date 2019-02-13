@@ -17,9 +17,6 @@ import com.firebase.ui.auth.AuthUI
 import com.pokeapi.lpiem.pokeapiandroid.R
 import kotlinx.android.synthetic.main.activity_main_app.*
 
-
-
-
 class MainAppActivity : AppCompatActivity(){
     private var singleton: AppProviderSingleton?= AppProviderSingleton.getInstance()
     private lateinit var mDrawerLayout: DrawerLayout
@@ -39,9 +36,34 @@ class MainAppActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_app)
-        mDrawerLayout = findViewById(R.id.drawer_layout)
         setUpFragment()
 
+        navigationDrawerItemManagment()
+
+
+
+        //Toast.makeText(this,singleton!!.Profile.Username,Toast.LENGTH_LONG).show()
+
+    }
+
+    /**
+     * Managing toolbar attached to navigationView
+     */
+    private fun managingToolbar() {
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        val actionbar: ActionBar? = supportActionBar
+        actionbar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.ic_settings_black_24dp)
+        }
+    }
+
+    /**
+     * Manage actions for the items within the navigation view
+     */
+    private fun navigationDrawerItemManagment() {
+        mDrawerLayout = findViewById(R.id.drawer_layout)
         navigationView.setNavigationItemSelectedListener { menuItem ->
             // set item as selected to persist highlight
             menuItem.isChecked = true
@@ -51,29 +73,29 @@ class MainAppActivity : AppCompatActivity(){
             // Add code here to update the UI based on the item selected
             // For example, swap UI fragments here
             // set item as selected to persist highlight
-            when(menuItem.itemId){
+            when (menuItem.itemId) {
 
-                R.id.pokedexMenu ->{
-                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container,pokedexListView).commit()
+                R.id.pokedexMenu -> {
+                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, pokedexListView).commit()
                 }
-                R.id.pokeMap ->{
+                R.id.pokeMap -> {
                     startActivity(Intent(this, LocalizationActivity::class.java))
                 }
-                R.id.profile ->{
-                    Toast.makeText(this,getString(R.string.NotYetImplemented),Toast.LENGTH_LONG).show()
+                R.id.profile -> {
+                    Toast.makeText(this, getString(R.string.not_yet_implemented), Toast.LENGTH_LONG).show()
                 }
-                R.id.collections ->{
-                    Toast.makeText(this,getString(R.string.NotYetImplemented),Toast.LENGTH_LONG).show()
+                R.id.collections -> {
+                    Toast.makeText(this, getString(R.string.not_yet_implemented), Toast.LENGTH_LONG).show()
                 }
-                R.id.options ->{
-                    Toast.makeText(this,getString(R.string.NotYetImplemented),Toast.LENGTH_LONG).show()
+                R.id.options -> {
+                    Toast.makeText(this, getString(R.string.not_yet_implemented), Toast.LENGTH_LONG).show()
 
                 }
-                R.id.about ->{
-                    Toast.makeText(this,getString(R.string.NotYetImplemented),Toast.LENGTH_LONG).show()
+                R.id.about -> {
+                    Toast.makeText(this, getString(R.string.not_yet_implemented), Toast.LENGTH_LONG).show()
 
                 }
-                R.id.logOut ->{
+                R.id.logOut -> {
                     loggingOut()
                 }
             }
@@ -84,19 +106,12 @@ class MainAppActivity : AppCompatActivity(){
 
             true
         }
-
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-        val actionbar: ActionBar? = supportActionBar
-        actionbar?.apply {
-            setDisplayHomeAsUpEnabled(true)
-            setHomeAsUpIndicator(R.drawable.ic_settings_black_24dp)
-        }
-
-        //Toast.makeText(this,singleton!!.Profile.Username,Toast.LENGTH_LONG).show()
-
+        managingToolbar()
     }
 
+    /**
+     * Logging-out session function
+     */
     private fun loggingOut(){
         AuthUI.getInstance()
                 .signOut(this)

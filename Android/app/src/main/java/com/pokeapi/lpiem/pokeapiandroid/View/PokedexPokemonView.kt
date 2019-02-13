@@ -13,7 +13,7 @@ class PokedexPokemonView : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pokedex_pokemon_view)
-        title = "Pokémon n° - "
+        title = getString(R.string.pokedex_activity_prefix_title)
         displayList()
     }
 
