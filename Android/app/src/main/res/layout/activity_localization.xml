@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <fragment
+        android:id="@+id/frg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,7 +18,7 @@
     android:layout_height="match_parent"
     tools:context=".View.LocalizationActivity">
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/latitude"
         android:layout_width="281dp"
         android:layout_height="42dp"
@@ -14,7 +26,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
+    <TextView
         android:id="@+id/longitude"
         android:layout_width="281dp"
         android:layout_height="42dp"
@@ -22,7 +34,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/latitude" />
 
-    <androidx.appcompat.widget.ContentFrameLayout
+    <ContentFrameLayout
         android:id="@+id/frgContainer"
         android:layout_width="match_parent"
         android:layout_height="579dp"
@@ -30,6 +42,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/longitude"></androidx.appcompat.widget.ContentFrameLayout>
+        app:layout_constraintTop_toBottomOf="@+id/longitude"></ContentFrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </fragment>
+
+</FrameLayout>

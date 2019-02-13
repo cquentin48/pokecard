@@ -37,7 +37,7 @@ class PokedexListView : Fragment(),PokedexFunctionInterface {
     private lateinit var myFragmentView: View
 
 
-    @SuppressLint("WrongConstant")
+
     override fun initPokedex(pokemonImportData : List<PokemonRetrofit>) {
         data = (pokemonImportData).toMutableList()
         backupData = (pokemonImportData).toMutableList()

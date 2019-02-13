@@ -44,7 +44,7 @@ class LocalizationActivity : AppCompatActivity(), MapFragment.OnFragmentInteract
 
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-        val criteria = Criteria()
+        //val criteria = Criteria()
         providers = locationManager!!.allProviders
         //provider = locationManager.getBestProvider(criteria, false);
         provider = "network"

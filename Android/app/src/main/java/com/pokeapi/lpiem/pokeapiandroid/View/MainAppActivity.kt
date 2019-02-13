@@ -31,27 +31,27 @@ import kotlinx.android.synthetic.main.nav_drawer_header_layout.*
 
 
 
-class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>, MapFragmentManager{
-    override fun getContext(): Context {
+class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
+   /* override fun getContext(): Context {
         return this as Context
     }
 
     override fun getContextLocation(): LocationManager {
-        return getSystemService(Context.LOCATION_SERVICE) as LocationManager
+      //  return getSystemService(Context.LOCATION_SERVICE) as LocationManager
     }
 
     override fun checkForPermission(): Boolean {
-        return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+      //  return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
     }
 
     override fun getCoord() {
-
-    }
+        //todoo
+    }*/
 
     private var singleton: AppProviderSingleton?= AppProviderSingleton.getInstance()
     private lateinit var mDrawerLayout: DrawerLayout
     private lateinit var pokedexListView: PokedexListView
-    private lateinit var pokeMap: LocalizationActivity
+    private lateinit var pokeMap: MapScreenFragment
 
     var Singleton: AppProviderSingleton
         get() = this.singleton!!
@@ -64,7 +64,7 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>, M
      */
     private fun setUpFragment(){
         pokedexListView = PokedexListView()
-        pokeMap = LocalizationActivity()
+        pokeMap = MapScreenFragment()
 
         pokedexListView.passContext(applicationContext)
     }
@@ -90,7 +90,7 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>, M
                     supportFragmentManager.beginTransaction().replace(R.id.fragment_container,pokedexListView).commit()
                 }
                 R.id.pokeMap ->{
-                    Toast.makeText(this,getString(R.string.NotYetImplemented),Toast.LENGTH_LONG).show()
+                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container,pokeMap).commit()
                 }
                 R.id.profile ->{
                     Toast.makeText(this,getString(R.string.NotYetImplemented),Toast.LENGTH_LONG).show()

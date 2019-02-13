@@ -34,8 +34,8 @@ class MapProvider(var activity: MapFragmentManager): Serializable {
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            mMapFragment  = MapFragment.newInstance(10.0,10.0)
-            addFragment()
+            //mMapFragment  = MapFragment.newInstance(10.0,10.0)
+            //addFragment()
             return
         }
         val location = locationManager!!.getLastKnownLocation(provider)

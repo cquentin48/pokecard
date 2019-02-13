@@ -3,7 +3,6 @@ package com.pokeapi.lpiem.pokeapiandroid.View
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
-import android.location.Criteria
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -15,32 +14,54 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.pokeapi.lpiem.pokeapiandroid.R
+import kotlinx.android.synthetic.main.activity_localization.*
+
 
 class MapScreenFragment : Fragment() , MapFragment.OnFragmentInteractionListener, LocationListener {
-    private lateinit var latituteField: TextView
-    private lateinit var longitudeField: TextView
+
     private lateinit var detailsfield: TextView
-
-
     private var lat: Double = 0.toDouble()
     private var lon: Double = 0.toDouble()
-    override fun onFragmentInteraction(uri: Uri) {
+    private lateinit var provider: String
+    private lateinit var providers: List<String>
+    private lateinit var locationManager: LocationManager
 
+    override fun onFragmentInteraction(uri: Uri) {
+//todo
     }
+
+
 
     lateinit var mMapFragment:MapFragment
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.activity_localization, container, false)
+        return inflater.inflate(com.pokeapi.lpiem.pokeapiandroid.R.layout.activity_localization, container, false)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        latituteField = findViewById(R.id.latitude) as TextView
-        longitudeField = findViewById(R.id.longitude) as TextView
+
+        locationManager = context!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+        providers = locationManager!!.allProviders
+        //provider = locationManager.getBestProvider(criteria, false);
+        provider = "network"
+
+        if (ActivityCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            mMapFragment  = MapFragment.newInstance(10.0,10.0)
+            addFragment()
+            return
+        }
+        val location = locationManager!!.getLastKnownLocation(provider)
 
 
 
@@ -49,8 +70,8 @@ class MapScreenFragment : Fragment() , MapFragment.OnFragmentInteractionListener
             println("Provider $provider has been selected.")
             onLocationChanged(location)
         } else {
-            latituteField!!.text = "Location not available"
-            longitudeField!!.text = "Location not available"
+            latitude.text = "Location not available"
+            longitude.text = "Location not available"
         }
 
 
@@ -63,7 +84,7 @@ class MapScreenFragment : Fragment() , MapFragment.OnFragmentInteractionListener
 
     override fun onResume() {
         super.onResume()
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(context as MainActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -84,8 +105,8 @@ class MapScreenFragment : Fragment() , MapFragment.OnFragmentInteractionListener
     override fun onLocationChanged(location: Location) {
         lat = location.latitude
         lon = location.longitude
-        latituteField!!.text = "latitude: " + lat.toString()
-        longitudeField!!.text = "longitude: " +lon.toString()
+        latitude.text = "latitude: " + lat.toString()
+        longitude.text = "longitude: " +lon.toString()
         //val detailgetter = DetailsGetter()
         // detailsfield!!.text = detailgetter.getData()
     }
@@ -96,20 +117,20 @@ class MapScreenFragment : Fragment() , MapFragment.OnFragmentInteractionListener
     }
 
     override fun onProviderEnabled(provider: String) {
-        Toast.makeText(this, "Enabled new provider $provider",
+        Toast.makeText(context, "Enabled new provider $provider",
                 Toast.LENGTH_SHORT).show()
 
     }
 
     override fun onProviderDisabled(provider: String) {
-        Toast.makeText(this, "Disabled provider $provider",
+        Toast.makeText(context, "Disabled provider $provider",
                 Toast.LENGTH_SHORT).show()
     }
 
 
 
     fun addFragment() {
-        val manager = supportFragmentManager
+        val manager = activity!!.supportFragmentManager
         val ft = manager.beginTransaction()
         ft.add(R.id.frgContainer, mMapFragment)
         ft.commit()
