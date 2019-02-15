@@ -33,7 +33,7 @@ class LogInActivity : AppCompatActivity() {
         this.singleton = AppProviderSingleton.getInstance()
         FirebaseApp.initializeApp(this@LogInActivity)
         mAuth = FirebaseAuth.getInstance(FirebaseApp.initializeApp(this@LogInActivity)!!)
-        startActivity()
+        checkUser()
         signIn()
     }
 
@@ -64,13 +64,13 @@ class LogInActivity : AppCompatActivity() {
      */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        startActivity()
+        checkUser()
         if (requestCode == RC_SIGN_IN) {
             val response = IdpResponse.fromResultIntent(data)
 
             // Successfully signed in
             if (resultCode == Activity.RESULT_OK) {
-                startActivity()
+                checkUser()
                 finish()
             } else {
                 // Sign in failed
@@ -96,7 +96,7 @@ class LogInActivity : AppCompatActivity() {
     /**
      * Launch mainActivity after successfull login
      */
-    private fun startActivity() {
+    private fun checkUser() {
         if(FirebaseAuth.getInstance().currentUser!=null){
             singleton!!.User = FirebaseAuth.getInstance().currentUser!!
             startActivity(Intent(this@LogInActivity, MainActivity::class.java))
