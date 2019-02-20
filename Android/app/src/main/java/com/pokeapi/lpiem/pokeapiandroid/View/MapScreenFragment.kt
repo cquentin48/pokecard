@@ -15,6 +15,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import com.pokeapi.lpiem.pokeapiandroid.Model.UserApp
 import com.pokeapi.lpiem.pokeapiandroid.R
 import kotlinx.android.synthetic.main.activity_localization.*
 
@@ -41,6 +42,9 @@ class MapScreenFragment : Fragment() , MapFragment.OnFragmentInteractionListener
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.activity_localization, container, false)
     }
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,6 +85,7 @@ class MapScreenFragment : Fragment() , MapFragment.OnFragmentInteractionListener
         lon = location.longitude
 
 
+
         mMapFragment  = MapFragment.newInstance(lat,lon)
         addFragment()
         isCreate = true
@@ -108,6 +113,7 @@ class MapScreenFragment : Fragment() , MapFragment.OnFragmentInteractionListener
 
     override fun onLocationChanged(location: Location) {
         if(isCreate) {
+            UserApp.lat = location.latitude
             lat = location.latitude
             lon = location.longitude
             latitude.text = "latitude: " + lat.toString()

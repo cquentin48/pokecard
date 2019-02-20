@@ -1,4 +1,9 @@
 package com.pokeapi.lpiem.pokeapiandroid.Model
 
-class UserApp {
+object UserApp {
+    var lat : Double = 0.0
+    var long : Int = 0
+
+
+
 }

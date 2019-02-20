@@ -1,6 +1,8 @@
 package com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Model.PokemonData
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.*
 import com.pokeapi.lpiem.pokeapiandroid.Model.SocialNetworks.FacebookProfile
@@ -54,27 +56,34 @@ class AppProviderSingleton() {
         pokemonList = mutableListOf()
     }
 
-    fun getPokeList(pokedexView: PokedexListView){
+    fun getPokeList() : LiveData<List<PokemonRetrofit>>{
         val pokemonAPI = RetrofitSingleton.getInstance()
 
         val callPokemon = pokemonAPI!!.getPokemonListData()
+
+        val list = MutableLiveData<List<PokemonRetrofit>>()
 
         callPokemon.enqueue(object : Callback<PokemonList> {
 
             override fun onResponse(call: Call<PokemonList>, response: Response<PokemonList>) {
                 if (response.isSuccessful) {
                     val returnedData = response.body()
-                    pokedexView.initPokedex(returnedData!!.PokemonList)
+                    //pokedexView.initPokedex(returnedData!!.PokemonList)
+                    list.postValue(returnedData!!.PokemonList)
                 } else {
                     Log.d("Error", "Error while fetching data")
+                    list.postValue(emptyList())
                 }
             }
 
             override fun onFailure(call: Call<PokemonList>, t: Throwable) {
                 Log.e("Error", t.localizedMessage)
                 t.printStackTrace()
+                list.postValue(emptyList())
             }
         })
+
+        return list
     }
 
     fun cloneList(originalHashMap: List<PokemonRetrofit>):List<PokemonRetrofit>{
