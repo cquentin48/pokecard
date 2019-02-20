@@ -40,6 +40,10 @@ class PokedexListView : Fragment(), PokedexFunctionInterface {
 
 
     @SuppressLint("WrongConstant")
+    /**
+     * Pokedex initialisation
+     * @param pokemonImportData raw imported from the api
+     */
     override fun initPokedex(pokemonImportData : List<PokemonRetrofit>) {
         data = (pokemonImportData).toMutableList()
         backupData = (pokemonImportData).toMutableList()
