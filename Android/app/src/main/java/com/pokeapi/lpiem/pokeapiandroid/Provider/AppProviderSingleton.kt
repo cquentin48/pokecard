@@ -1,17 +1,16 @@
 package com.pokeapi.lpiem.pokeapiandroid.Provider
 
 import android.util.Log
-import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Model.PokemonData
-import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.*
 import com.pokeapi.lpiem.pokeapiandroid.View.Fragment.PokedexListView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.google.firebase.auth.FirebaseUser
+import com.pokeapi.lpiem.pokeapiandroid.Model.Retrofit.Pokemons.PokemonList
 import com.pokeapi.lpiem.pokeapiandroid.R
 
 
-class AppProviderSingleton {
+object AppProviderSingleton {
     private lateinit var firebaseUser:FirebaseUser
     var User:FirebaseUser
         get() = firebaseUser
@@ -19,19 +18,17 @@ class AppProviderSingleton {
             firebaseUser = newValue
         }
 
-    var pokemonList:MutableList<PokemonData> ? = mutableListOf()
-
+    /**
+     * Fetch data from webservice
+     * @param pokedexView fragment support for the data to be loaded
+     */
     fun getPokeList(pokedexView: PokedexListView){
-        val pokemonAPI = RetrofitSingleton.getInstance()
-
-        val callPokemon = pokemonAPI!!.getPokemonListData()
-
-        callPokemon.enqueue(object : Callback<PokemonList> {
+        RetrofitSingleton.buildInstance()!!.getPokemonListData().enqueue(object : Callback<PokemonList> {
 
             override fun onResponse(call: Call<PokemonList>, response: Response<PokemonList>) {
                 if (response.isSuccessful) {
                     val returnedData = response.body()
-                    pokedexView.initPokedex(returnedData!!.PokemonList)
+                    pokedexView.initPokedex(returnedData!!.pokemonList)
                 } else {
                     Log.d(pokedexView.context!!.getString(R.string.error_tag), pokedexView.context!!.getString(R.string.fetching_data_error))
                 }
@@ -42,21 +39,5 @@ class AppProviderSingleton {
                 t.printStackTrace()
             }
         })
-    }
-
-    companion object {
-
-        private var initialized = false
-        private var instance: AppProviderSingleton? = null
-
-        fun getInstance(): AppProviderSingleton {
-            return if (initialized) {
-                instance!!
-            } else {
-                initialized = true
-                instance = AppProviderSingleton()
-                instance!!
-            }
-        }
     }
 }

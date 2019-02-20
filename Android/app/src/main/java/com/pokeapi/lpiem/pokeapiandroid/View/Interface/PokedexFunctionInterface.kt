@@ -1,10 +1,11 @@
 package com.pokeapi.lpiem.pokeapiandroid.View.Interface
 
-import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonRetrofit
-import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Path
+import com.pokeapi.lpiem.pokeapiandroid.Model.Retrofit.Pokemons.PokemonRetrofit
 
 interface PokedexFunctionInterface {
+    /**
+     * Fetch data from webservice
+     * @param pokedexView fragment support for the data to be loaded
+     */
     fun initPokedex(pokemonImportData : List<PokemonRetrofit>)
 }

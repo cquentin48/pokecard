@@ -1,7 +1,6 @@
 package com.pokeapi.lpiem.pokeapiandroid.View.Fragment
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
 import android.view.LayoutInflater
@@ -9,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.activity_pokedex_list_view.*
-import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonRetrofit
+import com.pokeapi.lpiem.pokeapiandroid.Model.Retrofit.Pokemons.PokemonRetrofit
 import com.pokeapi.lpiem.pokeapiandroid.Provider.AppProviderSingleton
 import com.pokeapi.lpiem.pokeapiandroid.R
 import com.xwray.groupie.GroupAdapter
@@ -23,9 +22,6 @@ import com.pokeapi.lpiem.pokeapiandroid.View.Interface.PokedexFunctionInterface
 import com.xwray.groupie.Section
 import java.util.*
 
-/**
- * TODO Implementing retrofit paging and updating groupie
- */
 
 private const val ARG_PARAM1 = "param1"
 
@@ -34,7 +30,6 @@ class PokedexListView : Fragment(), PokedexFunctionInterface {
     private lateinit var param:String
     private lateinit var data:MutableList<PokemonRetrofit>
     private lateinit var backupData:MutableList<PokemonRetrofit>
-    private val pokemonAPI = AppProviderSingleton.getInstance()
     private lateinit var myFragmentView: View
 
 
@@ -50,7 +45,7 @@ class PokedexListView : Fragment(), PokedexFunctionInterface {
             spanCount = 3
         }
         recyclerViewPokedexList.apply {
-            layoutManager = GridLayoutManager(activity!!.baseContext, groupAdapter.spanCount).apply {
+            layoutManager = GridLayoutManager(activity!!.applicationContext, groupAdapter.spanCount).apply {
                 spanSizeLookup = groupAdapter.spanSizeLookup
             }
             adapter = groupAdapter
@@ -69,7 +64,7 @@ class PokedexListView : Fragment(), PokedexFunctionInterface {
     private fun generateListItems(pokemonList:MutableList<PokemonRetrofit>):MutableList<PokedexItem>{
         val returnedList:MutableList<PokedexItem> = mutableListOf()
         for(i in 0 until pokemonList.size){
-            returnedList.add(i,PokedexItem(pokemonList[i].sprite!!,pokemonList[i].name!!,activity!!.baseContext))
+            returnedList.add(i,PokedexItem(pokemonList[i].sprite, pokemonList[i].name,activity!!.applicationContext))
         }
         return returnedList
     }
@@ -85,8 +80,8 @@ class PokedexListView : Fragment(), PokedexFunctionInterface {
     /**
      * Initialisation of the adapter
      */
-    fun initAdapter(){
-        pokemonAPI.getPokeList(this)
+    private fun initAdapter(){
+        AppProviderSingleton.getPokeList(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -98,16 +93,16 @@ class PokedexListView : Fragment(), PokedexFunctionInterface {
     /**
      * Filter pokemon retrofit data by its first letter
      * @param pokemonList rawData
-     *
+     * @return rawData ordered by first letter alphabetically
      */
     private fun filterPokemonListByFirstLetter(pokemonList : MutableList<PokemonRetrofit>):TreeMap<String,MutableList<PokemonRetrofit>>{
         val pokemonReturnList:HashMap<String,MutableList<PokemonRetrofit>> = HashMap()
         for(i in 0 until pokemonList.size){
-            if(!pokemonReturnList.containsKey(Character.toString(pokemonList[i].name!![0].toUpperCase()))){
-                pokemonReturnList[Character.toString(pokemonList[i].name!![0].toUpperCase())] = arrayListOf()
+            if(!pokemonReturnList.containsKey(Character.toString(pokemonList[i].name[0].toUpperCase()))){
+                pokemonReturnList[Character.toString(pokemonList[i].name[0].toUpperCase())] = arrayListOf()
             }
-            pokemonReturnList[Character.toString(pokemonList[i].name!![0].toUpperCase())]?.
-                    add(pokemonReturnList[Character.toString(pokemonList[i].name!![0].toUpperCase())]!!.size,pokemonList[i])
+            pokemonReturnList[Character.toString(pokemonList[i].name[0].toUpperCase())]?.
+                    add(pokemonReturnList[Character.toString(pokemonList[i].name[0].toUpperCase())]!!.size,pokemonList[i])
         }
         return TreeMap(pokemonReturnList)
     }
@@ -140,11 +135,13 @@ class PokedexListView : Fragment(), PokedexFunctionInterface {
 
     /**
      * Filter data by the search bar
+     * @param searchString value seeked from the user
+     * @return rawData filtered by research
      */
     private fun filterData(searchString:String):MutableList<PokemonRetrofit>{
         val pokemonRetrofitListFiltered = arrayListOf<PokemonRetrofit>()
         data.forEach {
-            if(it.name!!.contains(searchString,true)){
+            if(it.name.contains(searchString,true)){
                 pokemonRetrofitListFiltered.add(it)
             }
         }

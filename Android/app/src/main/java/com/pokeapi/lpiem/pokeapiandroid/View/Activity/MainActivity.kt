@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import com.pokeapi.lpiem.pokeapiandroid.Provider.AppProviderSingleton
 import android.location.LocationManager
 import android.provider.Settings
 import android.view.View
@@ -20,7 +19,6 @@ import com.pokeapi.lpiem.pokeapiandroid.View.LocalizationActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(){
-    private var singleton: AppProviderSingleton?= AppProviderSingleton.getInstance()
     private lateinit var mDrawerLayout: DrawerLayout
     private lateinit var pokedexListView: PokedexListView
     private lateinit var pokeMap: LocalizationActivity
@@ -76,17 +74,17 @@ class MainActivity : AppCompatActivity(){
                     startActivity(Intent(this, LocalizationActivity::class.java))
                 }
                 R.id.profile -> {
-                    Toast.makeText(this, getString(R.string.not_yet_implemented), Toast.LENGTH_LONG).show()
+                    displayToastNotYetImplemented()
                 }
                 R.id.collections -> {
-                    Toast.makeText(this, getString(R.string.not_yet_implemented), Toast.LENGTH_LONG).show()
+                    displayToastNotYetImplemented()
                 }
                 R.id.options -> {
-                    Toast.makeText(this, getString(R.string.not_yet_implemented), Toast.LENGTH_LONG).show()
+                    displayToastNotYetImplemented()
 
                 }
                 R.id.about -> {
-                    Toast.makeText(this, getString(R.string.not_yet_implemented), Toast.LENGTH_LONG).show()
+                    displayToastNotYetImplemented()
 
                 }
                 R.id.logOut -> {
@@ -96,6 +94,13 @@ class MainActivity : AppCompatActivity(){
             true
         }
         managingToolbar()
+    }
+
+    /**
+     * Display a toast about a menu not been implemented
+     */
+    private fun displayToastNotYetImplemented() {
+        Toast.makeText(this, getString(R.string.not_yet_implemented), Toast.LENGTH_LONG).show()
     }
 
     /**
@@ -109,6 +114,10 @@ class MainActivity : AppCompatActivity(){
                 }
     }
 
+    /**
+     * Manage action of each item selected
+     * @param item which item has been used
+     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {

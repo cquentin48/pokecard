@@ -1,7 +1,6 @@
 package com.pokeapi.lpiem.pokeapiandroid.View.Activity
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -20,25 +19,19 @@ import com.pokeapi.lpiem.pokeapiandroid.R
 const val RC_SIGN_IN = 1
 
 class LogInActivity : AppCompatActivity() {
-    private var singleton: AppProviderSingleton? = AppProviderSingleton.getInstance()
-    private var context: Context? = null
-    private lateinit var mAuth: FirebaseAuth
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_log_in)
-        this.context = this
         this.title = getString(R.string.poke_card_log_in_title)
-        this.singleton = AppProviderSingleton.getInstance()
         FirebaseApp.initializeApp(this@LogInActivity)
-        mAuth = FirebaseAuth.getInstance(FirebaseApp.initializeApp(this@LogInActivity)!!)
+        FirebaseAuth.getInstance(FirebaseApp.initializeApp(this@LogInActivity)!!)
         checkUser()
         signIn()
     }
 
     /**
-     * Sign in session managment
+     * Build a signIn Session
      */
     private fun signIn(){
         signInButton.setOnClickListener {
@@ -58,8 +51,12 @@ class LogInActivity : AppCompatActivity() {
         }
     }
 
+
     /**
-     * Result of the sign in intent
+     * Manage after logIn session
+     * @param requestCode which action have been used
+     * @param resultCode result code of the signIn
+     * @param data result data from the signIn
      */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -67,29 +64,46 @@ class LogInActivity : AppCompatActivity() {
         if (requestCode == RC_SIGN_IN) {
             val response = IdpResponse.fromResultIntent(data)
 
-            // Successfully signed in
-            if (resultCode == Activity.RESULT_OK) {
-                checkUser()
-                finish()
+            if (isLogInSuccessfull(resultCode)) {
+                manageSuccessfullLogIn()
             } else {
-                // Sign in failed
                 if (response == null) {
-                    // User pressed back button
-                    Toast.makeText(this@LogInActivity,R.string.sign_in_cancelled,Toast.LENGTH_LONG).show()
-                    return
+                    return manageError(R.string.no_internet_connection)
                 }
 
                 if (response.error!!.errorCode == ErrorCodes.NO_NETWORK) {
-                    Toast.makeText(this@LogInActivity,R.string.no_internet_connection,Toast.LENGTH_LONG).show()
-                    return
+                    return manageError(R.string.no_internet_connection)
                 }
 
-                Toast.makeText(this@LogInActivity,R.string.unknown_error,Toast.LENGTH_LONG).show()
                 Log.e(getString(R.string.error_tag), getString(R.string.sign_in_error_prefix), response.error)
             }
         }else{
-            Log.e("Error",requestCode.toString()+" "+resultCode.toString())
+            Log.e(getString(R.string.error_tag), "$requestCode $resultCode")
         }
+    }
+
+    /**
+     * Display error message if the signIn has failed
+     * @param errorMessage id key for the string message error in the string.xml file
+     */
+    private fun manageError(errorMessage: Int) {
+        Toast.makeText(this@LogInActivity, errorMessage, Toast.LENGTH_LONG).show()
+        return
+    }
+
+    /**
+     * If the logIn has been successfull
+     * @param resultCode result code of the sign In
+     * @param boolean check if the user has successfully signed In
+     */
+    private fun isLogInSuccessfull(resultCode: Int) = resultCode == Activity.RESULT_OK
+
+    /**
+     * Function manager if the logIn has been successfull
+     */
+    private fun manageSuccessfullLogIn() {
+        checkUser()
+        finish()
     }
 
     /**
@@ -97,7 +111,7 @@ class LogInActivity : AppCompatActivity() {
      */
     private fun checkUser() {
         if(FirebaseAuth.getInstance().currentUser!=null){
-            singleton!!.User = FirebaseAuth.getInstance().currentUser!!
+            AppProviderSingleton.User = FirebaseAuth.getInstance().currentUser!!
             startActivity(Intent(this@LogInActivity, MainActivity::class.java))
         }
     }
