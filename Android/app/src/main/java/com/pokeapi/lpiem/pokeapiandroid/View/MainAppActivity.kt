@@ -18,6 +18,7 @@ import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.Species
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Pokemon.InterfaceCallBackController
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
 import android.location.LocationManager
+import android.net.Uri
 import android.provider.Settings
 import android.view.View
 import androidx.core.app.ActivityCompat
@@ -31,22 +32,25 @@ import kotlinx.android.synthetic.main.nav_drawer_header_layout.*
 
 
 
-class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
-   /* override fun getContext(): Context {
-        return this as Context
+class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>, MapFragment.OnFragmentInteractionListener{
+    override fun onFragmentInteraction(uri: Uri) {
+       // TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+    /* override fun getContext(): Context {
+         return this as Context
+     }
 
-    override fun getContextLocation(): LocationManager {
-      //  return getSystemService(Context.LOCATION_SERVICE) as LocationManager
-    }
+     override fun getContextLocation(): LocationManager {
+       //  return getSystemService(Context.LOCATION_SERVICE) as LocationManager
+     }
 
-    override fun checkForPermission(): Boolean {
-      //  return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
-    }
+     override fun checkForPermission(): Boolean {
+       //  return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+     }
 
-    override fun getCoord() {
-        //todoo
-    }*/
+     override fun getCoord() {
+         //todoo
+     }*/
 
     private var singleton: AppProviderSingleton?= AppProviderSingleton.getInstance()
     private lateinit var mDrawerLayout: DrawerLayout

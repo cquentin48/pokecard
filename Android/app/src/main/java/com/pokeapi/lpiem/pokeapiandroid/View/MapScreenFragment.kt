@@ -27,7 +27,7 @@ class MapScreenFragment : Fragment() , MapFragment.OnFragmentInteractionListener
     private lateinit var provider: String
     private lateinit var providers: List<String>
     private lateinit var locationManager: LocationManager
-
+    private var isCreate: Boolean = false
     override fun onFragmentInteraction(uri: Uri) {
 //todo
     }
@@ -36,8 +36,10 @@ class MapScreenFragment : Fragment() , MapFragment.OnFragmentInteractionListener
 
     lateinit var mMapFragment:MapFragment
 
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(com.pokeapi.lpiem.pokeapiandroid.R.layout.activity_localization, container, false)
+        return inflater.inflate(R.layout.activity_localization, container, false)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,16 +77,18 @@ class MapScreenFragment : Fragment() , MapFragment.OnFragmentInteractionListener
         }
 
 
-
+        lat = location.latitude
+        lon = location.longitude
 
 
         mMapFragment  = MapFragment.newInstance(lat,lon)
         addFragment()
+        isCreate = true
     }
 
     override fun onResume() {
         super.onResume()
-        if (ActivityCompat.checkSelfPermission(context as MainActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(activity as Context , Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -103,10 +107,12 @@ class MapScreenFragment : Fragment() , MapFragment.OnFragmentInteractionListener
     }
 
     override fun onLocationChanged(location: Location) {
-        lat = location.latitude
-        lon = location.longitude
-        latitude.text = "latitude: " + lat.toString()
-        longitude.text = "longitude: " +lon.toString()
+        if(isCreate) {
+            lat = location.latitude
+            lon = location.longitude
+            latitude.text = "latitude: " + lat.toString()
+            longitude.text = "longitude: " + lon.toString()
+        }
         //val detailgetter = DetailsGetter()
         // detailsfield!!.text = detailgetter.getData()
     }
