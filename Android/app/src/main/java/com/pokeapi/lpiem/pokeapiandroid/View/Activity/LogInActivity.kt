@@ -45,7 +45,6 @@ class LogInActivity : AppCompatActivity() {
             val providers = arrayListOf(
                     AuthUI.IdpConfig.GoogleBuilder().build(),
                     AuthUI.IdpConfig.FacebookBuilder().build(),
-                    AuthUI.IdpConfig.TwitterBuilder().build(),
                     AuthUI.IdpConfig.EmailBuilder().build())
 
             startActivityForResult(
