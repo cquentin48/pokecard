@@ -117,6 +117,7 @@ class MainActivity : AppCompatActivity(){
     /**
      * Manage action of each item selected
      * @param item which item has been used
+     * @return true
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

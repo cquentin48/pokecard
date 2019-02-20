@@ -23,6 +23,7 @@ class AdapterHeader(private val letterString:String): Item(), ExpandableItem {
 
     /**
      * Set child items for the adapterHeader
+     * @param onToggleListener viewHolder group child of the adapterHeader
      */
     override fun setExpandableGroup(onToggleListener: ExpandableGroup) {
         expandableGroup = onToggleListener
