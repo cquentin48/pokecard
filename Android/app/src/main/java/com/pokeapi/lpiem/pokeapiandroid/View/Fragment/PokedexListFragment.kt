@@ -31,7 +31,6 @@ private const val ARG_PARAM1 = "param1"
 
 class PokedexListView : Fragment(), PokedexFunctionInterface {
 
-    private lateinit var applicationContext: Context
     private lateinit var param:String
     private lateinit var data:MutableList<PokemonRetrofit>
     private lateinit var backupData:MutableList<PokemonRetrofit>
@@ -62,11 +61,6 @@ class PokedexListView : Fragment(), PokedexFunctionInterface {
     }
 
 
-    fun passContext(context: Context){
-        applicationContext = context
-    }
-
-
     /**
      * Generate list of pokemon base on their first letter
      * @param pokemonList rawData unfiltered
@@ -75,7 +69,7 @@ class PokedexListView : Fragment(), PokedexFunctionInterface {
     private fun generateListItems(pokemonList:MutableList<PokemonRetrofit>):MutableList<PokedexItem>{
         val returnedList:MutableList<PokedexItem> = mutableListOf()
         for(i in 0 until pokemonList.size){
-            returnedList.add(i,PokedexItem(pokemonList[i].sprite!!,pokemonList[i].name!!,applicationContext))
+            returnedList.add(i,PokedexItem(pokemonList[i].sprite!!,pokemonList[i].name!!,activity!!.baseContext))
         }
         return returnedList
     }

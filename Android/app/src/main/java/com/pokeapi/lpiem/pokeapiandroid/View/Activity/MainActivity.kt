@@ -31,8 +31,6 @@ class MainActivity : AppCompatActivity(){
     private fun setUpFragment(){
         pokedexListView = PokedexListView()
         pokeMap = LocalizationActivity()
-
-        pokedexListView.passContext(applicationContext)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
