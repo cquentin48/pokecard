@@ -45,7 +45,7 @@ class PokedexListView : Fragment(), PokedexFunctionInterface {
             spanCount = 3
         }
         recyclerViewPokedexList.apply {
-            layoutManager = GridLayoutManager(activity!!.applicationContext, groupAdapter.spanCount).apply {
+            layoutManager = GridLayoutManager(activity, groupAdapter.spanCount).apply {
                 spanSizeLookup = groupAdapter.spanSizeLookup
             }
             adapter = groupAdapter
