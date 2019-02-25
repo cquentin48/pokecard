@@ -15,7 +15,6 @@ class PokemonProvider : Callback<PokemonRetrofit> {
     var pokemonRetrofitInput: PokemonRetrofit? = null
     var pokemonName: String? = null
     private var message: String? = null
-    private val interfaceCallBackController: InterfaceCallBackController<*>? = null
 
     fun start(googleConnexionResult: MainAppActivity) {
 

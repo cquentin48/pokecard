@@ -29,7 +29,7 @@ import kotlinx.android.synthetic.main.nav_drawer_header_layout.*
 
 
 class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
-    private var singleton: AppProviderSingleton?= AppProviderSingleton.getInstance()
+    private var singleton = AppProviderSingleton
     private lateinit var mDrawerLayout: DrawerLayout
     private lateinit var pokedexListView: PokedexListView
     private lateinit var pokeMap: LocalizationActivity
@@ -120,18 +120,18 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
     }
 
     override fun addPokemonSpecies(i: Int, s: Species) {
-        singleton!!.pokemonList!!.get(i).PokemonSpecies = s
+       // singleton!!.pokemonList!!.get(i).PokemonSpecies = s
     }
 
     override fun addPokedexEntry(i: Int, p: String) {
-        singleton!!.pokemonList!!.get(i).PokemonPokedexEntry = p
+        //singleton!!.pokemonList!!.get(i).PokemonPokedexEntry = p
     }
 
     override fun addPokemonToList(p: PokemonRetrofit) {
-        Singleton!!.addPokemonToList(PokemonData(p.name!!,
+        /*Singleton!!.addPokemonToList(PokemonData(p.name!!,
                 p.species!!,
                 p.typeList!!.toMutableList(),
-                p.id))
+                p.id))*/
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

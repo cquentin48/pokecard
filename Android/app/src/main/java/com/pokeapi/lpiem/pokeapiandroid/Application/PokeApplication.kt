@@ -17,7 +17,7 @@ class PokeApplication : Application() {
                 .build()
         val mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
         Twitter.initialize(this)
-        singleton = AppProviderSingleton.getInstance()
+        singleton = AppProviderSingleton
         super.onCreate()
     }
 }

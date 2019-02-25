@@ -16,7 +16,7 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.lifecycle.Observer
 import com.pokeapi.lpiem.pokeapiandroid.View.Adapter.AdapterHeader
 import com.xwray.groupie.ExpandableGroup
 import com.pokeapi.lpiem.pokeapiandroid.View.Adapter.PokedexItem
@@ -26,21 +26,15 @@ import java.util.*
 
 private const val ARG_PARAM1 = "param1"
 
-class PokedexListView : Fragment(),PokedexFunctionInterface {
+class PokedexListView : Fragment(){
 
     private lateinit var applicationContext: Context
     private lateinit var param:String
-    private lateinit var data:MutableList<PokemonRetrofit>
-    private lateinit var backupData:MutableList<PokemonRetrofit>
-    private lateinit var adapter: GridLayoutManager
-    private val pokemonAPI = AppProviderSingleton.getInstance()
     private lateinit var myFragmentView: View
 
 
     @SuppressLint("WrongConstant")
-    override fun initPokedex(pokemonImportData : List<PokemonRetrofit>) {
-        data = (pokemonImportData).toMutableList()
-        backupData = (pokemonImportData).toMutableList()
+    fun initPokedex() {
         val groupAdapter = GroupAdapter<ViewHolder>().apply {
             spanCount = 3
         }
@@ -51,7 +45,10 @@ class PokedexListView : Fragment(),PokedexFunctionInterface {
             adapter = groupAdapter
         }
 
-        createList((filterPokemonListByFirstLetter(data)),groupAdapter)
+        AppProviderSingleton.pokemonList.observe(this, Observer {
+            createList(filterPokemonListByFirstLetter(it.PokemonList as MutableList<PokemonRetrofit>),groupAdapter)
+        })
+        AppProviderSingleton.fetchData()
         pokedexSearchChangedListener()
     }
 
@@ -59,8 +56,6 @@ class PokedexListView : Fragment(),PokedexFunctionInterface {
     fun passContext(context: Context){
         applicationContext = context
     }
-
-
 
     private fun generateListItems(pokemonList:MutableList<PokemonRetrofit>):MutableList<PokedexItem>{
         val returnedList:MutableList<PokedexItem> = mutableListOf()
@@ -82,10 +77,6 @@ class PokedexListView : Fragment(),PokedexFunctionInterface {
         }
     }
 
-    fun initAdapter(){
-        pokemonAPI.getPokeList(this)
-    }
-
     companion object {
         @JvmStatic
         fun newInstance(param1: String) =
@@ -99,8 +90,12 @@ class PokedexListView : Fragment(),PokedexFunctionInterface {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         myFragmentView = inflater.inflate(R.layout.activity_pokedex_list_view,container,false)
-        initAdapter()
         return inflater.inflate(R.layout.activity_pokedex_list_view,container,false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initPokedex()
     }
 
     /**
@@ -142,7 +137,7 @@ class PokedexListView : Fragment(),PokedexFunctionInterface {
     /**
      * Filter data by the search bar
      */
-    private fun filterData(searchString:String):MutableList<PokemonRetrofit>{
+    /*private fun filterData(searchString:String):MutableList<PokemonRetrofit>{
         val pokemonRetrofitListFiltered = arrayListOf<PokemonRetrofit>()
         data.forEach {
             if(it.name!!.contains(searchString,true)){
@@ -151,7 +146,7 @@ class PokedexListView : Fragment(),PokedexFunctionInterface {
         }
         recyclerViewPokedexList.adapter!!.notifyDataSetChanged()
         return pokemonRetrofitListFiltered
-    }
+    }*/
 
     private fun filterHashmapByAlphabeticalLetter(data:HashMap<String, MutableList<PokemonRetrofit>>): HashMap<String, MutableList<PokemonRetrofit>> {
         val map = object : HashMap<String, MutableList<PokemonRetrofit>>() {
@@ -169,7 +164,7 @@ class PokedexListView : Fragment(),PokedexFunctionInterface {
     }
 
     private fun getPokemonListByFirstLetter(rawData: HashMap<String,MutableList<PokemonRetrofit>>, letter: String):MutableList<PokemonRetrofit>?{
-        for((key,value) in rawData){
+        for((key,_) in rawData){
             if(key == letter){
                 return rawData[key]
             }
@@ -186,9 +181,9 @@ class PokedexListView : Fragment(),PokedexFunctionInterface {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int,
                                        count: Int) {
                 if (s != "") {
-                    data = filterData(s.toString())
+                    //data = filterData(s.toString())
                 }else{
-                    data = backupData.toMutableList()
+                    //data = backupData.toMutableList()
                 }
                 notifyData()
             }

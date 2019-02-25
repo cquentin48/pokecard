@@ -10,7 +10,7 @@ import com.pokeapi.lpiem.pokeapiandroid.R
 import kotlinx.android.synthetic.main.activity_pokedex_list_view.*
 
 class PokedexPokemonView : AppCompatActivity() {
-    val singleton: AppProviderSingleton?= AppProviderSingleton.getInstance()
+    val singleton: AppProviderSingleton?= AppProviderSingleton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

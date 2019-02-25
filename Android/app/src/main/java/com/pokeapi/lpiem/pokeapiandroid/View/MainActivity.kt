@@ -31,7 +31,7 @@ import com.pokeapi.lpiem.pokeapiandroid.R
 
 
 class MainActivity : AppCompatActivity() {
-    private var singleton: AppProviderSingleton? = AppProviderSingleton.getInstance()
+    private var singleton: AppProviderSingleton? = AppProviderSingleton
     private var context: Context? = null
     private lateinit var mAuth: FirebaseAuth
 
@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         this.context = this
         this.title = "PokeCard - Connexion à l'application"
-        this.singleton = AppProviderSingleton.getInstance()
+        this.singleton = AppProviderSingleton
         FirebaseApp.initializeApp(this@MainActivity)
         mAuth = FirebaseAuth.getInstance(FirebaseApp.initializeApp(this@MainActivity)!!)
         startActivity()
