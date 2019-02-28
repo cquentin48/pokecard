@@ -21,7 +21,7 @@ object AppProviderSingleton {
 
     fun getPokeList():MutableLiveData<PokemonList>{
 
-        val callPokemon = RetrofitSingleton.getInstance()!!.getPokemonListData()
+        val callPokemon = RetrofitSingleton.getInstance()!!.getPokemonListData(0)
 
         callPokemon.enqueue(object : Callback<PokemonList> {
 

@@ -3,7 +3,7 @@ package com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class PokemonList{
+class PokemonList : @ParameterName(name = "repos") List<PokemonList> {
     @SerializedName("pokemonList")
     @Expose
     private lateinit var pokemonList : List<PokemonRetrofit>

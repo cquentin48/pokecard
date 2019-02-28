@@ -1,5 +1,6 @@
 package com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit
 
+import io.reactivex.Single
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -16,8 +17,11 @@ interface PokemonAPI {
             @Path("id") id: Int
     ): Call<Species>
 
-    @GET("/public/index.php/pokemon/")
-    fun getPokemonListData(): Call<PokemonList>
+    @GET("public/index.php/pokemonlist/{pageId}")
+    fun getPokemonListData(
+            @Path("pageId") pageId: Int,
+            @Path("pagieSize") pageSize: Int
+    ): Call<PokemonList>
 
     @GET("/pokemon/")
     fun getPokemonById(): Call<PokemonRetrofit>
