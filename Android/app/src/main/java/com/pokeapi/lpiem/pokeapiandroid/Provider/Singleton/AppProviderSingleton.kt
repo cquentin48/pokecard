@@ -19,28 +19,6 @@ object AppProviderSingleton {
 
     var pokemonList = MutableLiveData<PokemonList >()
 
-    fun getPokeList():MutableLiveData<PokemonList>{
-
-        val callPokemon = RetrofitSingleton.getInstance()!!.getPokemonListData(0)
-
-        callPokemon.enqueue(object : Callback<PokemonList> {
-
-            override fun onResponse(call: Call<PokemonList>, response: Response<PokemonList>) {
-                if (response.isSuccessful) {
-                    pokemonList.postValue(response.body()!!)
-                } else {
-                    Log.d("Error", "Error while fetching data")
-                }
-            }
-
-            override fun onFailure(call: Call<PokemonList>, t: Throwable) {
-                Log.e("Error", t.localizedMessage)
-                t.printStackTrace()
-            }
-        })
-        return pokemonList
-    }
-
     fun cloneList(originalHashMap: List<PokemonRetrofit>):List<PokemonRetrofit>{
         return originalHashMap.toMutableList()
     }

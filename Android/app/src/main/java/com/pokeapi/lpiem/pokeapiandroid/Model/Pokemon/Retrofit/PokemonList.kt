@@ -8,6 +8,10 @@ class PokemonList : @ParameterName(name = "repos") List<PokemonList> {
     @Expose
     private lateinit var pokemonList : List<PokemonRetrofit>
 
+    @SerializedName("count")
+    @Expose
+    var count = 0
+
     var PokemonList:List<PokemonRetrofit>
     get() = pokemonList
     set(value){

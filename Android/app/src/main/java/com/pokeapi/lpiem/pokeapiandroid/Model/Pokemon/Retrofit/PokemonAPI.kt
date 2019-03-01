@@ -20,7 +20,7 @@ interface PokemonAPI {
     @GET("public/index.php/pokemonlist/{pageId}")
     fun getPokemonListData(
             @Path("pageId") pageId: Int,
-            @Path("pagieSize") pageSize: Int
+            pageSize:Int
     ): Call<PokemonList>
 
     @GET("/pokemon/")
