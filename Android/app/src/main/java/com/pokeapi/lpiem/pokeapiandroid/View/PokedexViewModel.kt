@@ -15,14 +15,14 @@ import io.reactivex.disposables.CompositeDisposable
 
 class PokedexViewModel : ViewModel(){
 
-    private val networkService = RetrofitSingleton.getInstance()
+    private val retrofitInstance = RetrofitSingleton.getInstance()
     var newsList: LiveData<PagedList<PokemonRetrofit>>
     private val compositeDisposable = CompositeDisposable()
-    private val pageSize = 43
+    private val pageSize = 10
     private val pokemonDataSourceFactory: PokemonDataFactory
 
     init {
-        pokemonDataSourceFactory = PokemonDataFactory(compositeDisposable)
+        pokemonDataSourceFactory = PokemonDataFactory(compositeDisposable,retrofitInstance!!)
         val config = PagedList.Config.Builder()
                 .setPageSize(pageSize)
                 .setInitialLoadSizeHint(pageSize * 2)

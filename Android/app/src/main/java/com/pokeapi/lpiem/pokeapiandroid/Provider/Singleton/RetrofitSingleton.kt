@@ -6,6 +6,9 @@ import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonAPI
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import okhttp3.OkHttpClient
+import java.util.concurrent.TimeUnit
+
 
 object RetrofitSingleton {
     private var instance: PokemonAPI? = null
@@ -23,8 +26,16 @@ object RetrofitSingleton {
         val gson = GsonBuilder().setLenient().create()
         val retrofit = Retrofit.Builder()
                 .baseUrl(OWNAPIBASEURL)
+                .client(setTimeOut())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson)).build()
         return retrofit.create(PokemonAPI::class.java)
+    }
+
+    private fun setTimeOut(): OkHttpClient {
+        return OkHttpClient.Builder()
+                .readTimeout(1, TimeUnit.MINUTES)
+                .connectTimeout(1, TimeUnit.MINUTES)
+                .build()
     }
 }

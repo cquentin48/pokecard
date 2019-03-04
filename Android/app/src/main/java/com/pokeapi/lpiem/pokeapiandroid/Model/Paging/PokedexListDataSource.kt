@@ -4,21 +4,20 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.pokeapi.lpiem.pokeapiandroid.Model.Enum.LoadingState
-import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonList
+import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonAPI
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonRetrofit
-import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.RetrofitSingleton
 import io.reactivex.Completable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Action
 
 
-class PokedexListDataSource(private val compositeDisposable: CompositeDisposable) : PageKeyedDataSource<Int, PokemonRetrofit>() {
+class PokedexListDataSource(
+        private val compositeDisposable: CompositeDisposable,
+        private val api: PokemonAPI)
+    : PageKeyedDataSource<Int, PokemonRetrofit>() {
 
     var networkState = MutableLiveData<LoadingState>()
     private var retryCompletable: Completable? = null
-    private val api = RetrofitSingleton.getInstance()!!
-    private val itemSize = 20
-    private var totalCount = 0
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, PokemonRetrofit>) {
         networkState.postValue(LoadingState.LOADING)
