@@ -23,9 +23,9 @@ object AppProviderSingleton {
         return originalHashMap.toMutableList()
     }
 
-    fun fetchData(){
+    /*fun fetchData(){
         pokemonList = getPokeList()
-    }
+    }*/
 
     /**
      * Fetch pokedex entry of a pokemon

@@ -17,9 +17,12 @@ import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import com.pokeapi.lpiem.pokeapiandroid.Model.Enum.LoadingState
 import com.pokeapi.lpiem.pokeapiandroid.View.Adapter.AdapterHeader
 import com.xwray.groupie.ExpandableGroup
 import com.pokeapi.lpiem.pokeapiandroid.View.Adapter.PokedexItem
+import com.pokeapi.lpiem.pokeapiandroid.View.Adapter.PokedexViewAdapter
 import com.xwray.groupie.Section
 import java.util.*
 
@@ -31,9 +34,30 @@ class PokedexListView : Fragment(){
     private lateinit var applicationContext: Context
     private lateinit var param:String
     private lateinit var myFragmentView: View
+    private lateinit var viewModel: PokedexViewModel
+    private lateinit var newsListAdapter: PokedexViewAdapter
 
+    private fun initAdapter() {
+        newsListAdapter = PokedexViewAdapter(viewModel::retry,applicationContext)
+        recyclerViewPokedexList.layoutManager = GridLayoutManager(applicationContext,3)
+        recyclerViewPokedexList.adapter = newsListAdapter
+        viewModel.newsList.observe(this, Observer {
+            newsListAdapter.submitList(it)
+        })
+    }
 
-    @SuppressLint("WrongConstant")
+   private fun initState() {
+        viewModel.getState().observe(this, Observer { state ->
+            /*progress_bar.visibility = if (viewModel.listIsEmpty() && state == State.LOADING) View.VISIBLE else View.GONE
+            txt_error.visibility = if (viewModel.listIsEmpty() && state == State.ERROR) View.VISIBLE else View.GONE*/
+            if (!viewModel.listIsEmpty()) {
+                newsListAdapter.setState(state ?: LoadingState.DONE)
+            }
+
+        })
+   }
+
+    /*@SuppressLint("WrongConstant")
     fun initPokedex() {
         val groupAdapter = GroupAdapter<ViewHolder>().apply {
             spanCount = 3
@@ -50,7 +74,7 @@ class PokedexListView : Fragment(){
         })
         AppProviderSingleton.fetchData()
         pokedexSearchChangedListener()
-    }
+    }*/
 
 
     fun passContext(context: Context){
@@ -95,7 +119,11 @@ class PokedexListView : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initPokedex()
+        viewModel = ViewModelProviders.of(this)
+                .get(PokedexViewModel::class.java)
+        initAdapter()
+        initState()
+        //initPokedex()
     }
 
     /**

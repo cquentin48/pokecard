@@ -5,69 +5,71 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.pokeapi.lpiem.pokeapiandroid.Model.Enum.LoadingState
 import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonList
+import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonRetrofit
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.RetrofitSingleton
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import io.reactivex.Completable
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.functions.Action
 
 
-class PokedexListDataSource : PageKeyedDataSource<Int, PokemonList>() {
+class PokedexListDataSource(private val compositeDisposable: CompositeDisposable) : PageKeyedDataSource<Int, PokemonRetrofit>() {
 
     var networkState = MutableLiveData<LoadingState>()
+    private var retryCompletable: Completable? = null
+    private val api = RetrofitSingleton.getInstance()!!
     private val itemSize = 20
     private var totalCount = 0
 
-    override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, PokemonList>) {
+    override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, PokemonRetrofit>) {
         networkState.postValue(LoadingState.LOADING)
-
-        val callPokemon = RetrofitSingleton.getInstance()!!
-
-        callPokemon.getPokemonListData(0, params.requestedLoadSize)
-                .enqueue(object : Callback<PokemonList> {
-                    override fun onResponse(call: Call<PokemonList>, response: Response<PokemonList>) {
-                        if (response.isSuccessful) {
-                            totalCount = response.body()!!.count
-                            callback.onResult(response.body()!!.PokemonList as MutableList<PokemonList>, null, 1)
-                            networkState.postValue(LoadingState.DONE)
-
-                        } else {
-                            networkState.postValue(LoadingState.ERROR)
+        compositeDisposable.add(
+                api.getPokemonListData(0, params.requestedLoadSize)
+                        .subscribe({ response ->
+                            updateLoadingState(LoadingState.DONE)
+                            callback.onResult(response.PokemonList,
+                                    null,
+                                    1)
                         }
-                    }
-
-                    override fun onFailure(call: Call<PokemonList>, t: Throwable) {
-                        val errorMessage = if (t == null) "unknown error" else t.message
-                        Log.e("Error", errorMessage)
-                        networkState.postValue(LoadingState.ERROR)
-                    }
-                })
+                                , {
+                            updateLoadingState(LoadingState.ERROR)
+                            Log.e("Error", it.localizedMessage)
+                            it.printStackTrace()
+                            //setRetry(Action { loadInitial(params, callback) })
+                        })
+        )
     }
 
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, PokemonList>) {
-        networkState.postValue(LoadingState.LOADING)
-        val callPokemon = RetrofitSingleton.getInstance()!!
-
-        callPokemon.getPokemonListData(params.key,params.requestedLoadSize)
-                .enqueue(object : Callback<PokemonList>{
-                    override fun onResponse(call: Call<PokemonList>, response: Response<PokemonList>) {
-                        if(response.isSuccessful){
-                            val key = if(isLastPage(params.key)) params.key+1 else null
-                            callback.onResult(response.body()!!.PokemonList as MutableList<PokemonList>,params.key+1)
-                        }else{
-                            networkState.postValue(LoadingState.ERROR)
-                        }
-                    }
-
-                    override fun onFailure(call: Call<PokemonList>, t: Throwable) {
-                        networkState.postValue(LoadingState.ERROR)
-                        Log.e("Error",t.localizedMessage)
-                    }
-                })
+    private fun updateLoadingState(newState: LoadingState) {
+        networkState.postValue(newState)
     }
 
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, PokemonList>) {
+    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, PokemonRetrofit>) {
+        updateLoadingState(LoadingState.LOADING)
+        compositeDisposable.add(
+                api.getPokemonListData(params.key, params.requestedLoadSize)
+                        .subscribe(
+                                { response ->
+                                    updateLoadingState(LoadingState.DONE)
+                                    callback.onResult(response.PokemonList,
+                                            params.key + 1
+                                    )
+                                },
+                                {
+                                    updateLoadingState(LoadingState.ERROR)
+                                    Log.e("Error", it.localizedMessage)
+                                    it.printStackTrace()
+                                    setRetry(Action { loadAfter(params, callback) })
+                                }
+                        )
+        )
+
+    }
+
+    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, PokemonRetrofit>) {
         //Nothing will happen ;)
     }
 
-    private fun isLastPage(pageId: Int) : Boolean = (pageId+1)*itemSize<totalCount
+    private fun setRetry(action: Action?) {
+        retryCompletable = if (action == null) null else Completable.fromAction(action)
+    }
 }

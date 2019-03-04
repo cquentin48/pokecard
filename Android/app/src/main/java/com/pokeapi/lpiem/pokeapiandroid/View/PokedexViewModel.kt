@@ -6,52 +6,45 @@ import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.lifecycle.Transformations
 import com.pokeapi.lpiem.pokeapiandroid.Model.Enum.LoadingState
+import com.pokeapi.lpiem.pokeapiandroid.Model.Paging.PokedexListDataSource
 import com.pokeapi.lpiem.pokeapiandroid.Model.Paging.PokemonDataFactory
-import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonList
-import java.util.concurrent.Executor
-import java.util.concurrent.Executors
+import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonRetrofit
+import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.RetrofitSingleton
+import io.reactivex.disposables.CompositeDisposable
 
 
 class PokedexViewModel : ViewModel(){
-    private var executor: Executor? = null
-    private var networkState: LiveData<LoadingState>? = null
-    var pokedexPokemonListLiveData: LiveData<PagedList<PokemonList>>? = null
 
+    private val networkService = RetrofitSingleton.getInstance()
+    var newsList: LiveData<PagedList<PokemonRetrofit>>
+    private val compositeDisposable = CompositeDisposable()
+    private val pageSize = 43
+    private val pokemonDataSourceFactory: PokemonDataFactory
 
-    /*
-     * Step 1: We are initializing an Executor class
-     * Step 2: We are getting an instance of the DataSourceFactory class
-     * Step 3: We are initializing the network state liveData as well.
-     *         This will update the UI on the network changes that take place
-     *         For instance, when the data is getting fetched, we would need
-     *         to display a loader and when data fetching is completed, we
-     *         should hide the loader.
-     * Step 4: We need to configure the PagedList.Config.
-     * Step 5: We are initializing the pageList using the config we created
-     *         in Step 4 and the DatasourceFactory we created from Step 2
-     *         and the executor we initialized from Step 1.
-     */
-    init{
-        executor = Executors.newFixedThreadPool(5)
-
-        val feedDataFactory = PokemonDataFactory()
-        networkState = Transformations.switchMap(feedDataFactory.pokedexData)
-        ) { dataSource -> dataSource.getNetworkState() }
-
-        val pagedListConfig = PagedList.Config.Builder()
+    init {
+        pokemonDataSourceFactory = PokemonDataFactory(compositeDisposable)
+        val config = PagedList.Config.Builder()
+                .setPageSize(pageSize)
+                .setInitialLoadSizeHint(pageSize * 2)
                 .setEnablePlaceholders(false)
-                .setInitialLoadSizeHint(10)
-                .setPageSize(20).build()
-
-        pokedexPokemonListLiveData = LivePagedListBuilder(feedDataFactory, pagedListConfig)
-                .setFetchExecutor(executor!!)
                 .build()
+        newsList = LivePagedListBuilder<Int, PokemonRetrofit>(pokemonDataSourceFactory, config).build()
     }
 
-    /*
-     * Getter method for the network state
-     */
-    fun getNetworkState(): LiveData<LoadingState>? {
-        return networkState
+
+    fun getState(): LiveData<LoadingState> = Transformations.switchMap<PokedexListDataSource,
+            LoadingState>(pokemonDataSourceFactory.newsDataSourceLiveData, PokedexListDataSource::networkState)
+
+    fun retry() {
+        //pokemonDataSourceFactory.newsDataSourceLiveData.value?
+    }
+
+    fun listIsEmpty(): Boolean {
+        return newsList.value?.isEmpty() ?: true
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.dispose()
     }
 }
