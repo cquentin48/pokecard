@@ -12,16 +12,17 @@ import androidx.drawerlayout.widget.DrawerLayout
 import android.location.LocationManager
 import android.provider.Settings
 import android.view.View
-import com.firebase.ui.auth.AuthUI
 import com.pokeapi.lpiem.pokeapiandroid.R
 import com.pokeapi.lpiem.pokeapiandroid.View.Fragment.PokedexListView
 import com.pokeapi.lpiem.pokeapiandroid.View.LocalizationActivity
+import com.pokeapi.lpiem.pokeapiandroid.ViewModel.MainMenuViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(){
     private lateinit var mDrawerLayout: DrawerLayout
     private lateinit var pokedexListView: PokedexListView
     private lateinit var pokeMap: LocalizationActivity
+    private var viewModel: MainMenuViewModel = MainMenuViewModel()
 
     /**
      * Set up fragments
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        initGraphicalElements()
         setUpFragment()
         navigationDrawerItemManagment()
     }
@@ -42,13 +44,16 @@ class MainActivity : AppCompatActivity(){
      * Managing toolbar attached to navigationView
      */
     private fun managingToolbar() {
+        initActionBar()
+        viewModel.managingToolbar(supportActionBar as ActionBar)
+    }
+
+    /**
+     * Initialisation of the action bar
+     */
+    private fun initActionBar() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-        val actionbar: ActionBar? = supportActionBar
-        actionbar?.apply {
-            setDisplayHomeAsUpEnabled(true)
-            setHomeAsUpIndicator(R.drawable.ic_settings_black_24dp)
-        }
     }
 
     /**
@@ -56,7 +61,8 @@ class MainActivity : AppCompatActivity(){
      */
     private fun navigationDrawerItemManagment() {
         mDrawerLayout = findViewById(R.id.drawer_layout)
-        navigationView.setNavigationItemSelectedListener { menuItem ->
+        viewModel.managingNavigationElements(this@MainActivity,navigationView,supportFragmentManager)
+        /*navigationView.setNavigationItemSelectedListener { menuItem ->
             // set item as selected to persist highlight
             menuItem.isChecked = true
             // close drawer when item is tapped
@@ -92,8 +98,17 @@ class MainActivity : AppCompatActivity(){
                 }
             }
             true
-        }
+        }*/
         managingToolbar()
+    }
+
+    private fun initGraphicalElements(){
+        initDrawerLayout()
+        initActionBar()
+    }
+
+    private fun initDrawerLayout() {
+        viewModel.BackgroundDrawerLayout = drawer_layout
     }
 
     /**
@@ -107,11 +122,7 @@ class MainActivity : AppCompatActivity(){
      * Logging-out session function
      */
     private fun loggingOut(){
-        AuthUI.getInstance()
-                .signOut(this)
-                .addOnCompleteListener {
-                    startActivity(Intent(this, LogInActivity::class.java))
-                }
+        viewModel.loggingOut(this@MainActivity)
     }
 
     /**

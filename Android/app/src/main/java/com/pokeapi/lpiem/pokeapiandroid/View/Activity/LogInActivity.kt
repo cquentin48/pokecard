@@ -14,18 +14,23 @@ import kotlinx.android.synthetic.main.activity_log_in.*
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
 import android.widget.Toast
+import com.pokeapi.lpiem.pokeapiandroid.Provider.FirebaseSingleton
 import com.pokeapi.lpiem.pokeapiandroid.R
+import com.pokeapi.lpiem.pokeapiandroid.ViewModel.LoginModelView
 
 const val RC_SIGN_IN = 1
 
 class LogInActivity : AppCompatActivity() {
+    private lateinit var singleton: AppProviderSingleton
+    private var context: Context? = null
+    private val viewModel: LoginModelView = LoginModelView()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_log_in)
         this.title = getString(R.string.poke_card_log_in_title)
-        FirebaseApp.initializeApp(this@LogInActivity)
-        FirebaseAuth.getInstance(FirebaseApp.initializeApp(this@LogInActivity)!!)
+        this.singleton = AppProviderSingleton
+        viewModel.initFirebaseAuthentification(this)
         checkUser()
         signIn()
     }
@@ -111,7 +116,7 @@ class LogInActivity : AppCompatActivity() {
      */
     private fun checkUser() {
         if(FirebaseAuth.getInstance().currentUser!=null){
-            AppProviderSingleton.User = FirebaseAuth.getInstance().currentUser!!
+            singleton.User = FirebaseAuth.getInstance().currentUser!!
             startActivity(Intent(this@LogInActivity, MainActivity::class.java))
         }
     }
