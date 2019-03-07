@@ -12,25 +12,7 @@ import com.pokeapi.lpiem.pokeapiandroid.R
 
 
 object AppProviderSingleton {
-    private lateinit var firebaseUser:FirebaseUser
-    private var firebaseSingleton: FirebaseSingleton
-
-    init {
-        firebaseSingleton = FirebaseSingleton
-    }
-
-    var User:FirebaseUser
-        get() = firebaseUser
-        set(newValue){
-            firebaseUser = newValue
-        }
-
-    fun getPokeList(pokedexView: PokedexListView){
-        RetrofitSingleton.getPokeList(pokedexView)
-    }
-
-    fun initFirebaseAuth(context: Context){
-        firebaseSingleton = FirebaseSingleton
-        firebaseSingleton.initFirebaseAuth(context)
-    }
+    /*
+    NOT CURRENTLY USED BUT CAN BE USED FOR APPLICATION MANAGMENT DURING OPERATIONS BY USER
+     */
 }

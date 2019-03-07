@@ -9,17 +9,8 @@ import com.google.firebase.auth.FirebaseUser
 import com.pokeapi.lpiem.pokeapiandroid.View.Activity.LogInActivity
 
 object FirebaseSingleton {
-    private var instance:FirebaseSingleton
-    private lateinit var firebaseUser: FirebaseUser
+    lateinit var firebaseUser: FirebaseUser
     private lateinit var firebaseAuthentification: FirebaseAuth
-    var FirebaseAuthentification:FirebaseAuth
-    get() = this.firebaseAuthentification
-    set(newValue){
-        this.firebaseAuthentification
-    }
-    init {
-        instance = this@FirebaseSingleton
-    }
 
     /**
      * initialisation of firebase authentification service

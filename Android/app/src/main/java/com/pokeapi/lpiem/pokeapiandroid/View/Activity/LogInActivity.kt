@@ -1,13 +1,13 @@
 package com.pokeapi.lpiem.pokeapiandroid.View.Activity
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import com.firebase.ui.auth.AuthUI
 
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.pokeapi.lpiem.pokeapiandroid.Provider.AppProviderSingleton
 import kotlinx.android.synthetic.main.activity_log_in.*
@@ -22,7 +22,6 @@ const val RC_SIGN_IN = 1
 
 class LogInActivity : AppCompatActivity() {
     private lateinit var singleton: AppProviderSingleton
-    private var context: Context? = null
     private val viewModel: LoginModelView = LoginModelView()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -116,7 +115,7 @@ class LogInActivity : AppCompatActivity() {
      */
     private fun checkUser() {
         if(FirebaseAuth.getInstance().currentUser!=null){
-            singleton.User = FirebaseAuth.getInstance().currentUser!!
+            FirebaseSingleton.firebaseUser = FirebaseAuth.getInstance().currentUser!!
             startActivity(Intent(this@LogInActivity, MainActivity::class.java))
         }
     }
