@@ -9,10 +9,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.FirebaseDatabase
 
 
 class AppProviderSingleton() {
     private lateinit var firebaseUser:FirebaseUser
+    private val firebaseDatabase = FirebaseDatabase.getInstance().reference
     var User:FirebaseUser
         get() = firebaseUser
         set(newValue){
@@ -23,6 +25,11 @@ class AppProviderSingleton() {
 
     fun addPokemonToList(newPokemon : PokemonData){
         pokemonList!!.add(newPokemon)
+    }
+
+    fun getUserList(){
+        var list = firebaseDatabase.child("Users")
+        Log.d("List", list.toString())
     }
 
     init {

@@ -21,6 +21,7 @@
             app:srcCompat="@drawable/walkemon_logo" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout4"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
@@ -64,6 +65,17 @@
                 app:layout_constraintStart_toStartOf="@+id/registrationDateProfileTextView"
                 app:layout_constraintTop_toBottomOf="@+id/registrationDateProfileTextView" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/profileItemRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/constraintLayout4"
+            app:layout_constraintStart_toStartOf="@+id/avatarImageView"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

@@ -63,13 +63,13 @@ class ProfileFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        myFragmentView = inflater.inflate(R.layout.activity_pokedex_list_view,container,false)
+        myFragmentView = inflater.inflate(R.layout.fragment_profile,container,false)
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity!!.title = activity!!.getString(R.string.ProfileTitle)+" "+singleton!!.User.displayName
+        activity!!.title = activity!!.getString(R.string.ProfileTitleFragment)+" "+singleton!!.User.displayName
         initProfileFragment()
     }
 

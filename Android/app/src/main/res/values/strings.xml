@@ -52,7 +52,7 @@
     <string name="default_email_value">examplemail@mail.com</string>
 
     <!--Fragments Titles-->
-    <string name="ProfileTitle">Profil de </string>
+    <string name="ProfileTitleFragment">Profil de </string>
 
     <!--Labels-->
     <string name="emailLabel">Email : </string>

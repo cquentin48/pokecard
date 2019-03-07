@@ -46,6 +46,7 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
 
         pokedexListView.passContext(applicationContext)
         profileView.passContext(applicationContext)
+        AppProviderSingleton.getInstance().getUserList()
     }
 
     private fun addAdditionnalInformations(){
