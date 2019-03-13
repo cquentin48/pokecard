@@ -10,8 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
+import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.FirebaseDatabaseSingleton
 
 import com.pokeapi.lpiem.pokeapiandroid.R
 import com.pokeapi.lpiem.pokeapiandroid.View.Adapter.ProfileItemAdapter
@@ -49,6 +51,7 @@ class ProfileFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        profileFragmentViewModel.initRecyclerView()
     }
 
     fun passContext(context: Context){
@@ -86,7 +89,9 @@ class ProfileFragment : Fragment() {
 
     private fun initResumeSection(){
         otherInformationsRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
-        otherInformationsRecyclerView.adapter = ProfileItemAdapter(profileFragmentViewModel.initOtherSections(selectedSection),applicationContext)
+        profileFragmentViewModel.infoList.observe(this, Observer {
+            otherInformationsRecyclerView.adapter = ProfileItemAdapter(it,applicationContext)
+        })
     }
 
     // TODO: Rename method, update argument and hook method into UI event

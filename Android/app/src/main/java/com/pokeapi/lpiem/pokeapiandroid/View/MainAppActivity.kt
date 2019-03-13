@@ -49,10 +49,6 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
 
         pokedexListView.passContext(applicationContext)
         profileView.passContext(applicationContext)
-        /*FirebaseDatabaseSingleton.initUser(AppProviderSingleton.getInstance().User.uid.toString(),
-                Profile(AppProviderSingleton.getInstance().User.displayName.toString(),
-                        AppProviderSingleton.getInstance().User.email.toString(),
-                        AppProviderSingleton.getInstance().User.photoUrl.toString()!!))*/
     }
 
     private fun addAdditionnalInformations(){
