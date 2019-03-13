@@ -27,11 +27,6 @@ class AppProviderSingleton() {
         pokemonList!!.add(newPokemon)
     }
 
-    fun getUserList(){
-        var list = firebaseDatabase.child("Users")
-        Log.d("List", list.toString())
-    }
-
     init {
         pokemonList = mutableListOf()
     }

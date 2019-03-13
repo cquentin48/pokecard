@@ -9,7 +9,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.database.*
 import com.google.firebase.database.FirebaseDatabase
 import com.pokeapi.lpiem.pokeapiandroid.Model.SocialNetworks.Profile
-import kotlinx.android.synthetic.main.fragment_profile.*
 
 object FirebaseDatabaseSingleton {
 
@@ -25,8 +24,7 @@ object FirebaseDatabaseSingleton {
     fun setUpTextView(textView: TextView, elementType: String) {
         userRef.child(AppProviderSingleton.getInstance().User.uid).addValueEventListener(
                 object : ValueEventListener {
-                    override fun onCancelled(p0: DatabaseError) {
-                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    override fun onCancelled(databaseError: DatabaseError) {
                     }
 
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -39,8 +37,8 @@ object FirebaseDatabaseSingleton {
     fun settingUpImageView(imageView: ImageView, fragmentContext: Context, reference: DatabaseReference) {
         reference.addValueEventListener(
                 object : ValueEventListener {
-                    override fun onCancelled(p0: DatabaseError) {
-                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        showErrorMessage(databaseError)
                     }
 
                     override fun onDataChange(p0: DataSnapshot) {
@@ -57,8 +55,8 @@ object FirebaseDatabaseSingleton {
 
     private fun addElementToList(dataList: HashMap<String, String>, reference: DatabaseReference, key: String) {
         reference.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-                Log.d("Error", p0.message)
+            override fun onCancelled(databaseError: DatabaseError) {
+                showErrorMessage(databaseError)
             }
 
             override fun onDataChange(data: DataSnapshot) {
@@ -67,12 +65,18 @@ object FirebaseDatabaseSingleton {
         })
     }
 
-    private fun countElements(reference: DatabaseReference, requiredValue: Any): Int {
+    private fun showErrorMessage(databaseError: DatabaseError) {
+        Log.e("Error", databaseError.message)
+        Log.e("Error", databaseError.details)
+    }
+
+    fun countElements(reference: DatabaseReference, requiredValue: Any): Int {
         var numberOfElements = 0
         reference.addValueEventListener(
                 object : ValueEventListener {
-                    override fun onCancelled(p0: DatabaseError) {
-                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        Log.e("Error",databaseError.message)
+                        Log.e("Error",databaseError.details)
                     }
 
                     override fun onDataChange(p0: DataSnapshot) {
@@ -89,10 +93,38 @@ object FirebaseDatabaseSingleton {
     }
 
     fun initUser(userId: String, user: Profile) {
-        userRef.child(userId).setValue(user)
+        if(isUserAlreadyPresent(userId)){
+            userRef.child(userId).setValue(user)
+        }
     }
 
     fun isUserAlreadyPresent(userId: String): Boolean {
         return if (userRef.child(userId) == null) true else false
+    }
+
+    fun initArrayList(context: Context, elementList:List<String>){
+
+    }
+
+    fun getElement(ref:DatabaseReference, typeObject:Int):String{
+        var element = ""
+        ref.addValueEventListener(
+                object:ValueEventListener{
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        showErrorMessage(databaseError)
+                    }
+
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        if(typeObject == 0){
+                            Log.d("Element : "+dataSnapshot.key,dataSnapshot.getValue(String::class.java))
+                            element = "${dataSnapshot.key} : ${dataSnapshot.getValue(String::class.java)}"
+                        }else{
+                            Log.d("Element : "+dataSnapshot.key,dataSnapshot.getValue(Long::class.java).toString())
+                            element = "${dataSnapshot.key} : ${dataSnapshot.getValue(Long::class.java).toString()}"
+                        }
+                    }
+                }
+        )
+        return element
     }
 }

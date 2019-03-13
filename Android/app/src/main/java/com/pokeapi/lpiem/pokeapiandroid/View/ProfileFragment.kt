@@ -1,5 +1,6 @@
 package com.pokeapi.lpiem.pokeapiandroid.View
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
@@ -9,15 +10,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
-import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.FirebaseDatabaseSingleton
 
 import com.pokeapi.lpiem.pokeapiandroid.R
+import com.pokeapi.lpiem.pokeapiandroid.View.Adapter.ProfileItemAdapter
+import com.pokeapi.lpiem.pokeapiandroid.ViewModel.ProfileFragmentViewModel
 import kotlinx.android.synthetic.main.fragment_profile.*
-import java.text.SimpleDateFormat
-import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -41,6 +40,8 @@ class ProfileFragment : Fragment() {
     private lateinit var myFragmentView: View
     private lateinit var applicationContext: Context
     private val singleton:AppProviderSingleton = AppProviderSingleton.getInstance()
+    private var selectedSection : Int = 0
+    private var profileFragmentViewModel = ProfileFragmentViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,9 +61,10 @@ class ProfileFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 
+    @SuppressLint("ResourceType")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity!!.title = activity!!.getString(R.string.ProfileTitleFragment)+" "+singleton!!.User.displayName
+        activity!!.title = activity!!.getString(R.string.ProfileTitleFragment)+" "+ singleton.User.displayName
         initProfileFragment()
     }
 
@@ -73,46 +75,9 @@ class ProfileFragment : Fragment() {
     }
 
     private fun initProfileBasicInformations() {
-        FirebaseDatabaseSingleton.setUpTextView(usernameTextViewProfile,"username")
-        FirebaseDatabaseSingleton.setUpTextView(lastUserConnectionDate,"lastUserConnection")
-        FirebaseDatabaseSingleton.setUpTextView(registrationDateProfileTextView,"registrationDate")
-        FirebaseDatabaseSingleton.settingUpImageView(avatarImageView,
-                applicationContext,
-                FirebaseDatabaseSingleton.userRef.child(AppProviderSingleton.getInstance().User.uid).child("avatarImage"))
+        profileFragmentViewModel.initMainInfos(applicationContext,usernameTextViewProfile, lastUserConnectionDate, registrationDateProfileTextView, avatarImageView)
     }
 
-    /*private fun initOtherSections(){
-        val groupAdapter = GroupAdapter<ViewHolder>().apply {
-            spanCount = 3
-        }
-        recyclerViewPokedexList.apply {
-            layoutManager = GridLayoutManager(activity!!.baseContext, groupAdapter.spanCount).apply {
-                spanSizeLookup = groupAdapter.spanSizeLookup
-            }
-            adapter = groupAdapter
-        }
-        initOtherSectionsContent()
-    }
-
-    private fun createList(rawData: TreeMap<String, MutableList<PokemonRetrofit>>, groupAdapter: GroupAdapter<ViewHolder>){
-        for((key,value) in rawData){
-            addListToGroup(key,value,groupAdapter)
-        }
-    }
-
-
-    /**
-     * Add the list to the adapter
-     * @param letter alphabetical letter about the first letter in the pokemon name
-     * @param rawData pokemon list starting with the param [letter].
-     * @param groupAdapter adapter about loading the lists
-     */
-    private fun addListToGroup(letter:String, rawData: MutableList<PokemonRetrofit>, groupAdapter: GroupAdapter<ViewHolder>){
-        ExpandableGroup(AdapterHeader(letter),true).apply {
-            add(Section(generateListItems(rawData)))
-            groupAdapter.add(this)
-        }
-    }*/
 
     private fun initTextView(textView: TextView, text:String, ressourceId:Int) {
         textView.text = text
@@ -120,7 +85,8 @@ class ProfileFragment : Fragment() {
     }
 
     private fun initResumeSection(){
-
+        otherInformationsRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
+        otherInformationsRecyclerView.adapter = ProfileItemAdapter(profileFragmentViewModel.initOtherSections(selectedSection),applicationContext)
     }
 
     // TODO: Rename method, update argument and hook method into UI event

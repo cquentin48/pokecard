@@ -60,4 +60,9 @@
     <string name="usernameLabel">Pseudonyme : </string>
     <string name="phoneNumberLabel">N° de téléphone : </string>
     <string name="avatarSelect">Choix de l\'avatart</string>
+
+    <!--Bottom navigation view-->
+    <string name="completeGeneralInfos">Généralités</string>
+    <string name="completePokeStats">Pokéstats</string>
+    <string name="completePokeCoins">Poképièces</string>
 </resources>

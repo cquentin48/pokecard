@@ -3,6 +3,8 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="backgroundColor">#ff0000</color>
+    <color name="backgroundColor">#cc0000</color>
     <color name="textColor">#ffffff</color>
+    <color name="unselectedFragment">#808080</color>
+    <color name="selectedFragment">#ffffff</color>
 </resources>
