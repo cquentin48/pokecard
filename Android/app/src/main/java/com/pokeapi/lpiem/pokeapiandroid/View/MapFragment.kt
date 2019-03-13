@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentManager
 
 
 import com.google.android.gms.maps.model.LatLng
@@ -16,22 +17,32 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.Marker
 import com.pokeapi.lpiem.pokeapiandroid.R
+import java.io.Serializable
+import com.facebook.appevents.codeless.internal.UnityReflection.sendMessage
+import android.R.attr.bitmap
+import android.R
+import android.os.Message
 
 
 class MapFragment : Fragment() {
     private var ARG_PARAM1:String = "latitude"
     private var ARG_PARAM2 :String = "longitude"
+    private var ARG_PARAM3 :String = "screenLocalization"
     // TODO: Rename and change types of parameters
     private var latitude: Double = 0.toDouble()
     private var longitude: Double = 0.toDouble()
+    private lateinit var screenLocalization: MapFragmentManager
     private var listener: OnFragmentInteractionListener? = null
+    private lateinit var marker: Marker
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             latitude = it.getDouble(ARG_PARAM1)
             longitude = it.getDouble(ARG_PARAM2)
+            screenLocalization = it.getSerializable(ARG_PARAM3) as MapFragmentManager
         }
     }
 
@@ -55,10 +66,14 @@ class MapFragment : Fragment() {
 
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(googlePlex), 2500, null)
 
-            mMap.addMarker(MarkerOptions()
+            marker = mMap.addMarker(MarkerOptions()
                     .position(LatLng(latitude, longitude))
                     .title("Moi"))
         }
+
+       update()
+
+
         // Inflate the layout for this fragment
         return rootView
     }
@@ -109,13 +124,33 @@ class MapFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
 
-        fun newInstance(latitude: Double, longitude: Double) =
+        fun newInstance(latitude: Double, longitude: Double, screenLocalization: Serializable) =
                 MapFragment().apply {
                     arguments = Bundle().apply {
                         putDouble(ARG_PARAM1, latitude)
                         putDouble(ARG_PARAM2, longitude)
+                        putSerializable(ARG_PARAM3, screenLocalization)
                     }
                 }
+    }
+
+    fun update(){
+        var mThread = Thread(Runnable {
+            Thread.sleep(5000)
+            var position: MutableList<Double> = screenLocalization.setMarkerPosition()
+
+            val msg: Message = handler.obtainMessage()
+            msg.what = UPDATE_IMAGE
+            msg.obj = bitmap
+            msg.arg1 = index
+            handler.sendMessage(msg)
+
+            var runOnUiThread = Runnable {
+                marker.position = (LatLng(position[0], position[1]))
+            }
+            update()
+        }).start()
+
     }
 
 

@@ -174,7 +174,7 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>, M
         return true
     }
 
-    fun goToLocalization(view:View) {
+  /*  fun goToLocalization(view:View) {
 
         val service = getSystemService(LOCATION_SERVICE) as LocationManager
         val enabled = service
@@ -188,5 +188,5 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>, M
             val myIntent = Intent(this, LocalizationActivity::class.java)
             startActivity(myIntent)
         }
-    }
+    }*/
 }

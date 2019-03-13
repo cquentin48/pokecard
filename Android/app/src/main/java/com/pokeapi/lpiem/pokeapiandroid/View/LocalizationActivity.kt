@@ -20,7 +20,7 @@ import com.pokeapi.lpiem.pokeapiandroid.R
 
 
 
-
+/*
 class LocalizationActivity : AppCompatActivity(), MapFragment.OnFragmentInteractionListener, LocationListener {
     private lateinit var latituteField: TextView
     private lateinit var longitudeField: TextView
@@ -136,3 +136,4 @@ class LocalizationActivity : AppCompatActivity(), MapFragment.OnFragmentInteract
 
 
 }
+*/

@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat
 import com.pokeapi.lpiem.pokeapiandroid.View.MapFragment
 import com.pokeapi.lpiem.pokeapiandroid.View.MapFragmentManager
 import java.io.Serializable
-
+/*
 class MapProvider(var activity: MapFragmentManager): Serializable {
     private var mActivity : MapFragmentManager = activity
     private lateinit var locationManager: LocationManager
@@ -44,4 +44,4 @@ class MapProvider(var activity: MapFragmentManager): Serializable {
 
 
 
-}
+}*/
