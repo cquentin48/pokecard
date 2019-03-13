@@ -32,6 +32,7 @@
             app:layout_constraintTop_toTopOf="@+id/avatarImageView">
 
             <TextView
+                android:drawableLeft="@drawable/ic_contact_mail_black_24dp"
                 android:id="@+id/usernameTextViewProfile"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -49,13 +50,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:text="TextView"
-                app:layout_constraintBottom_toTopOf="@+id/emailProfileTextView"
+                app:layout_constraintBottom_toTopOf="@+id/lastUserConnectionDate"
                 app:layout_constraintEnd_toEndOf="@+id/usernameTextViewProfile"
                 app:layout_constraintStart_toStartOf="@+id/usernameTextViewProfile"
                 app:layout_constraintTop_toBottomOf="@+id/usernameTextViewProfile" />
 
             <TextView
-                android:id="@+id/emailProfileTextView"
+                android:id="@+id/lastUserConnectionDate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -76,6 +77,14 @@
             app:layout_constraintEnd_toEndOf="@+id/constraintLayout4"
             app:layout_constraintStart_toStartOf="@+id/avatarImageView"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
+
+        <com.google.android.material.navigation.NavigationView
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/profileItemRecyclerView"
+            app:layout_constraintStart_toStartOf="@+id/profileItemRecyclerView"
+            app:layout_constraintTop_toBottomOf="@+id/profileItemRecyclerView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

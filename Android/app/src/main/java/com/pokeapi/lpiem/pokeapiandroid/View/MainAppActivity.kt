@@ -16,9 +16,12 @@ import com.pokeapi.lpiem.pokeapiandroid.Provider.Pokemon.InterfaceCallBackContro
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
 import android.location.LocationManager
 import android.provider.Settings
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.firebase.ui.auth.AuthUI
+import com.pokeapi.lpiem.pokeapiandroid.Model.SocialNetworks.Profile
+import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.FirebaseDatabaseSingleton
 import com.pokeapi.lpiem.pokeapiandroid.R
 import kotlinx.android.synthetic.main.activity_main_app.*
 
@@ -46,6 +49,10 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
 
         pokedexListView.passContext(applicationContext)
         profileView.passContext(applicationContext)
+        FirebaseDatabaseSingleton.initUser(AppProviderSingleton.getInstance().User.uid.toString(),
+                Profile(AppProviderSingleton.getInstance().User.displayName.toString(),
+                        AppProviderSingleton.getInstance().User.email.toString(),
+                        AppProviderSingleton.getInstance().User.photoUrl.toString()!!))
         AppProviderSingleton.getInstance().getUserList()
     }
 

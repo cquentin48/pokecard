@@ -9,19 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonRetrofit
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
+import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.FirebaseDatabaseSingleton
 
 import com.pokeapi.lpiem.pokeapiandroid.R
-import com.pokeapi.lpiem.pokeapiandroid.View.Adapter.AdapterHeader
-import com.xwray.groupie.ExpandableGroup
-import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.Section
-import com.xwray.groupie.kotlinandroidextensions.ViewHolder
-import kotlinx.android.synthetic.main.activity_pokedex_list_view.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -80,23 +73,12 @@ class ProfileFragment : Fragment() {
     }
 
     private fun initProfileBasicInformations() {
-        initTextView(usernameTextViewProfile,
-                singleton.User.displayName!!,
-                R.drawable.ic_contacts_black_24dp)
-
-        initTextView(emailProfileTextView,
-                singleton.User.email!!,
-                R.drawable.ic_contact_mail_black_24dp)
-
-        initTextView(registrationDateProfileTextView,
-                SimpleDateFormat("dd/MM/yyyy").format(Date(singleton.User.metadata!!.creationTimestamp)),
-                R.drawable.ic_perm_contact_calendar_black_24dp)
-
-        Glide
-                .with(applicationContext)
-                .load(singleton!!.User.photoUrl)
-                .apply(RequestOptions().override(300, 300).circleCrop())
-                .into(avatarImageView)
+        FirebaseDatabaseSingleton.setUpTextView(usernameTextViewProfile,"username")
+        FirebaseDatabaseSingleton.setUpTextView(lastUserConnectionDate,"lastUserConnection")
+        FirebaseDatabaseSingleton.setUpTextView(registrationDateProfileTextView,"registrationDate")
+        FirebaseDatabaseSingleton.settingUpImageView(avatarImageView,
+                applicationContext,
+                FirebaseDatabaseSingleton.userRef.child(AppProviderSingleton.getInstance().User.uid).child("avatarImage"))
     }
 
     /*private fun initOtherSections(){
