@@ -81,16 +81,11 @@ class ProfileFragment : Fragment() {
         profileFragmentViewModel.initMainInfos(applicationContext,usernameTextViewProfile, lastUserConnectionDate, registrationDateProfileTextView, avatarImageView)
     }
 
-
-    private fun initTextView(textView: TextView, text:String, ressourceId:Int) {
-        textView.text = text
-        textView.setCompoundDrawablesWithIntrinsicBounds(ressourceId, 0, 0, 0)
-    }
-
     private fun initResumeSection(){
         otherInformationsRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
         profileFragmentViewModel.infoList.observe(this, Observer {
             otherInformationsRecyclerView.adapter = ProfileItemAdapter(it,applicationContext)
+            (otherInformationsRecyclerView.adapter as ProfileItemAdapter).notifyDataSetChanged()
         })
     }
 
