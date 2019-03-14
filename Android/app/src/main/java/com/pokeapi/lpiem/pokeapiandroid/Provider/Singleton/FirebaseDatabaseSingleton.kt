@@ -53,6 +53,27 @@ object FirebaseDatabaseSingleton {
         )
     }
 
+    fun moveElementToAnotherPlace(originalPath : DatabaseReference, newPath: DatabaseReference){
+        originalPath.addValueEventListener(
+                object : ValueEventListener{
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        showErrorMessage(databaseError)
+                    }
+
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        newPath.setValue(dataSnapshot.value) { databaseError, _ ->
+                            if(databaseError == null){
+                                Log.d("Information", "Success")
+                            }else{
+                                showErrorMessage(databaseError)
+                            }
+                        }
+                    }
+
+                }
+        )
+    }
+
     private fun addElementToList(dataList: HashMap<String, String>, reference: DatabaseReference, key: String) {
         reference.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(databaseError: DatabaseError) {
