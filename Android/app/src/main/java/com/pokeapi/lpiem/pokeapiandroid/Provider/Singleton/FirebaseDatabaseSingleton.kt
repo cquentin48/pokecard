@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.database.*
@@ -123,12 +124,7 @@ object FirebaseDatabaseSingleton {
         return if (userRef.child(userId) == null) true else false
     }
 
-    fun initArrayList(context: Context, elementList:List<String>){
-
-    }
-
-    fun getElement(ref:DatabaseReference, typeObject:Int):String{
-        var element = ""
+    fun getElement(ref:DatabaseReference, typeObject:Int, liveData: MutableLiveData<ArrayList<String>>){
         ref.addValueEventListener(
                 object:ValueEventListener{
                     override fun onCancelled(databaseError: DatabaseError) {
@@ -138,14 +134,15 @@ object FirebaseDatabaseSingleton {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         if(typeObject == 0){
                             Log.d("Element : "+dataSnapshot.key,dataSnapshot.getValue(String::class.java))
-                            element = "${dataSnapshot.key} : ${dataSnapshot.getValue(String::class.java)}"
+                            (liveData.value!!.add("${dataSnapshot.key} : ${dataSnapshot.getValue(String::class.java)}"))
+                            liveData.postValue(liveData.value)
                         }else{
                             Log.d("Element : "+dataSnapshot.key,dataSnapshot.getValue(Long::class.java).toString())
-                            element = "${dataSnapshot.key} : ${dataSnapshot.getValue(Long::class.java).toString()}"
+                            (liveData.value!!.add("${dataSnapshot.key} : ${dataSnapshot.getValue(Long::class.java).toString()}"))
+                            liveData.postValue(liveData.value)
                         }
                     }
                 }
         )
-        return element
     }
 }

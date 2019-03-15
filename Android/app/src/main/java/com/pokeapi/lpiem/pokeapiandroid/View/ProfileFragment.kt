@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -84,14 +85,19 @@ class ProfileFragment : Fragment() {
     private fun initResumeSection(){
         otherInformationsRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
         profileFragmentViewModel.infoList.observe(this, Observer {
-            otherInformationsRecyclerView.adapter = ProfileItemAdapter(it,applicationContext)
-            (otherInformationsRecyclerView.adapter as ProfileItemAdapter).notifyDataSetChanged()
+            updateRecyclerView(it)
         })
+        profileFragmentViewModel.initOtherSections(0)
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
+    }
+
+    fun updateRecyclerView(rawData:ArrayList<String>){
+        otherInformationsRecyclerView.adapter = ProfileItemAdapter(rawData,applicationContext)
+        (otherInformationsRecyclerView.adapter as ProfileItemAdapter).notifyDataSetChanged()
     }
 
     override fun onDetach() {

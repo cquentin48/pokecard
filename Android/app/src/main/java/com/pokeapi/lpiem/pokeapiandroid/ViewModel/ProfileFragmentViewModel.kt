@@ -1,6 +1,7 @@
 package com.pokeapi.lpiem.pokeapiandroid.ViewModel
 
 import android.content.Context
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.MutableLiveData
@@ -27,7 +28,8 @@ class ProfileFragmentViewModel {
                         child(AppProviderSingleton.getInstance().User.uid).child(it.replace("counting","")),
                         true).toString())
             }else{
-                elementList.add(FirebaseDatabaseSingleton.getElement(FirebaseDatabaseSingleton.userRef.child(AppProviderSingleton.getInstance().User.uid).child(it),getElementTypeById(it)))
+                FirebaseDatabaseSingleton.getElement(FirebaseDatabaseSingleton.userRef.child(AppProviderSingleton.getInstance().User.uid).child(it),getElementTypeById(it),infoList)
+                /*elementList.add(FirebaseDatabaseSingleton.getElement(FirebaseDatabaseSingleton.userRef.child(AppProviderSingleton.getInstance().User.uid).child(it),getElementTypeById(it)))*/
             }
         }
         infoList.postValue(elementList)
