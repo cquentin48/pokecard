@@ -16,7 +16,6 @@ import com.pokeapi.lpiem.pokeapiandroid.Provider.Pokemon.InterfaceCallBackContro
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
 import android.location.LocationManager
 import android.provider.Settings
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.firebase.ui.auth.AuthUI
@@ -51,8 +50,10 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
         profileView.passContext(applicationContext)
     }
 
-    private fun addAdditionnalInformations(){
-
+    private fun initUserData(){
+        FirebaseDatabaseSingleton.initUser(AppProviderSingleton.getInstance().User.uid,
+                Profile(AppProviderSingleton.getInstance().User.displayName,AppProviderSingleton.getInstance().User.email,
+                        AppProviderSingleton.getInstance().User.photoUrl.toString()))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,7 +63,7 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
         setUpFragment()
 
         FirebaseDatabaseSingleton.initUser(AppProviderSingleton.getInstance().User.uid,Profile())
-        addAdditionnalInformations()
+        initUserData()
 
         navigationView.setNavigationItemSelectedListener { menuItem ->
             // set item as selected to persist highlight

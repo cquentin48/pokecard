@@ -9,12 +9,32 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.database.*
 import com.google.firebase.database.FirebaseDatabase
+import com.pokeapi.lpiem.pokeapiandroid.Model.AdapterModel.ProfileFragmentAdapterModel
 import com.pokeapi.lpiem.pokeapiandroid.Model.SocialNetworks.Profile
 
 object FirebaseDatabaseSingleton {
 
     private val principalElementList = listOf("username", "lastUserConnection", "registrationDate")
     private val arrayElementList = listOf("pokemonCollection", "friendList", "achievmentList")
+    private val principalElementsList = listOf(
+            ProfileFragmentAdapterModel("Distance : ",
+                    "",
+                    "",
+                    "distance",
+                    "long"
+            ),
+            ProfileFragmentAdapterModel("Date d'inscription : ",
+                    "",
+                    "",
+                    "registrationDate",
+                    "string"
+            ),
+            ProfileFragmentAdapterModel("Pokédex remplit : ",
+                    "",
+                    "",
+                    "countingPokemonCollection",
+                    "long"
+            ))
 
     val database = FirebaseDatabase.getInstance()
     val userRef = database.getReference("users")
@@ -92,8 +112,8 @@ object FirebaseDatabaseSingleton {
         Log.e("Error", databaseError.details)
     }
 
-    fun countElements(reference: DatabaseReference, requiredValue: Any): Int {
-        var numberOfElements = 0
+    fun countElements(reference: DatabaseReference, requiredValue: Any, liveData: MutableLiveData<HashMap<String, String>>){
+
         reference.addValueEventListener(
                 object : ValueEventListener {
                     override fun onCancelled(databaseError: DatabaseError) {
@@ -101,17 +121,19 @@ object FirebaseDatabaseSingleton {
                         Log.e("Error",databaseError.details)
                     }
 
-                    override fun onDataChange(p0: DataSnapshot) {
-                        p0.children.forEach {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        var numberOfElements = 0
+                        dataSnapshot.children.forEach {
                             if (it.equals(requiredValue)) {
                                 numberOfElements++
                             }
                         }
+                        liveData.value!![dataSnapshot.key!!] = "${dataSnapshot.key} : $numberOfElements"
+                        liveData.postValue(liveData.value)
                     }
 
                 }
         )
-        return numberOfElements
     }
 
     fun initUser(userId: String, user: Profile) {
@@ -121,10 +143,10 @@ object FirebaseDatabaseSingleton {
     }
 
     fun isUserAlreadyPresent(userId: String): Boolean {
-        return if (userRef.child(userId) == null) true else false
+        return userRef.child(userId) != null
     }
 
-    fun getElement(ref:DatabaseReference, typeObject:Int, liveData: MutableLiveData<ArrayList<String>>){
+    fun getElement(ref:DatabaseReference, typeObject:Int, liveData: MutableLiveData<HashMap<String,String>>){
         ref.addValueEventListener(
                 object:ValueEventListener{
                     override fun onCancelled(databaseError: DatabaseError) {
@@ -133,12 +155,10 @@ object FirebaseDatabaseSingleton {
 
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         if(typeObject == 0){
-                            Log.d("Element : "+dataSnapshot.key,dataSnapshot.getValue(String::class.java))
-                            (liveData.value!!.add("${dataSnapshot.key} : ${dataSnapshot.getValue(String::class.java)}"))
+                            liveData.value!![dataSnapshot.key.toString()] = "${dataSnapshot.key} : ${dataSnapshot.getValue(String::class.java)}"
                             liveData.postValue(liveData.value)
                         }else{
-                            Log.d("Element : "+dataSnapshot.key,dataSnapshot.getValue(Long::class.java).toString())
-                            (liveData.value!!.add("${dataSnapshot.key} : ${dataSnapshot.getValue(Long::class.java).toString()}"))
+                            liveData.value!![dataSnapshot.key.toString()] = "${dataSnapshot.key} : ${dataSnapshot.getValue(Long::class.java).toString()}"
                             liveData.postValue(liveData.value)
                         }
                     }

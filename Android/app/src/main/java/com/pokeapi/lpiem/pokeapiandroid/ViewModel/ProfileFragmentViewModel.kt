@@ -9,7 +9,7 @@ import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.FirebaseDatabaseSingleton
 
 class ProfileFragmentViewModel {
-    var infoList:MutableLiveData<ArrayList<String>> = MutableLiveData()
+    var infoList:MutableLiveData<HashMap<String,String>> = MutableLiveData()
     fun initMainInfos(context: Context, usernameTextView: TextView, lastUserConnection:TextView, registrationDateProfileTextView:TextView, avatarImageView:ImageView){
         FirebaseDatabaseSingleton.setUpTextView(usernameTextView,"username")
         FirebaseDatabaseSingleton.setUpTextView(lastUserConnection,"lastUserConnection")
@@ -21,15 +21,14 @@ class ProfileFragmentViewModel {
 
     private fun initCompleteMainInfos(){
         val loadingList = listOf("registrationDate","countingfriendList","countingachievmentList","distance")
-        val elementList = arrayListOf<String>()
+        val elementList = hashMapOf<String,String>()
         loadingList.forEach {
             if(it.contains("counting")){
-                elementList.add("Compteur : "+FirebaseDatabaseSingleton.countElements(FirebaseDatabaseSingleton.userRef.
+                FirebaseDatabaseSingleton.countElements(FirebaseDatabaseSingleton.userRef.
                         child(AppProviderSingleton.getInstance().User.uid).child(it.replace("counting","")),
-                        true).toString())
+                        true,infoList)
             }else{
                 FirebaseDatabaseSingleton.getElement(FirebaseDatabaseSingleton.userRef.child(AppProviderSingleton.getInstance().User.uid).child(it),getElementTypeById(it),infoList)
-                /*elementList.add(FirebaseDatabaseSingleton.getElement(FirebaseDatabaseSingleton.userRef.child(AppProviderSingleton.getInstance().User.uid).child(it),getElementTypeById(it)))*/
             }
         }
         infoList.postValue(elementList)
@@ -47,6 +46,6 @@ class ProfileFragmentViewModel {
     }
 
     fun initRecyclerView(){
-        infoList.value = arrayListOf()
+        infoList.value = hashMapOf()
     }
 }

@@ -95,7 +95,7 @@ class ProfileFragment : Fragment() {
         listener?.onFragmentInteraction(uri)
     }
 
-    fun updateRecyclerView(rawData:ArrayList<String>){
+    fun updateRecyclerView(rawData:HashMap<String,String>){
         otherInformationsRecyclerView.adapter = ProfileItemAdapter(rawData,applicationContext)
         (otherInformationsRecyclerView.adapter as ProfileItemAdapter).notifyDataSetChanged()
     }
