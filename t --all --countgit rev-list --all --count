@@ -1,0 +1,104 @@
+NoeColin (7):
+      map localization in progress, first page update
+      Merge pull request #3 from cquentin48/hotfix/fixRecyclerView
+      Merge pull request #4 from cquentin48/hotfix/loginHotFix
+      Merge pull request #5 from cquentin48/hotfix/activityToFragments
+      Merge pull request #6 from cquentin48/hotfix/screenLockHotFix
+      Merge pull request #7 from cquentin48/hotfix/navigationViewLogoFix
+      Merge pull request #8 from cquentin48/feature/firebaseAuthentification
+
+Noé Colin (6):
+      add type img
+      Merge branch 'feature/iconesTypesPokemon' into develop
+      map set. location in progress
+      Merge branch 'develop' into localizationFragment
+      localization and zoom + merge done
+      Merge branch 'localizationFragment' into develop
+
+Quentin (2):
+      [Feat]Basic informations in the profile
+      [Feat]Adding description for the profile
+
+Quentin CHAPEL (78):
+      Initial commit
+      Ajout des fichiers php
+      Amélioration de l'écran de connexion et début de création du menu d'option
+      Fonctionnalités de connexion à travers les comptes google ou facebook désormais opérationnelles
+      Conversion au format Kotlin
+      Conversion en kotlin
+      gitflow-feature-stash: inflaterPokedex
+      gitflow-feature-stash: inflaterPokedex
+      Travail fin Vendredi
+      [Feat]Import pokemon from pokeApi
+      [Feat]Work done on the 11th of December
+      [Feat]Work done on the 4th of January
+      Merge branch 'develop' into feature/inflaterPokedex
+      [Feat]Commit before migrating to AndroidX
+      [Feat]Migrating data to AndroidX and resolving errors
+      [Feat]Adding retrofit function
+      [Feat]Work done before going to english lesson.
+      [Feat]Work done on the 22th of January at noon
+      [Feat]Pokedex recycler view
+      [Feat]Work done on the 22nd of January
+      [Fix]Removing PHP code from android repository
+      Merge branch 'hotfix/removingPHPPart' into develop
+      Merge branch 'develop' into feature/inflaterPokedex
+      [Feat]Work done on the 22nd of January
+      [Feat]Loading pokemonList from webapi
+      [Feat]Work done at 7:00 am
+      [Feat]Basic navigation drawer
+      Merge remote-tracking branch 'origin/hotfix/removingPHPPart' into develop
+      [Fix]Fixing pokedex activity layout
+      Merge branch 'develop' into feature/inflaterPokedex
+      Merge branch 'feature/inflaterPokedex' into develop
+      [Feat]Work done before merge
+      [Fix]Fixing error loading class
+      Merge branch 'develop' into feature/navigationDrawer
+      Merge branch 'feature/navigationDrawer' into develop
+      [Feat]Implementing smart adapters
+      [Feat]Working on recyclerview
+      [Feat]Working on recyclerview implementation
+      [Fix]Fixing managing data for the recyclerview.
+      Merge branch 'hotfix/fixRecyclerView' of https://github.com/cquentin48/pokecard into hotfix/fixRecyclerView
+      [Feat]Implementing basic groupie recyclerview
+      [Fix]Sorting hashmap
+      [Feat]Transforming fragments into activity
+      [Fix]Fixing issues about logging with google account
+      [Fix]Fixing issues about logging in with facebook API
+      [Fix]Changes about fetching data from facebook api
+      Merging data from develop into branch hotfix/activityToFragment.
+      [Fix]Fixing scrolling problem on the pokedex fragment
+      Merge branch 'develop' of https://github.com/cquentin48/pokecard into hotfix/loginHotFix
+      [Feat]Before merging data from develop branch
+      [Fix]Fixing issue about missing navigation drawer
+      [Feat]Fetching data from google/facebook with loggin out
+      [Fix]Crash when trying to load with pokeApi Account
+      [Fix]Fixing pokedex recycler view apparition bug
+      [Fix]Fixing comments on the google profile class
+      Merging data from develop into branch hotfix/activitytoFragments
+      [Fix]Locking the screen to portrait mode for the main Activity
+      [Fix]Fixing missing imageView in navigationDrawer
+      [Feat]Adding localization activity into navigationdrawer
+      [Feat]Material design style for the signin activity
+      [Feat]Firebase auth initialisation and changing layout
+      [Feat]Implementing pre-built firebase authentification
+      [Feat]Changing JDK Level
+      [Feat]Implementing basic built authentification UI
+      [Feat]Creating custom theme for firebase UI
+      [Feat]Applying theme to mainActivity
+      [Fix]Fixing sign-out account
+      [Fix]Fixing text color
+      [Feat]Adding directly sign in
+      [Feat]Basic pokemon informations
+      [Feat]Implementing groupie for profile
+      [Feat]Implementing basic informations for the profile fragment
+      [Feat]Init basic informations for the profile fragment
+      [Feat][WIP]Implementing profile fragment
+      [Feat][WIP]Implementing observer on profile recycler view
+      [Feat]Implementing basic function in order to move
+      [Feat]Removing unused function
+      [Feat]Init basic information for the profile
+
+cquentin48 (1):
+      Merge pull request #1 from cquentin48/feature/migratingToAndroidX
+

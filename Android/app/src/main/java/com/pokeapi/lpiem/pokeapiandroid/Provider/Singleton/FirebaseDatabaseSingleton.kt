@@ -19,6 +19,7 @@ object FirebaseDatabaseSingleton {
 
     val database = FirebaseDatabase.getInstance()
     val userRef = database.getReference("users")
+    val myProfileRef = userRef.child(AppProviderSingleton.getInstance().User.uid)
     val achievementList = database.getReference("achievments")
     val messageList = database.getReference("messages")
 
@@ -93,8 +94,14 @@ object FirebaseDatabaseSingleton {
         Log.e("Error", databaseError.details)
     }
 
+    private fun getReference(databaseEntry:String, mainReference:DatabaseReference):DatabaseReference{
+        return mainReference.child(databaseEntry)
+    }
+
     fun countElements(profileItem: ProfileFragmentAdapterModel, requiredValue: Any, liveData: MutableLiveData<HashMap<String, String>>){
-        FirebaseDatabaseSingleton.userRef.child(AppProviderSingleton.getInstance().User.uid).child(profileItem.databaseEntry).addValueEventListener(
+        profileItem.databaseEntry.replace("counting","")
+        Log.d("Entry",profileItem.databaseEntry.replace("counting",""))
+        getReference(profileItem.databaseEntry,myProfileRef).addValueEventListener(
                 object : ValueEventListener {
                     override fun onCancelled(databaseError: DatabaseError) {
                         Log.e("Error",databaseError.message)
@@ -108,7 +115,7 @@ object FirebaseDatabaseSingleton {
                                 numberOfElements++
                             }
                         }
-                        liveData.value!![dataSnapshot.key!!] = "${dataSnapshot.key} : $numberOfElements"
+                        liveData.value!![profileItem.itemLabel] = "$numberOfElements"
                         liveData.postValue(liveData.value)
                     }
 
@@ -122,27 +129,45 @@ object FirebaseDatabaseSingleton {
         }
     }
 
+    /**
+     * Check if a user already exists in a database
+     * @param userId id of the user
+     * @return [true] the user is already in the base [false] new user
+     */
     fun isUserAlreadyPresent(userId: String): Boolean {
         return userRef.child(userId) != null
     }
 
-    fun getElement(ref:DatabaseReference, typeObject:Int, liveData: MutableLiveData<HashMap<String,String>>){
-        ref.addValueEventListener(
+    /**
+     * Update an element set in a live data
+     * @param profileItem profile index set in the profile fragment
+     * @param liveData live data used to show the profile
+     */
+    fun getElement(profileItem: ProfileFragmentAdapterModel, liveData: MutableLiveData<HashMap<String,String>>){
+        getReference(profileItem.databaseEntry,myProfileRef).addValueEventListener(
                 object:ValueEventListener{
                     override fun onCancelled(databaseError: DatabaseError) {
                         showErrorMessage(databaseError)
                     }
 
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        if(typeObject == 0){
-                            liveData.value!![dataSnapshot.key.toString()] = "${dataSnapshot.key} : ${dataSnapshot.getValue(String::class.java)}"
-                            liveData.postValue(liveData.value)
-                        }else{
-                            liveData.value!![dataSnapshot.key.toString()] = "${dataSnapshot.key} : ${dataSnapshot.getValue(Long::class.java).toString()}"
-                            liveData.postValue(liveData.value)
-                        }
+                        liveData.value!![profileItem.itemLabel] = "${fetchElement(dataSnapshot,profileItem.dataType)}"
+                        liveData.postValue(liveData.value)
                     }
                 }
         )
+    }
+
+    /**
+     * Return the element according to its type
+     * @param dataSnapshot data record in the firebase database
+     * @param elementType type of the element stored in the database of firebase (string, long, ...)
+     */
+    fun fetchElement(dataSnapshot: DataSnapshot, elementType:String):String{
+        return when(elementType){
+            "string"->"${dataSnapshot.getValue(String::class.java)}"
+            "long"->"${dataSnapshot.getValue(Long::class.java)}"
+            else->"${dataSnapshot.getValue(String::class.java)}"
+        }
     }
 }

@@ -11,24 +11,26 @@ import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.FirebaseDatabaseSingleton
 
 class ProfileFragmentViewModel {
-    var infoList = MutableLiveData<ArrayList<ProfileFragmentViewModel>>()
+    var infoList = MutableLiveData<HashMap<String,String>>()
     private val principalElementsList = listOf(
-            ProfileFragmentAdapterModel("Distance : ",
-                    "",
+            ProfileFragmentAdapterModel("Distance",
                     R.drawable.notify_panel_notification_icon_bg,
                     "distance",
                     "long"
             ),
-            ProfileFragmentAdapterModel("Date d'inscription : ",
-                    "",
+            ProfileFragmentAdapterModel("Date d'inscription",
                     R.drawable.notify_panel_notification_icon_bg,
                     "registrationDate",
                     "string"
             ),
-            ProfileFragmentAdapterModel("Pokédex rempli : ",
-                    "",
+            ProfileFragmentAdapterModel("Pokédex rempli",
                     R.drawable.notify_panel_notification_icon_bg,
-                    "countingPokemonCollection",
+                    "countingpokemonCollection",
+                    "long"
+            ),
+            ProfileFragmentAdapterModel("Nombre de succès",
+                    R.drawable.notify_panel_notification_icon_bg,
+                    "countingachievmentList",
                     "long"
             ))
     fun initMainInfos(context: Context, usernameTextView: TextView, lastUserConnection:TextView, registrationDateProfileTextView:TextView, avatarImageView:ImageView){
@@ -41,15 +43,13 @@ class ProfileFragmentViewModel {
     }
 
     private fun initCompleteMainInfos(){
-        val loadingList = listOf("registrationDate","countingfriendList","countingachievmentList","distance")
         val elementList = hashMapOf<String,String>()
-        loadingList.forEach {
-            if(it.contains("counting")){
-                FirebaseDatabaseSingleton.countElements(FirebaseDatabaseSingleton.userRef.
-                        child(AppProviderSingleton.getInstance().User.uid).child(it.replace("counting","")),
-                        true,infoList)
+        principalElementsList.forEach {
+            if(it.databaseEntry.contains("counting")){
+                FirebaseDatabaseSingleton.countElements(it,it.dataType,infoList)
             }else{
-                FirebaseDatabaseSingleton.getElement(FirebaseDatabaseSingleton.userRef.child(AppProviderSingleton.getInstance().User.uid).child(it),getElementTypeById(it),infoList)
+                FirebaseDatabaseSingleton
+                FirebaseDatabaseSingleton.getElement(it,infoList)
             }
         }
         infoList.postValue(elementList)

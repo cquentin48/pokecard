@@ -25,11 +25,13 @@ class ProfileItemAdapter(val items: HashMap<String,String>, val context:Context)
 
     override fun onBindViewHolder(holder: ProfileItemAdapter.ViewHolder, position: Int) {
         /*Glide.with(context).load(items[position].imageViewURL).into(holder.imageViewIcon)*/
+        holder.label.text = "${items.keys.elementAt(position)}"
         holder.description.text = "${items[items.keys.elementAt(position)]}"
     }
 
     class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
         var imageViewIcon = itemView.profileSectionItemIcon
-        var description = itemView.profileSectionDetail
+        var description = itemView.profileSectionLabel
+        var label = itemView.profileSectionLabel
     }
 }
