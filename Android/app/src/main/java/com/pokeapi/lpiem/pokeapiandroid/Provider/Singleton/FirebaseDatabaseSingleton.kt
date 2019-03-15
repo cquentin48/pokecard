@@ -16,25 +16,6 @@ object FirebaseDatabaseSingleton {
 
     private val principalElementList = listOf("username", "lastUserConnection", "registrationDate")
     private val arrayElementList = listOf("pokemonCollection", "friendList", "achievmentList")
-    private val principalElementsList = listOf(
-            ProfileFragmentAdapterModel("Distance : ",
-                    "",
-                    "",
-                    "distance",
-                    "long"
-            ),
-            ProfileFragmentAdapterModel("Date d'inscription : ",
-                    "",
-                    "",
-                    "registrationDate",
-                    "string"
-            ),
-            ProfileFragmentAdapterModel("Pokédex remplit : ",
-                    "",
-                    "",
-                    "countingPokemonCollection",
-                    "long"
-            ))
 
     val database = FirebaseDatabase.getInstance()
     val userRef = database.getReference("users")
@@ -112,9 +93,8 @@ object FirebaseDatabaseSingleton {
         Log.e("Error", databaseError.details)
     }
 
-    fun countElements(reference: DatabaseReference, requiredValue: Any, liveData: MutableLiveData<HashMap<String, String>>){
-
-        reference.addValueEventListener(
+    fun countElements(profileItem: ProfileFragmentAdapterModel, requiredValue: Any, liveData: MutableLiveData<HashMap<String, String>>){
+        FirebaseDatabaseSingleton.userRef.child(AppProviderSingleton.getInstance().User.uid).child(profileItem.databaseEntry).addValueEventListener(
                 object : ValueEventListener {
                     override fun onCancelled(databaseError: DatabaseError) {
                         Log.e("Error",databaseError.message)
