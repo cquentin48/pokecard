@@ -1,10 +1,12 @@
 package com.pokeapi.lpiem.pokeapiandroid.View.Adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.FirebaseDatabaseSingleton
 import com.pokeapi.lpiem.pokeapiandroid.R
 import kotlinx.android.synthetic.main.profile_item.view.*
 
@@ -24,14 +26,14 @@ class ProfileItemAdapter(val items: HashMap<String,String>, val context:Context)
     }
 
     override fun onBindViewHolder(holder: ProfileItemAdapter.ViewHolder, position: Int) {
-        /*Glide.with(context).load(items[position].imageViewURL).into(holder.imageViewIcon)*/
+        Log.d("Information","${items.keys.elementAt(position)}")
         holder.label.text = "${items.keys.elementAt(position)}"
-        holder.description.text = "${items[items.keys.elementAt(position)]}"
+        holder.value.text = "${items[items.keys.elementAt(position)]}"
     }
 
     class ViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
-        var imageViewIcon = itemView.profileSectionItemIcon
-        var description = itemView.profileSectionLabel
-        var label = itemView.profileSectionLabel
+        val imageViewIcon = itemView.profileSectionItemIcon
+        val value = itemView.profileSectionValue
+        val label = itemView.profileSectionLabel
     }
 }
