@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_android"
+        android:id="@+id/profile_complete_Data"
 
         android:enabled="true"
         android:title="@string/completeGeneralInfos"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_logo"
+        android:id="@+id/profile_friend_list"
         android:enabled="true"
-        android:title="@string/completePokeStats"
+        android:title="@string/friendListPokeState"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_landscape"
+        android:id="@+id/profile_all_trade_requests"
         android:enabled="true"
-        android:title="@string/completePokeCoins"
+        android:title="@string/tradeRequests"
         app:showAsAction="ifRoom" />
 </menu>

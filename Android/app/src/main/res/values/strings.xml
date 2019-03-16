@@ -63,6 +63,6 @@
 
     <!--Bottom navigation view-->
     <string name="completeGeneralInfos">Généralités</string>
-    <string name="completePokeStats">Pokéstats</string>
-    <string name="completePokeCoins">Poképièces</string>
+    <string name="friendListPokeState">Amis</string>
+    <string name="tradeRequests">Echanges</string>
 </resources>
