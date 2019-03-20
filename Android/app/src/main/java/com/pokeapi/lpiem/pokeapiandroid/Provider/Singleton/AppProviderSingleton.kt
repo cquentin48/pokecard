@@ -2,6 +2,8 @@ package com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton
 
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -42,27 +44,34 @@ class AppProviderSingleton() {
         return if(firebaseUser.photoUrl != null )firebaseUser.photoUrl.toString() else context.getString(R.string.default_photo_url)
     }
 
-    fun getPokeList(pokedexView: PokedexListView){
+    fun getPokeList() : LiveData<List<PokemonRetrofit>>{
         val pokemonAPI = RetrofitSingleton.getInstance()
 
         val callPokemon = pokemonAPI!!.getPokemonListData()
+
+        val list = MutableLiveData<List<PokemonRetrofit>>()
 
         callPokemon.enqueue(object : Callback<PokemonList> {
 
             override fun onResponse(call: Call<PokemonList>, response: Response<PokemonList>) {
                 if (response.isSuccessful) {
                     val returnedData = response.body()
-                    pokedexView.initPokedex(returnedData!!.PokemonList)
+                    //pokedexView.initPokedex(returnedData!!.PokemonList)
+                    list.postValue(returnedData!!.PokemonList)
                 } else {
                     Log.d("Error", "Error while fetching data")
+                    list.postValue(emptyList())
                 }
             }
 
             override fun onFailure(call: Call<PokemonList>, t: Throwable) {
                 Log.e("Error", t.localizedMessage)
                 t.printStackTrace()
+                list.postValue(emptyList())
             }
         })
+
+        return list
     }
 
     fun cloneList(originalHashMap: List<PokemonRetrofit>):List<PokemonRetrofit>{
