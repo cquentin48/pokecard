@@ -1,6 +1,9 @@
 package com.pokeapi.lpiem.pokeapiandroid.View
 
+import android.Manifest
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
@@ -15,10 +18,15 @@ import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.Species
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Pokemon.InterfaceCallBackController
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
 import android.location.LocationManager
+import android.net.Uri
 import android.provider.Settings
 import android.view.View
 import android.widget.ImageView
 import com.firebase.ui.auth.AuthUI
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import com.facebook.login.LoginManager
+import com.google.android.gms.auth.api.Auth
 import com.pokeapi.lpiem.pokeapiandroid.R
 import kotlinx.android.synthetic.main.activity_main_app.*
 import android.widget.TextView
@@ -28,11 +36,30 @@ import com.bumptech.glide.request.RequestOptions
 
 
 
-class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
+class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>, MapFragment.OnFragmentInteractionListener{
+    override fun onFragmentInteraction(uri: Uri) {
+       // TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+    /* override fun getContext(): Context {
+         return this as Context
+     }
+
+     override fun getContextLocation(): LocationManager {
+       //  return getSystemService(Context.LOCATION_SERVICE) as LocationManager
+     }
+
+     override fun checkForPermission(): Boolean {
+       //  return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+     }
+
+     override fun getCoord() {
+         //todoo
+     }*/
+
     private var singleton: AppProviderSingleton?= AppProviderSingleton.getInstance()
     private lateinit var mDrawerLayout: DrawerLayout
     private lateinit var pokedexListView: PokedexListView
-    private lateinit var pokeMap: LocalizationActivity
+    private lateinit var pokeMap: MapScreenFragment
 
     var Singleton: AppProviderSingleton
         get() = this.singleton!!
@@ -45,7 +72,7 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
      */
     private fun setUpFragment(){
         pokedexListView = PokedexListView()
-        pokeMap = LocalizationActivity()
+        pokeMap = MapScreenFragment()
 
         pokedexListView.passContext(applicationContext)
     }
@@ -71,7 +98,7 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
                     supportFragmentManager.beginTransaction().replace(R.id.fragment_container,pokedexListView).commit()
                 }
                 R.id.pokeMap ->{
-                    startActivity(Intent(this, LocalizationActivity::class.java))
+                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container,pokeMap).commit()
                 }
                 R.id.profile ->{
                     Toast.makeText(this,getString(R.string.NotYetImplemented),Toast.LENGTH_LONG).show()
@@ -154,7 +181,7 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
         return true
     }
 
-    fun goToLocalization(view:View) {
+  /*  fun goToLocalization(view:View) {
 
         val service = getSystemService(LOCATION_SERVICE) as LocationManager
         val enabled = service
@@ -168,5 +195,5 @@ class MainAppActivity : AppCompatActivity(), InterfaceCallBackController<Any>{
             val myIntent = Intent(this, LocalizationActivity::class.java)
             startActivity(myIntent)
         }
-    }
+    }*/
 }

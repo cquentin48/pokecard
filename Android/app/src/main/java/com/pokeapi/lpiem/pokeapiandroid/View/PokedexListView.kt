@@ -16,6 +16,7 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import android.text.Editable
 import android.text.TextWatcher
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pokeapi.lpiem.pokeapiandroid.View.Adapter.AdapterHeader
 import com.xwray.groupie.ExpandableGroup
@@ -37,7 +38,7 @@ class PokedexListView : Fragment(),PokedexFunctionInterface {
     private lateinit var myFragmentView: View
 
 
-    @SuppressLint("WrongConstant")
+
     override fun initPokedex(pokemonImportData : List<PokemonRetrofit>) {
         data = (pokemonImportData).toMutableList()
         backupData = (pokemonImportData).toMutableList()
@@ -83,7 +84,15 @@ class PokedexListView : Fragment(),PokedexFunctionInterface {
     }
 
     fun initAdapter(){
-        pokemonAPI.getPokeList(this)
+        //affichage du loading
+        pokemonAPI.getPokeList().observe(this, androidx.lifecycle.Observer {
+            //suppression loading
+
+            initPokedex(it)
+            if (it.isEmpty()) {
+
+            }
+        })
     }
 
     companion object {

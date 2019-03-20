@@ -1,12 +1,19 @@
 package com.pokeapi.lpiem.pokeapiandroid.View
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
 
 
 import com.google.android.gms.maps.model.LatLng
@@ -16,16 +23,22 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.Marker
 import com.pokeapi.lpiem.pokeapiandroid.R
 
 
-class MapFragment : Fragment() {
+class MapFragment : Fragment(), LocationListener {
+
+
     private var ARG_PARAM1:String = "latitude"
     private var ARG_PARAM2 :String = "longitude"
     // TODO: Rename and change types of parameters
+    private lateinit var locationManager: LocationManager
     private var latitude: Double = 0.toDouble()
     private var longitude: Double = 0.toDouble()
     private var listener: OnFragmentInteractionListener? = null
+    private lateinit var marker: Marker
+    private lateinit var provider: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +52,13 @@ class MapFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
 
         val rootView = inflater.inflate(R.layout.fragment_map, container, false)
+
+        locationManager = context!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+
+        //provider = locationManager.getBestProvider(criteria, false);
+        provider = "network"
+
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.frg) as SupportMapFragment?  //use SuppoprtMapFragment for using in fragment instead of activity  MapFragment = activity   SupportMapFragment = fragment
         mapFragment!!.getMapAsync { mMap ->
@@ -55,10 +75,24 @@ class MapFragment : Fragment() {
 
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(googlePlex), 2500, null)
 
-            mMap.addMarker(MarkerOptions()
+            marker = mMap.addMarker(MarkerOptions()
                     .position(LatLng(latitude, longitude))
                     .title("Moi"))
         }
+
+        if (ActivityCompat.checkSelfPermission(activity as Context , Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+
+        }
+        locationManager!!.requestLocationUpdates(provider, 400, 1f, this)
+
+
         // Inflate the layout for this fragment
         return rootView
     }
@@ -117,6 +151,25 @@ class MapFragment : Fragment() {
                     }
                 }
     }
+
+    override fun onLocationChanged(location: Location?) {
+        marker.position = LatLng(location!!.latitude, location!!.longitude)
+
+    }
+
+    override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onProviderEnabled(provider: String?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onProviderDisabled(provider: String?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+
 
 
 }
