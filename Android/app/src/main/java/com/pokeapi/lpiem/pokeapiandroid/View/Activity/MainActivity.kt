@@ -15,6 +15,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.firebase.ui.auth.AuthUI
 import com.pokeapi.lpiem.pokeapiandroid.Provider.AppProviderSingleton
 import com.pokeapi.lpiem.pokeapiandroid.R
@@ -54,6 +55,7 @@ class MainActivity : AppCompatActivity(){
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.ic_settings_black_24dp)
         }
+        updateNavigationHeader()
     }
 
 
@@ -63,8 +65,11 @@ class MainActivity : AppCompatActivity(){
         val navigationViewUsername = headerView.findViewById(R.id.userNameNavigationView) as TextView
         val navigationViewUserProfileImage = headerView.findViewById(R.id.userProfileNavigationImage) as ImageView
         navigationViewUsername.text = if(AppProviderSingleton.User.displayName == "") AppProviderSingleton.User.email else AppProviderSingleton.User.displayName
-
-        Glide.with(this@MainActivity).load(AppProviderSingleton.User.photoUrl).into(imageView)
+        val defaultString = getString(R.string.default_photo_url)
+        Glide.with(this@MainActivity).
+                load(if(AppProviderSingleton.User.photoUrl.toString() == "")defaultString else AppProviderSingleton.User.photoUrl.toString())
+                .apply(RequestOptions().override(300, 300).circleCrop())
+                .into(navigationViewUserProfileImage)
     }
 
     /**
@@ -117,16 +122,6 @@ class MainActivity : AppCompatActivity(){
      */
     private fun displayToastNotYetImplemented() {
         Toast.makeText(this, getString(R.string.not_yet_implemented), Toast.LENGTH_LONG).show()
-    }
-
-    private fun updateNavigationHeader(){
-        val navigationView = navigationView
-        val headerView = navigationView.getHeaderView(0)
-        val navigationViewUsername = headerView.findViewById(R.id.userNameNavigationView) as TextView
-        val navigationViewUserProfileImage = headerView.findViewById(R.id.userProfileNavigationImage) as ImageView
-        navigationViewUsername.text = singleton!!.fetchDisplayName()
-
-        singleton!!.displayAvatar(this@MainAppActivity,navigationViewUserProfileImage)
     }
 
     /**
