@@ -50,6 +50,7 @@
     <string name="default_password_value">password</string>
     <string name="default_username_value">Pseudonyme</string>
     <string name="default_email_value">examplemail@mail.com</string>
+    <string name="default_photo_url">https://ih0.redbubble.net/image.31546296.6294/ap,550x550,12x12,1,transparent,t.png</string>
 
     <!--Labels-->
     <string name="emailLabel">Email : </string>
