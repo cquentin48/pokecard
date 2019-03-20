@@ -15,14 +15,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import com.google.android.gms.location.LocationRequest
 import com.pokeapi.lpiem.pokeapiandroid.Model.UserApp
 import com.pokeapi.lpiem.pokeapiandroid.R
 import kotlinx.android.synthetic.main.activity_localization.*
-import java.io.Serializable
 
 
-class MapScreenFragment : Fragment() , MapFragment.OnFragmentInteractionListener, LocationListener, MapFragmentManager {
+class MapScreenFragment : Fragment() , MapFragment.OnFragmentInteractionListener, LocationListener {
 
     private lateinit var detailsfield: TextView
     private var lat: Double = 0.toDouble()
@@ -59,7 +57,7 @@ class MapScreenFragment : Fragment() , MapFragment.OnFragmentInteractionListener
 
         setLocation()
 
-        mMapFragment  = MapFragment.newInstance(lat,lon, this)
+        mMapFragment  = MapFragment.newInstance(lat,lon)
         addFragment()
         isCreate = true
     }
@@ -122,13 +120,13 @@ class MapScreenFragment : Fragment() , MapFragment.OnFragmentInteractionListener
         ft.commit()
     }
 
-    fun createLocationRequest() {
+    /*fun createLocationRequest() {
         val locationRequest = LocationRequest.create()?.apply {
             interval = 10000
             fastestInterval = 5000
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
-    }
+    }*/
 
     fun setLocation(){
         if (ActivityCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -139,11 +137,23 @@ class MapScreenFragment : Fragment() , MapFragment.OnFragmentInteractionListener
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            mMapFragment  = MapFragment.newInstance(10.0,10.0, this)
+            mMapFragment  = MapFragment.newInstance(10.0,10.0)
             addFragment()
             return
         }
         val location = locationManager!!.getLastKnownLocation(provider)
+
+        if (ActivityCompat.checkSelfPermission(activity as Context , Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
+        locationManager!!.requestLocationUpdates(provider, 400, 1f, this)
 
 
 
@@ -162,12 +172,5 @@ class MapScreenFragment : Fragment() , MapFragment.OnFragmentInteractionListener
 
 
     }
-
-    public override fun setMarkerPosition(): MutableList<Double> {
-        setLocation()
-
-        return mutableListOf<Double>(lat, lon)
-    }
-
 
 }
