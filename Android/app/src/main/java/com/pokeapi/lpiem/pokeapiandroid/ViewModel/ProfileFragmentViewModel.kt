@@ -1,7 +1,6 @@
 package com.pokeapi.lpiem.pokeapiandroid.ViewModel
 
 import android.content.Context
-import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.MutableLiveData
@@ -9,6 +8,7 @@ import com.google.firebase.database.R
 import com.pokeapi.lpiem.pokeapiandroid.Model.AdapterModel.ProfileFragmentAdapterModel
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.FirebaseDatabaseSingleton
+import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.RetrofitSingleton
 
 class ProfileFragmentViewModel {
     var infoList = MutableLiveData<HashMap<String,String>>()
@@ -33,6 +33,8 @@ class ProfileFragmentViewModel {
                     "countingachievmentList",
                     "long"
             ))
+
+
     fun initMainInfos(context: Context, usernameTextView: TextView, lastUserConnection:TextView, registrationDateProfileTextView:TextView, avatarImageView:ImageView){
         FirebaseDatabaseSingleton.setUpTextView(usernameTextView,"username")
         FirebaseDatabaseSingleton.setUpTextView(lastUserConnection,"lastUserConnection")
@@ -58,6 +60,7 @@ class ProfileFragmentViewModel {
     fun initOtherSections(selectedSection:Int){
         when(selectedSection){
             0->initCompleteMainInfos()
+            1->RetrofitSingleton.getUserList()
             else->initCompleteMainInfos()
         }
     }

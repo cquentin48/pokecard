@@ -1,9 +1,8 @@
 package com.pokeapi.lpiem.pokeapiandroid.Model.AdapterModel
 
+import com.pokeapi.lpiem.pokeapiandroid.Model.SocialNetworks.Profile
+
 data class ProfileSubFragmentRetrofit(
-        var returnedData:HashMap<String, String>,
-        var dataType:String,
-        var success:Boolean,
-        var errorImageURL:String,
-        var errorMessageTitle:String,
-        var errorMessageDescription:String)
+        var returnedData:HashMap<Int, Profile>,
+        var title:String,
+        var message:String)

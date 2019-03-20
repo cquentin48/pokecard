@@ -13,8 +13,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.FirebaseDatabaseSingleton
+import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.RetrofitSingleton
 
 import com.pokeapi.lpiem.pokeapiandroid.R
 import com.pokeapi.lpiem.pokeapiandroid.View.Adapter.ProfileItemAdapter
@@ -55,6 +57,24 @@ class ProfileFragment : Fragment() {
         profileFragmentViewModel.initRecyclerView()
     }
 
+    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+
+        when (item.itemId) {
+            R.id.profile_complete_Data -> {
+                initResumeSection()
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.profile_friend_list -> {
+                profileFragmentViewModel.getUserList()
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.profile_all_trade_requests -> {
+                return@OnNavigationItemSelectedListener true
+            }
+        }
+        false
+    }
+
     fun passContext(context: Context){
         applicationContext = context
     }
@@ -70,6 +90,23 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         activity!!.title = activity!!.getString(R.string.ProfileTitleFragment)+" "+ singleton.User.displayName
         initProfileFragment()
+    }
+
+    /**
+     * Update recycler view according to element selected
+     */
+    fun updateRecyclerView(){
+        when(selectedSection){
+            0->initResumeSection()
+            else->initListSection()
+        }
+    }
+
+    fun initListSection(){
+        otherInformationsRecyclerView.layoutManager = LinearLayoutManager(context)
+        RetrofitSingleton.infoList.observe(this, Observer {
+            otherInformationsRecyclerView.adapter = ProfileFragmentItem()
+        })
     }
 
     private fun initProfileFragment() {
