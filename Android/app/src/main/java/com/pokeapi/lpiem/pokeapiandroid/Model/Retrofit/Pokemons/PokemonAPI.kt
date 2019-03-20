@@ -9,6 +9,6 @@ interface PokemonAPI {
      * Fetch pokemon list for the pokedex fragment
      * @return list of pokemon name and sprites
      */
-    @GET("/public/index.php/pokemon/")
+    @GET("/public/index.php/pokemonList/0")
     fun getPokemonListData(): Call<PokemonList>
 }
