@@ -20,6 +20,10 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+    maven { url "http://dl.bintray.com/pixplicity/maven" }
+}
 
 allprojects {
     repositories {

@@ -21,10 +21,17 @@ class AdapterHeader(private val letterString:String): Item(), ExpandableItem {
 
     override fun getLayout(): Int = R.layout.adapter_header
 
+    /**
+     * Set child items for the adapterHeader
+     * @param onToggleListener viewHolder group child of the adapterHeader
+     */
     override fun setExpandableGroup(onToggleListener: ExpandableGroup) {
         expandableGroup = onToggleListener
     }
 
+    /**
+     * Manage action about button on the left
+     */
     private fun getRotatedIconResId() = if(expandableGroup.isExpanded){
         R.drawable.ic_keyboard_arrow_down_black_24dp
     }else{

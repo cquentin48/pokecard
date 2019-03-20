@@ -4,24 +4,24 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/pokedexMenu"
-            android:title="@string/Pokedex" />
+            android:title="@string/pokedex_menu" />
         <item
             android:id="@+id/pokeMap"
-            android:title="@string/pokemapMenu" />
+            android:title="@string/pokemap_menu" />
         <item
             android:id="@+id/profile"
             android:title="@string/profileSubMenuTitle"></item>
         <item
             android:id="@+id/collections"
-            android:title="@string/toogleCollectionSubMenuTitle"></item>
+            android:title="@string/toogle_collection_sub_menu_title"></item>
         <item
             android:id="@+id/options"
-            android:title="@string/toogleOptionsSubMenuTitle"/>
+            android:title="@string/toogle_options_sub_menu_title"/>
         <item
             android:id="@+id/about"
-            android:title="@string/aboutMenu" />
+            android:title="@string/about_menu" />
         <item
             android:id="@+id/logOut"
-            android:title="@string/logoutSubMenuTitle"></item>
+            android:title="@string/logout_sub_menu_title"></item>
     </group>
 </menu>

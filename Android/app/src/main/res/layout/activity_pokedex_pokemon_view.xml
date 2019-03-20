@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.PokedexPokemonView">
+    tools:context=".View.Activity.PokedexPokemonView">
 
     <TextView
         android:id="@+id/pokemonNumberTextViewPokemonVirw"
         android:layout_width="0dp"
         android:layout_height="28dp"
         android:layout_marginStart="8dp"
-        android:text="@string/pokedexActivityPokemonNumberText"
+        android:text="@string/pokedex_activity_pokemon_number_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
             android:layout_marginTop="16dp"
-            android:text="@string/pokedexActivityTypesText"
+            android:text="@string/pokedex_activity_types_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -65,7 +65,7 @@
             android:id="@+id/pokemonHeightPokemonView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/pokedexActivityHeightText"
+            android:text="@string/pokedex_activity_height_text"
             app:layout_constraintStart_toStartOf="@+id/pokemonTypePokemonViewActivity"
             app:layout_constraintTop_toBottomOf="@+id/pokemonTypePokemonViewActivity" />
 
@@ -73,7 +73,7 @@
             android:id="@+id/pokemonWeightPokemonView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/pokedexActivityWeightText"
+            android:text="@string/pokedex_activity_weight_text"
             app:layout_constraintStart_toStartOf="@+id/pokemonHeightPokemonView"
             app:layout_constraintTop_toBottomOf="@+id/pokemonHeightPokemonView" />
 
@@ -81,7 +81,7 @@
             android:id="@+id/PokemonStatusPokemonView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/pokedexActivityStatusText"
+            android:text="@string/pokedex_activity_status_text"
             app:layout_constraintStart_toStartOf="@+id/pokemonWeightPokemonView"
             app:layout_constraintTop_toBottomOf="@+id/pokemonWeightPokemonView" />
 
@@ -89,7 +89,7 @@
             android:id="@+id/pokemonEvolutionsPokemonView"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:text="@string/pokedexActivityEvolutionText"
+            android:text="@string/pokedex_activity_evolution_text"
             app:layout_constraintStart_toStartOf="@+id/PokemonStatusPokemonView"
             app:layout_constraintTop_toBottomOf="@+id/PokemonStatusPokemonView" />
 
@@ -98,7 +98,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
-            android:text="@string/PokedexActivityDescriptionTitle"
+            android:text="@string/pokedex_activity_description_title"
             app:layout_constraintStart_toStartOf="@+id/pokemonEvolutionsPokemonView"
             app:layout_constraintTop_toBottomOf="@+id/pokemonEvolutionsPokemonView" />
 

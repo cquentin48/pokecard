@@ -31,6 +31,14 @@
           }
         },
         {
+          "client_id": "767822180766-2vnht3pge75v3vp98fct1de1fghbf5ob.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pokeapi.lpiem.pokeapiandroid",
+            "certificate_hash": "3724dba4baa68abe58bc01d6c2288e6cd036a3e8"
+          }
+        },
+        {
           "client_id": "767822180766-mm4ik9551k9ucfuofv05fe4sb0h5v5j8.apps.googleusercontent.com",
           "client_type": 3
         }
