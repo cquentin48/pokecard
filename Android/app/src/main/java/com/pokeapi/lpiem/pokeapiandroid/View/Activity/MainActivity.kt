@@ -9,9 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import android.location.LocationManager
-import android.provider.Settings
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
@@ -20,21 +17,20 @@ import com.firebase.ui.auth.AuthUI
 import com.pokeapi.lpiem.pokeapiandroid.Provider.AppProviderSingleton
 import com.pokeapi.lpiem.pokeapiandroid.R
 import com.pokeapi.lpiem.pokeapiandroid.View.Fragment.PokedexListView
-import com.pokeapi.lpiem.pokeapiandroid.View.LocalizationActivity
+import com.pokeapi.lpiem.pokeapiandroid.View.MapScreenFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_pokedex_pokemon_view.*
 
 class MainActivity : AppCompatActivity(){
     private lateinit var mDrawerLayout: DrawerLayout
     private lateinit var pokedexListView: PokedexListView
-    private lateinit var pokeMap: LocalizationActivity
+    private lateinit var pokeMap: MapScreenFragment
 
     /**
      * Set up fragments
      */
     private fun setUpFragment(){
         pokedexListView = PokedexListView()
-        pokeMap = LocalizationActivity()
+        pokeMap = MapScreenFragment()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,7 +88,7 @@ class MainActivity : AppCompatActivity(){
                     supportFragmentManager.beginTransaction().replace(R.id.fragment_container, pokedexListView).commit()
                 }
                 R.id.pokeMap -> {
-                    startActivity(Intent(this, LocalizationActivity::class.java))
+                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, pokeMap).commit()
                 }
                 R.id.profile -> {
                     displayToastNotYetImplemented()
@@ -150,7 +146,7 @@ class MainActivity : AppCompatActivity(){
         return true
     }
 
-    fun goToLocalization(view:View) {
+  /*  fun goToLocalization(view:View) {
 
         val service = getSystemService(LOCATION_SERVICE) as LocationManager
         val enabled = service
@@ -161,8 +157,8 @@ class MainActivity : AppCompatActivity(){
             startActivity(intent)
         }
         else {
-            val myIntent = Intent(this, LocalizationActivity::class.java)
-            startActivity(myIntent)
+          //  val myIntent = Intent(this, LocalizationActivity::class.java)
+           // startActivity(myIntent)
         }
-    }
+    }*/
 }
