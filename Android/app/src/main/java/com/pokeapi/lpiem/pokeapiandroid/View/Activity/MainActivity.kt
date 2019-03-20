@@ -12,11 +12,16 @@ import androidx.drawerlayout.widget.DrawerLayout
 import android.location.LocationManager
 import android.provider.Settings
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.firebase.ui.auth.AuthUI
+import com.pokeapi.lpiem.pokeapiandroid.Provider.AppProviderSingleton
 import com.pokeapi.lpiem.pokeapiandroid.R
 import com.pokeapi.lpiem.pokeapiandroid.View.Fragment.PokedexListView
 import com.pokeapi.lpiem.pokeapiandroid.View.LocalizationActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_pokedex_pokemon_view.*
 
 class MainActivity : AppCompatActivity(){
     private lateinit var mDrawerLayout: DrawerLayout
@@ -49,6 +54,17 @@ class MainActivity : AppCompatActivity(){
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.ic_settings_black_24dp)
         }
+    }
+
+
+    private fun updateNavigationHeader(){
+        val navigationView = navigationView
+        val headerView = navigationView.getHeaderView(0)
+        val navigationViewUsername = headerView.findViewById(R.id.userNameNavigationView) as TextView
+        val navigationViewUserProfileImage = headerView.findViewById(R.id.userProfileNavigationImage) as ImageView
+        navigationViewUsername.text = if(AppProviderSingleton.User.displayName == "") AppProviderSingleton.User.email else AppProviderSingleton.User.displayName
+
+        Glide.with(this@MainActivity).load(AppProviderSingleton.User.photoUrl).into(imageView)
     }
 
     /**
@@ -101,6 +117,16 @@ class MainActivity : AppCompatActivity(){
      */
     private fun displayToastNotYetImplemented() {
         Toast.makeText(this, getString(R.string.not_yet_implemented), Toast.LENGTH_LONG).show()
+    }
+
+    private fun updateNavigationHeader(){
+        val navigationView = navigationView
+        val headerView = navigationView.getHeaderView(0)
+        val navigationViewUsername = headerView.findViewById(R.id.userNameNavigationView) as TextView
+        val navigationViewUserProfileImage = headerView.findViewById(R.id.userProfileNavigationImage) as ImageView
+        navigationViewUsername.text = singleton!!.fetchDisplayName()
+
+        singleton!!.displayAvatar(this@MainAppActivity,navigationViewUserProfileImage)
     }
 
     /**
