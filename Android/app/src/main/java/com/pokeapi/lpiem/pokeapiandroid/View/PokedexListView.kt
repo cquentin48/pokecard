@@ -65,7 +65,7 @@ class PokedexListView : Fragment(),PokedexFunctionInterface {
     private fun generateListItems(pokemonList:MutableList<PokemonRetrofit>):MutableList<PokedexItem>{
         val returnedList:MutableList<PokedexItem> = mutableListOf()
         for(i in 0 until pokemonList.size){
-            returnedList.add(i,PokedexItem(pokemonList[i].sprite!!,pokemonList[i].name!!,applicationContext))
+            returnedList.add(i,PokedexItem(pokemonList[i].sprite!!,pokemonList[i].name!!,context!!))
         }
         return returnedList
     }
