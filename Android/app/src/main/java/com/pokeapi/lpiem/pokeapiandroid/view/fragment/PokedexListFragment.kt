@@ -52,7 +52,6 @@ class PokedexListView : Fragment(), PokedexFunctionInterface {
         }
 
         createList((filterPokemonListByFirstLetter(data)),groupAdapter)
-        pokedexSearchChangedListener()
     }
 
 
@@ -130,50 +129,5 @@ class PokedexListView : Fragment(), PokedexFunctionInterface {
             add(Section(generateListItems(rawData)))
             groupAdapter.add(this)
         }
-    }
-
-
-    /**
-     * Filter data by the search bar
-     * @param searchString value seeked from the user
-     * @return rawData filtered by research
-     */
-    private fun filterData(searchString:String):MutableList<PokemonRetrofit>{
-        val pokemonRetrofitListFiltered = arrayListOf<PokemonRetrofit>()
-        data.forEach {
-            if(it.name.contains(searchString,true)){
-                pokemonRetrofitListFiltered.add(it)
-            }
-        }
-        recyclerViewPokedexList.adapter!!.notifyDataSetChanged()
-        return pokemonRetrofitListFiltered
-    }
-
-    /**
-     * Listener function about smart research
-     */
-    private fun pokedexSearchChangedListener(){
-        pokemonSearchName.addTextChangedListener(object : TextWatcher {
-
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int,
-                                       count: Int) {
-                data = if (s != activity!!.getString(R.string.nothingInput)) {
-                    filterData(s.toString())
-                }else{
-                    backupData.toMutableList()
-                }
-                notifyData()
-            }
-
-
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int,
-                                           after: Int) {}
-
-            override fun afterTextChanged(s: Editable) {}
-
-            fun notifyData(){
-                recyclerViewPokedexList.adapter?.notifyDataSetChanged()
-            }
-        })
     }
 }
