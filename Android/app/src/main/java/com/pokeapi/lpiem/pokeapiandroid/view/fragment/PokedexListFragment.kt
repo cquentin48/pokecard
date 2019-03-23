@@ -17,6 +17,9 @@ import android.text.Editable
 import android.text.TextWatcher
 import com.pokeapi.lpiem.pokeapiandroid.view.adapter.AdapterHeader
 import com.xwray.groupie.ExpandableGroup
+import com.pokeapi.lpiem.pokeapiandroid.View.Adapter.PokedexItem
+import com.pokeapi.lpiem.pokeapiandroid.View.Interface.PokedexFunctionInterface
+import com.pokeapi.lpiem.pokeapiandroid.ViewModel.PokedexViewModel
 import com.pokeapi.lpiem.pokeapiandroid.view.adapter.PokedexItem
 import com.pokeapi.lpiem.pokeapiandroid.view.`interface`.PokedexFunctionInterface
 import com.xwray.groupie.Section
@@ -28,8 +31,10 @@ private const val ARG_PARAM1 = "param1"
 class PokedexListView : Fragment(), PokedexFunctionInterface {
 
     private lateinit var param:String
+    private val viewModel = PokedexViewModel()
     private lateinit var data:MutableList<PokemonRetrofit>
     private lateinit var backupData:MutableList<PokemonRetrofit>
+    private val pokemonAPI = AppProviderSingleton
     private lateinit var myFragmentView: View
 
 
@@ -79,8 +84,8 @@ class PokedexListView : Fragment(), PokedexFunctionInterface {
     /**
      * Initialisation of the adapter
      */
-    private fun initAdapter(){
-        AppProviderSingleton.getPokeList(this)
+    fun initAdapter(){
+        viewModel.loadPokedex(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
