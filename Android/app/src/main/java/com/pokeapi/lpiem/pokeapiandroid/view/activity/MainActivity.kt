@@ -1,4 +1,4 @@
-package com.pokeapi.lpiem.pokeapiandroid.View.Activity
+package com.pokeapi.lpiem.pokeapiandroid.view.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,10 +14,10 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.firebase.ui.auth.AuthUI
-import com.pokeapi.lpiem.pokeapiandroid.Provider.AppProviderSingleton
+import com.pokeapi.lpiem.pokeapiandroid.provider.AppProviderSingleton
 import com.pokeapi.lpiem.pokeapiandroid.R
-import com.pokeapi.lpiem.pokeapiandroid.View.Fragment.PokedexListView
-import com.pokeapi.lpiem.pokeapiandroid.View.MapScreenFragment
+import com.pokeapi.lpiem.pokeapiandroid.view.fragment.PokedexListView
+import com.pokeapi.lpiem.pokeapiandroid.view.MapScreenFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(){

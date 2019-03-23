@@ -1,4 +1,4 @@
-package com.pokeapi.lpiem.pokeapiandroid.View.Activity
+package com.pokeapi.lpiem.pokeapiandroid.view.activity
 
 import android.app.Activity
 import android.content.Intent
@@ -9,7 +9,7 @@ import com.firebase.ui.auth.AuthUI
 
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
-import com.pokeapi.lpiem.pokeapiandroid.Provider.AppProviderSingleton
+import com.pokeapi.lpiem.pokeapiandroid.provider.AppProviderSingleton
 import kotlinx.android.synthetic.main.activity_log_in.*
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse

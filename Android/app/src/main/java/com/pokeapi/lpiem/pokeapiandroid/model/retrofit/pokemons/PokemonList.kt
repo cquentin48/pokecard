@@ -1,4 +1,4 @@
-package com.pokeapi.lpiem.pokeapiandroid.Model.Retrofit.Pokemons
+package com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

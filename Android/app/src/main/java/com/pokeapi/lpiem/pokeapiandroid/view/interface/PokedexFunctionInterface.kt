@@ -1,6 +1,6 @@
-package com.pokeapi.lpiem.pokeapiandroid.View.Interface
+package com.pokeapi.lpiem.pokeapiandroid.view.`interface`
 
-import com.pokeapi.lpiem.pokeapiandroid.Model.Retrofit.Pokemons.PokemonRetrofit
+import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonRetrofit
 
 interface PokedexFunctionInterface {
     /**

@@ -1,4 +1,4 @@
-package com.pokeapi.lpiem.pokeapiandroid.Model.Retrofit.Pokemons
+package com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons
 
 import retrofit2.Call
 import retrofit2.http.GET

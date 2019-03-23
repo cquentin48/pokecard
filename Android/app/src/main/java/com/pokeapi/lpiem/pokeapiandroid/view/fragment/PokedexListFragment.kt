@@ -1,4 +1,4 @@
-package com.pokeapi.lpiem.pokeapiandroid.View.Fragment
+package com.pokeapi.lpiem.pokeapiandroid.view.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -8,17 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.activity_pokedex_list_view.*
-import com.pokeapi.lpiem.pokeapiandroid.Model.Retrofit.Pokemons.PokemonRetrofit
-import com.pokeapi.lpiem.pokeapiandroid.Provider.AppProviderSingleton
+import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonRetrofit
+import com.pokeapi.lpiem.pokeapiandroid.provider.AppProviderSingleton
 import com.pokeapi.lpiem.pokeapiandroid.R
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import android.text.Editable
 import android.text.TextWatcher
-import com.pokeapi.lpiem.pokeapiandroid.View.Adapter.AdapterHeader
+import com.pokeapi.lpiem.pokeapiandroid.view.adapter.AdapterHeader
 import com.xwray.groupie.ExpandableGroup
-import com.pokeapi.lpiem.pokeapiandroid.View.Adapter.PokedexItem
-import com.pokeapi.lpiem.pokeapiandroid.View.Interface.PokedexFunctionInterface
+import com.pokeapi.lpiem.pokeapiandroid.view.adapter.PokedexItem
+import com.pokeapi.lpiem.pokeapiandroid.view.`interface`.PokedexFunctionInterface
 import com.xwray.groupie.Section
 import java.util.*
 

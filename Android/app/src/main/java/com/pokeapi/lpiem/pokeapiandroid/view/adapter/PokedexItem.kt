@@ -1,11 +1,9 @@
-package com.pokeapi.lpiem.pokeapiandroid.View.Adapter
+package com.pokeapi.lpiem.pokeapiandroid.view.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import com.bumptech.glide.Glide
 import com.pokeapi.lpiem.pokeapiandroid.R
-import com.pokeapi.lpiem.pokeapiandroid.View.Activity.PokedexPokemonView
 import com.xwray.groupie.kotlinandroidextensions.Item
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import kotlinx.android.synthetic.main.pokedex_item.*
