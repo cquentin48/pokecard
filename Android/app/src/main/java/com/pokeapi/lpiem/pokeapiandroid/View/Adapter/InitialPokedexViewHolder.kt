@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonRetrofit
 import com.pokeapi.lpiem.pokeapiandroid.R
+import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonRetrofit
 import kotlinx.android.synthetic.main.pokedex_entry_ressource_layout.view.*
 
 class InitialPokedexViewHolder(view: View, context:Context): RecyclerView.ViewHolder(view) {
     private val context = context
-    fun bind(singlePokemon:PokemonRetrofit) {
+    fun bind(singlePokemon: PokemonRetrofit) {
         if (singlePokemon != null) {
             itemView.pokemonNamePokedexRessourceTextView.text = singlePokemon.name
             Glide.with(context).load(singlePokemon.sprite).into(itemView.pokemonSpritePokedexImageViewRessource)

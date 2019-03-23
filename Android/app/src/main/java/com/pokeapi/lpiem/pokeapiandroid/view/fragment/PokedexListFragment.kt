@@ -1,36 +1,54 @@
 package com.pokeapi.lpiem.pokeapiandroid.view.fragment
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
-import androidx.recyclerview.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.pokeapi.lpiem.pokeapiandroid.Provider.PokemonRetrofitSingleton
+import androidx.lifecycle.Observer
+import com.pokeapi.lpiem.pokeapiandroid.Model.Enum.LoadingState
 import kotlinx.android.synthetic.main.activity_pokedex_list_view.*
-import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonRetrofit
 import com.pokeapi.lpiem.pokeapiandroid.R
-import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.kotlinandroidextensions.ViewHolder
+import com.pokeapi.lpiem.pokeapiandroid.View.Adapter.PokedexViewAdapter
 import com.pokeapi.lpiem.pokeapiandroid.viewmodel.PokedexViewModel
-import com.pokeapi.lpiem.pokeapiandroid.view.adapter.PokedexItem
 
 
 private const val ARG_PARAM1 = "param1"
 
 class PokedexListView : Fragment(){
 
-    private lateinit var param:String
     private val viewModel = PokedexViewModel()
+    private lateinit var applicationContext: Context
+    private lateinit var param:String
+    private lateinit var newsListAdapter: PokedexViewAdapter
 
+    private fun initPokedex() {
+        newsListAdapter = PokedexViewAdapter(viewModel::retry,context!!)
+        recyclerViewPokedexList.adapter = newsListAdapter
+        viewModel.newsList.observe(this, Observer {
+            newsListAdapter.submitList(it)
+        })
+    }
+
+    private fun initState() {
+        viewModel.getState().observe(this, Observer { state ->
+            /*progress_bar.visibility = if (viewModel.listIsEmpty() && state == State.LOADING) View.VISIBLE else View.GONE
+            txt_error.visibility = if (viewModel.listIsEmpty() && state == State.ERROR) View.VISIBLE else View.GONE*/
+            if (!viewModel.listIsEmpty()) {
+                newsListAdapter.setState(state ?: LoadingState.DONE)
+            }
+
+        })
+    }
 
     @SuppressLint("WrongConstant")
     /**
      * Pokedex initialisation
      * @param pokemonImportData raw imported from the api
      */
-    fun initPokedex() {
+    /*fun initPokedex() {
         val groupAdapter = GroupAdapter<ViewHolder>().apply {
             spanCount = 3
         }
@@ -44,7 +62,7 @@ class PokedexListView : Fragment(){
         PokemonRetrofitSingleton.pokemonList.observe(this, androidx.lifecycle.Observer {
             viewModel.initPokedexAdapter(it.pokemonList.toMutableList(),context!!,groupAdapter)
         })
-    }
+    }*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +78,7 @@ class PokedexListView : Fragment(){
     fun initAdapter(){
         viewModel.loadPokedex(context!!)
         initPokedex()
+        initState()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

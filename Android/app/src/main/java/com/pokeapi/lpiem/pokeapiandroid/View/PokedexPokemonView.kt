@@ -4,13 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuInflater
-import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Model.PokemonData
-import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.AppProviderSingleton
 import com.pokeapi.lpiem.pokeapiandroid.R
-import kotlinx.android.synthetic.main.activity_pokedex_list_view.*
 
 class PokedexPokemonView : AppCompatActivity() {
-    val singleton: AppProviderSingleton?= AppProviderSingleton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

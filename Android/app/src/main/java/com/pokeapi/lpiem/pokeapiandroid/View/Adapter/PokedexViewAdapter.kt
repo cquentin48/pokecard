@@ -6,7 +6,7 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.pokeapi.lpiem.pokeapiandroid.Model.Enum.LoadingState
-import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonRetrofit
+import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonRetrofit
 
 class PokedexViewAdapter(private val retry: () -> Unit, context:Context)
     : PagedListAdapter<PokemonRetrofit, RecyclerView.ViewHolder>(pokemonDiffCallBack){

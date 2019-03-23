@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity(){
      * Manage actions for the items within the navigation view
      */
     private fun navigationDrawerItemManagment() {
-        mDrawerLayout = findViewById(R.id.drawer_layout)
+        mDrawerLayout = drawer_layout
         navigationView.setNavigationItemSelectedListener { menuItem ->
             // set item as selected to persist highlight
             menuItem.isChecked = true

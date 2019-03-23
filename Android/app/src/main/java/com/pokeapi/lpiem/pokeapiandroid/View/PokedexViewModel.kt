@@ -8,10 +8,13 @@ import androidx.lifecycle.Transformations
 import com.pokeapi.lpiem.pokeapiandroid.Model.Enum.LoadingState
 import com.pokeapi.lpiem.pokeapiandroid.Model.Paging.PokedexListDataSource
 import com.pokeapi.lpiem.pokeapiandroid.Model.Paging.PokemonDataFactory
-import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonRetrofit
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.RetrofitSingleton
+import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonRetrofit
 import io.reactivex.disposables.CompositeDisposable
 
+/**
+ * TODO Done merging data
+ */
 
 class PokedexViewModel : ViewModel(){
 

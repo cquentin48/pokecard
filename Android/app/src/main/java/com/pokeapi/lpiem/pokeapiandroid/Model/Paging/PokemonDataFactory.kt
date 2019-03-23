@@ -2,8 +2,8 @@ package com.pokeapi.lpiem.pokeapiandroid.Model.Paging
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
-import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonAPI
-import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonRetrofit
+import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonAPI
+import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonRetrofit
 import io.reactivex.disposables.CompositeDisposable
 
 class PokemonDataFactory(

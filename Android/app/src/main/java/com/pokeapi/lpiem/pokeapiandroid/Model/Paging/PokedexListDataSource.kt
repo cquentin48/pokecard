@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.pokeapi.lpiem.pokeapiandroid.Model.Enum.LoadingState
-import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonAPI
-import com.pokeapi.lpiem.pokeapiandroid.Model.Pokemon.Retrofit.PokemonRetrofit
+import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonAPI
+import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonRetrofit
 import io.reactivex.Completable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Action
@@ -25,7 +25,7 @@ class PokedexListDataSource(
                 api.getPokemonListData(0, params.requestedLoadSize)
                         .subscribe({ response ->
                             updateLoadingState(LoadingState.DONE)
-                            callback.onResult(response.PokemonList,
+                            callback.onResult(response.pokemonList,
                                     null,
                                     1)
                         }
@@ -49,7 +49,7 @@ class PokedexListDataSource(
                         .subscribe(
                                 { response ->
                                     updateLoadingState(LoadingState.DONE)
-                                    callback.onResult(response.PokemonList,
+                                    callback.onResult(response.pokemonList,
                                             params.key + 1
                                     )
                                 },
