@@ -1,7 +1,6 @@
 package com.pokeapi.lpiem.pokeapiandroid.view.activity
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -16,7 +15,7 @@ import com.firebase.ui.auth.IdpResponse
 import android.widget.Toast
 import com.pokeapi.lpiem.pokeapiandroid.Provider.FirebaseSingleton
 import com.pokeapi.lpiem.pokeapiandroid.R
-import com.pokeapi.lpiem.pokeapiandroid.ViewModel.LoginModelView
+import com.pokeapi.lpiem.pokeapiandroid.viewmodel.LoginModelView
 
 const val RC_SIGN_IN = 1
 

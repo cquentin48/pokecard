@@ -1,27 +1,18 @@
 package com.pokeapi.lpiem.pokeapiandroid.view.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import android.location.LocationManager
-import android.provider.Settings
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.firebase.ui.auth.AuthUI
-import com.pokeapi.lpiem.pokeapiandroid.provider.AppProviderSingleton
 import com.pokeapi.lpiem.pokeapiandroid.R
-import com.pokeapi.lpiem.pokeapiandroid.View.Fragment.PokedexListView
-import com.pokeapi.lpiem.pokeapiandroid.View.LocalizationActivity
-import com.pokeapi.lpiem.pokeapiandroid.ViewModel.MainMenuViewModel
+import com.pokeapi.lpiem.pokeapiandroid.viewmodel.MainMenuViewModel
 import com.pokeapi.lpiem.pokeapiandroid.view.fragment.PokedexListView
 import com.pokeapi.lpiem.pokeapiandroid.view.MapScreenFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -30,7 +21,6 @@ class MainActivity : AppCompatActivity(){
     private lateinit var mDrawerLayout: DrawerLayout
     private lateinit var pokedexListView: PokedexListView
     private lateinit var pokeMap: MapScreenFragment
-    private lateinit var pokeMap: LocalizationActivity
     private var viewModel: MainMenuViewModel = MainMenuViewModel()
 
     /**
@@ -54,7 +44,7 @@ class MainActivity : AppCompatActivity(){
      */
     private fun managingToolbar() {
         initActionBar()
-        viewModel.managingToolbar(supportActionBar as ActionBar)
+        managingToolbarSetting()
     }
 
     /**
@@ -71,18 +61,22 @@ class MainActivity : AppCompatActivity(){
         updateNavigationHeader()
     }
 
+    /**
+     * Managing toolbar attached to navigationView
+     */
+    fun managingToolbarSetting() {
+        actionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.ic_settings_black_24dp)
+        }
+    }
 
     private fun updateNavigationHeader(){
-        val navigationView = navigationView
-        val headerView = navigationView.getHeaderView(0)
-        val navigationViewUsername = headerView.findViewById(R.id.userNameNavigationView) as TextView
-        val navigationViewUserProfileImage = headerView.findViewById(R.id.userProfileNavigationImage) as ImageView
-        navigationViewUsername.text = if(AppProviderSingleton.User.displayName == "") AppProviderSingleton.User.email else AppProviderSingleton.User.displayName
-        val defaultString = getString(R.string.default_photo_url)
+        (this.navigationView.getHeaderView(0).findViewById(R.id.userNameNavigationView) as TextView).text = viewModel.getUsername()
         Glide.with(this@MainActivity).
-                load(if(AppProviderSingleton.User.photoUrl.toString() == "")defaultString else AppProviderSingleton.User.photoUrl.toString())
+                load(viewModel.getImageURL(this@MainActivity))
                 .apply(RequestOptions().override(300, 300).circleCrop())
-                .into(navigationViewUserProfileImage)
+                .into(this.navigationView.getHeaderView(0).findViewById(R.id.userProfileNavigationImage) as ImageView)
     }
 
     /**
@@ -90,8 +84,7 @@ class MainActivity : AppCompatActivity(){
      */
     private fun navigationDrawerItemManagment() {
         mDrawerLayout = findViewById(R.id.drawer_layout)
-        viewModel.managingNavigationElements(this@MainActivity,navigationView,supportFragmentManager)
-        /*navigationView.setNavigationItemSelectedListener { menuItem ->
+        navigationView.setNavigationItemSelectedListener { menuItem ->
             // set item as selected to persist highlight
             menuItem.isChecked = true
             // close drawer when item is tapped
@@ -127,7 +120,7 @@ class MainActivity : AppCompatActivity(){
                 }
             }
             true
-        }*/
+        }
         managingToolbar()
     }
 
@@ -144,7 +137,7 @@ class MainActivity : AppCompatActivity(){
      * Display a toast about a menu not been implemented
      */
     private fun displayToastNotYetImplemented() {
-        Toast.makeText(this, getString(R.string.not_yet_implemented), Toast.LENGTH_LONG).show()
+        viewModel.displayToastNotYetImplemented(this@MainActivity)
     }
 
     /**

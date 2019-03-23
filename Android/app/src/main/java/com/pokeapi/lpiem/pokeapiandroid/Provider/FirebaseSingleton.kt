@@ -6,7 +6,9 @@ import com.firebase.ui.auth.AuthUI
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.pokeapi.lpiem.pokeapiandroid.View.Activity.LogInActivity
+import com.pokeapi.lpiem.pokeapiandroid.R
+import com.pokeapi.lpiem.pokeapiandroid.provider.AppProviderSingleton
+import com.pokeapi.lpiem.pokeapiandroid.view.activity.LogInActivity
 
 object FirebaseSingleton {
     lateinit var firebaseUser: FirebaseUser
@@ -30,5 +32,13 @@ object FirebaseSingleton {
                 .addOnCompleteListener {
                     context.startActivity(Intent(context, LogInActivity::class.java))
                 }
+    }
+
+    fun getImageURL(context: Context):String{
+        return if(firebaseUser.photoUrl.toString() == "") context.getString(R.string.default_photo_url) else firebaseUser.photoUrl.toString()
+    }
+
+    fun getUsername():String{
+        return if(firebaseUser.displayName == "") firebaseUser.email!! else firebaseUser.displayName!!
     }
 }

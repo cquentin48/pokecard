@@ -1,4 +1,4 @@
-package com.pokeapi.lpiem.pokeapiandroid.ViewModel
+package com.pokeapi.lpiem.pokeapiandroid.viewmodel
 
 import android.content.Context
 import com.pokeapi.lpiem.pokeapiandroid.Provider.FirebaseSingleton
