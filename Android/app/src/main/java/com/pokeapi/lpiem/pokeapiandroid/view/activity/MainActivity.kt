@@ -125,12 +125,7 @@ class MainActivity : AppCompatActivity(){
     }
 
     private fun initGraphicalElements(){
-        initDrawerLayout()
         initActionBar()
-    }
-
-    private fun initDrawerLayout() {
-        viewModel.BackgroundDrawerLayout = drawer_layout
     }
 
     /**

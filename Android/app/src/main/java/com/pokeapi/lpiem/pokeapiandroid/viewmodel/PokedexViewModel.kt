@@ -8,10 +8,16 @@ import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 
 class PokedexViewModel {
+    /**
+     * Load the pokedex data into the fragment
+     */
     fun loadPokedex(context: Context){
         PokemonRetrofitSingleton.getPokeList(context)
     }
 
+    /**
+     * Init the pokedex Adapter
+     */
     fun initPokedexAdapter(rawList: MutableList<PokemonRetrofit>, context: Context, groupAdapter:GroupAdapter<ViewHolder>){
         return PokedexSingletonDisplayManagment.initPokedexData(rawList,context, groupAdapter)
     }

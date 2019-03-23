@@ -16,7 +16,7 @@ object PokedexSingletonDisplayManagment {
      * @param rawData RawData
      * @param groupAdapter group adapter for the list
      */
-    fun createList(rawData: TreeMap<String, MutableList<PokemonRetrofit>>, groupAdapter: GroupAdapter<ViewHolder>, context: Context){
+    private fun createList(rawData: TreeMap<String, MutableList<PokemonRetrofit>>, groupAdapter: GroupAdapter<ViewHolder>, context: Context){
         for((key,value) in rawData){
             addListToGroup(key,value,groupAdapter, context)
         }

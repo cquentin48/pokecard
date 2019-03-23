@@ -7,7 +7,6 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.pokeapi.lpiem.pokeapiandroid.R
-import com.pokeapi.lpiem.pokeapiandroid.provider.AppProviderSingleton
 import com.pokeapi.lpiem.pokeapiandroid.view.activity.LogInActivity
 
 object FirebaseSingleton {
@@ -34,11 +33,32 @@ object FirebaseSingleton {
                 }
     }
 
+    /**
+     * Return the image url of the user
+     * @param context in wich activity/fragment the function is called
+     */
     fun getImageURL(context: Context):String{
         return if(firebaseUser.photoUrl.toString() == "") context.getString(R.string.default_photo_url) else firebaseUser.photoUrl.toString()
     }
 
+    /**
+     * Return the username of the user
+     */
     fun getUsername():String{
         return if(firebaseUser.displayName == "") firebaseUser.email!! else firebaseUser.displayName!!
+    }
+
+    /**
+     * Launch mainActivity after successfull login
+     */
+    fun checkUser() : Boolean{
+        return FirebaseAuth.getInstance().currentUser!=null
+    }
+
+    /**
+     * Update the current logged in user
+     */
+    fun setCurrentUser(){
+        FirebaseSingleton.firebaseUser = FirebaseAuth.getInstance().currentUser!!
     }
 }
