@@ -42,6 +42,7 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-auth:4.1.0'
     implementation 'com.google.firebase:firebase-database:16.0.6'
     implementation 'com.xwray:groupie:2.3.0'
+    implementation "android.arch.paging:runtime:1.0.1"
     implementation 'com.xwray:groupie-kotlin-android-extensions:2.3.0'
     implementation 'com.xwray:groupie-databinding:2.3.0'
     implementation 'com.google.android.gms:play-services-maps:16.0.0'
@@ -69,6 +70,11 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.google.android.gms:play-services-location:15.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.9'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    implementation("com.squareup.okhttp3:okhttp:3.13.1")
+
+    implementation "android.arch.lifecycle:extensions:1.1.1"
 
 }
 repositories {
