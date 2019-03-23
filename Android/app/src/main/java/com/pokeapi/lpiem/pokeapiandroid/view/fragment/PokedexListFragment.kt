@@ -8,10 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import com.pokeapi.lpiem.pokeapiandroid.Model.Enum.LoadingState
 import kotlinx.android.synthetic.main.activity_pokedex_list_view.*
 import com.pokeapi.lpiem.pokeapiandroid.R
-import com.pokeapi.lpiem.pokeapiandroid.View.Adapter.PokedexViewAdapter
+import com.pokeapi.lpiem.pokeapiandroid.view.adapter.PokedexViewAdapter
 import com.pokeapi.lpiem.pokeapiandroid.viewmodel.PokedexViewModel
 
 
@@ -26,6 +27,7 @@ class PokedexListView : Fragment(){
 
     private fun initPokedex() {
         newsListAdapter = PokedexViewAdapter(viewModel::retry,context!!)
+        recyclerViewPokedexList.layoutManager = GridLayoutManager(context,3)
         recyclerViewPokedexList.adapter = newsListAdapter
         viewModel.newsList.observe(this, Observer {
             newsListAdapter.submitList(it)
@@ -76,7 +78,6 @@ class PokedexListView : Fragment(){
      * Initialisation of the adapter
      */
     fun initAdapter(){
-        viewModel.loadPokedex(context!!)
         initPokedex()
         initState()
     }

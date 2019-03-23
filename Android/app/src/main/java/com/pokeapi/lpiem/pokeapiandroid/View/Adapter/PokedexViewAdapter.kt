@@ -1,4 +1,4 @@
-package com.pokeapi.lpiem.pokeapiandroid.View.Adapter
+package com.pokeapi.lpiem.pokeapiandroid.view.adapter
 
 import android.content.Context
 import android.view.ViewGroup
@@ -16,7 +16,7 @@ class PokedexViewAdapter(private val retry: () -> Unit, context:Context)
     private val context = context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType == DATA_VIEW_TYPE) InitialPokedexViewHolder.create(parent,context) else SinglePokemonErrorViewHolder.create(retry, parent)
+        return if (viewType == DATA_VIEW_TYPE) InitialPokedexViewHolder.create(parent, context) else SinglePokemonErrorViewHolder.create(retry, parent)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

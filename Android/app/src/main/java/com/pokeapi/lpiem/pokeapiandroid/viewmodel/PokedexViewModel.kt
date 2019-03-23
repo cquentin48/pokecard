@@ -18,19 +18,6 @@ import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import io.reactivex.disposables.CompositeDisposable
 
 class PokedexViewModel : ViewModel(){
-    /**
-     * Load the pokedex data into the fragment
-     */
-    fun loadPokedex(context: Context){
-        PokemonRetrofitSingleton.getPokeList(context)
-    }
-
-    /**
-     * Init the pokedex Adapter
-     */
-    fun initPokedexAdapter(rawList: MutableList<PokemonRetrofit>, context: Context, groupAdapter:GroupAdapter<ViewHolder>){
-        return PokedexSingletonDisplayManagment.initPokedexData(rawList,context, groupAdapter)
-    }
 
 
     private val retrofitInstance = RetrofitSingleton.getInstance()

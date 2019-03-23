@@ -1,4 +1,4 @@
-package com.pokeapi.lpiem.pokeapiandroid.View.Adapter
+package com.pokeapi.lpiem.pokeapiandroid.view.adapter
 
 import android.view.LayoutInflater
 import android.view.View
