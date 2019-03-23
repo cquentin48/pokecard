@@ -1,7 +1,7 @@
-package com.pokeapi.lpiem.pokeapiandroid.Provider
+package com.pokeapi.lpiem.pokeapiandroid.provider
 
 import com.google.gson.GsonBuilder
-import com.pokeapi.lpiem.pokeapiandroid.Model.Retrofit.Pokemons.PokemonAPI
+import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonAPI
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

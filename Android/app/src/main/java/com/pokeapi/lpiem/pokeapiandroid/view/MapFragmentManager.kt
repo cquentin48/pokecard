@@ -1,7 +1,5 @@
-package com.pokeapi.lpiem.pokeapiandroid.View
+package com.pokeapi.lpiem.pokeapiandroid.view
 
-import android.content.Context
-import android.location.LocationManager
 import java.io.Serializable
 
 interface MapFragmentManager : Serializable {

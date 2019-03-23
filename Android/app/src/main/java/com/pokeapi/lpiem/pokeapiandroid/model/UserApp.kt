@@ -1,4 +1,4 @@
-package com.pokeapi.lpiem.pokeapiandroid.Model
+package com.pokeapi.lpiem.pokeapiandroid.model
 
 object UserApp {
     var lat : Double = 0.0

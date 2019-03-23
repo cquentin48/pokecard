@@ -1,4 +1,4 @@
-package com.pokeapi.lpiem.pokeapiandroid.View
+package com.pokeapi.lpiem.pokeapiandroid.view
 
 import android.Manifest
 import android.content.Context
@@ -14,7 +14,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import com.pokeapi.lpiem.pokeapiandroid.Model.UserApp
+import com.pokeapi.lpiem.pokeapiandroid.model.UserApp
 import com.pokeapi.lpiem.pokeapiandroid.R
 import kotlinx.android.synthetic.main.activity_localization.*
 

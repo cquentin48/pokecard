@@ -1,23 +1,4 @@
-package com.pokeapi.lpiem.pokeapiandroid.View
-
-import android.Manifest
-import android.content.Context
-import android.content.pm.PackageManager
-import android.location.Criteria
-import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.widget.TextView
-import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.fragment.app.Fragment
-import com.pokeapi.lpiem.pokeapiandroid.R
-
-
-
+package com.pokeapi.lpiem.pokeapiandroid.view
 
 
 /*

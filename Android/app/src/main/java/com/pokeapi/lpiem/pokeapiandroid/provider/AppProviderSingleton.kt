@@ -1,12 +1,12 @@
-package com.pokeapi.lpiem.pokeapiandroid.Provider
+package com.pokeapi.lpiem.pokeapiandroid.provider
 
 import android.util.Log
-import com.pokeapi.lpiem.pokeapiandroid.View.Fragment.PokedexListView
+import com.pokeapi.lpiem.pokeapiandroid.view.fragment.PokedexListView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.google.firebase.auth.FirebaseUser
-import com.pokeapi.lpiem.pokeapiandroid.Model.Retrofit.Pokemons.PokemonList
+import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonList
 import com.pokeapi.lpiem.pokeapiandroid.R
 
 
