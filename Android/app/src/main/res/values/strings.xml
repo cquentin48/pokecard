@@ -31,14 +31,14 @@
     <string name="poke_card_log_in_title">PokeCard - Connexion à l\'application</string>
 
     <!--Firebase Authentification-->
-        <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
-        <string name="facebook_application_id" translatable="false">770236446650561</string>
-        <string name="facebook_login_protocol_scheme" translatable="false">fb770236446650561</string>
-        <!-- Twitter consumer key and secret -->
-        <string name="twitter_consumer_key" translatable="false">8eFQXMVcK07NsGKAYzrazOPZN</string>
-        <string name="twitter_consumer_secret" translatable="false">iqiljy1VVdqJXp9F8cIMFGZSOFVjNFLsX7J9sOFvDUBaIZ9Kyl</string>
-        <!--Firebase Website-->
-        <string name="firebase_web_host" translatable="false">pokeapi-1541497105412.firebaseapp.com</string>
+    <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
+    <string name="facebook_application_id" translatable="false">770236446650561</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb770236446650561</string>
+    <!-- Twitter consumer key and secret -->
+    <string name="twitter_consumer_key" translatable="false">8eFQXMVcK07NsGKAYzrazOPZN</string>
+    <string name="twitter_consumer_secret" translatable="false">iqiljy1VVdqJXp9F8cIMFGZSOFVjNFLsX7J9sOFvDUBaIZ9Kyl</string>
+    <!--Firebase Website-->
+    <string name="firebase_web_host" translatable="false">pokeapi-1541497105412.firebaseapp.com</string>
 
     <!--Error messages-->
     <string name="sign_in_cancelled">Connection annulée</string>
@@ -62,4 +62,11 @@
     <string name="phoneNumberLabel">N° de téléphone : </string>
     <string name="avatarSelect">Choix de l\'avatart</string>
     <string name="singlePokemonPaginationLoadingText">Chargement du pokémon</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--Pokemon View-->
+    <string name="basicInfos">Informations de base</string>
+    <string name="pokedex">Pokédex</string>
 </resources>

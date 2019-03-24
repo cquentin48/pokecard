@@ -11,7 +11,7 @@ interface PokemonAPI {
     @GET("/api/v2/pokemon/{id}")
     fun getPokemonById(
             @Path("id") id: Int
-    ): Call<PokemonRetrofit>
+    ): Call<PokemonDataRetrofit>
 
     /*@GET("/api/v2/pokemon-species/{id}")
     fun getPokemonSpecies(
@@ -25,5 +25,5 @@ interface PokemonAPI {
     ): Single<PokemonList>
 
     @GET("/pokemon/")
-    fun getPokemonById(): Call<PokemonRetrofit>
+    fun getPokemonById(): Call<SinglePokemonRetrofitPokedex>
 }

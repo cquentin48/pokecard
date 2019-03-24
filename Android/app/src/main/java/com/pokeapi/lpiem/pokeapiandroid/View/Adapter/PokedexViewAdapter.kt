@@ -6,10 +6,10 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.pokeapi.lpiem.pokeapiandroid.model.enum.LoadingState
-import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonRetrofit
+import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.SinglePokemonRetrofitPokedex
 
 class PokedexViewAdapter(private val retry: () -> Unit, context:Context)
-    : PagedListAdapter<PokemonRetrofit, RecyclerView.ViewHolder>(pokemonDiffCallBack){
+    : PagedListAdapter<SinglePokemonRetrofitPokedex, RecyclerView.ViewHolder>(pokemonDiffCallBack){
     private val DATA_VIEW_TYPE = 1
     private val LOADING_DATA = 2
     private var state = LoadingState.LOADING
@@ -25,12 +25,12 @@ class PokedexViewAdapter(private val retry: () -> Unit, context:Context)
         else (holder as SinglePokemonErrorViewHolder).bind(state)
     }
     companion object {
-        val pokemonDiffCallBack = object : DiffUtil.ItemCallback<PokemonRetrofit>() {
-            override fun areItemsTheSame(oldItem: PokemonRetrofit, newItem: PokemonRetrofit): Boolean {
+        val pokemonDiffCallBack = object : DiffUtil.ItemCallback<SinglePokemonRetrofitPokedex>() {
+            override fun areItemsTheSame(oldItem: SinglePokemonRetrofitPokedex, newItem: SinglePokemonRetrofitPokedex): Boolean {
                 return oldItem == newItem
             }
 
-            override fun areContentsTheSame(oldItem: PokemonRetrofit, newItem: PokemonRetrofit): Boolean {
+            override fun areContentsTheSame(oldItem: SinglePokemonRetrofitPokedex, newItem: SinglePokemonRetrofitPokedex): Boolean {
                 return oldItem == newItem
             }
         }

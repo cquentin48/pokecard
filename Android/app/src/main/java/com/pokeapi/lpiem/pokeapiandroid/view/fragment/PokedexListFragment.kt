@@ -24,6 +24,7 @@ class PokedexListView : Fragment(){
     private lateinit var applicationContext: Context
     private lateinit var param:String
     private lateinit var newsListAdapter: PokedexViewAdapter
+    private lateinit var singlePokemonFragment: PokedexViewAdapter
 
     private fun initPokedex() {
         newsListAdapter = PokedexViewAdapter(viewModel::retry,context!!)
@@ -61,8 +62,8 @@ class PokedexListView : Fragment(){
             adapter = groupAdapter
         }
 
-        PokemonRetrofitSingleton.pokemonList.observe(this, androidx.lifecycle.Observer {
-            viewModel.initPokedexAdapter(it.pokemonList.toMutableList(),context!!,groupAdapter)
+        PokemonRetrofitSingleton.singlePokemonListPokedex.observe(this, androidx.lifecycle.Observer {
+            viewModel.initPokedexAdapter(it.singlePokemonListPokedex.toMutableList(),context!!,groupAdapter)
         })
     }*/
 

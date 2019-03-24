@@ -9,14 +9,14 @@ import com.pokeapi.lpiem.pokeapiandroid.model.enum.LoadingState
 import com.pokeapi.lpiem.pokeapiandroid.Model.Paging.PokedexListDataSource
 import com.pokeapi.lpiem.pokeapiandroid.Model.Paging.PokemonDataFactory
 import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.RetrofitSingleton
-import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonRetrofit
+import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.SinglePokemonRetrofitPokedex
 import io.reactivex.disposables.CompositeDisposable
 
 class PokedexViewModel : ViewModel(){
 
 
-    private val retrofitInstance = RetrofitSingleton.getInstance()
-    var newsList: LiveData<PagedList<PokemonRetrofit>>
+    private val retrofitInstance = RetrofitSingleton.retrofitInstance
+    var newsList: LiveData<PagedList<SinglePokemonRetrofitPokedex>>
     private val compositeDisposable = CompositeDisposable()
     private val pageSize = 10
     private val pokemonDataSourceFactory: PokemonDataFactory
@@ -28,7 +28,7 @@ class PokedexViewModel : ViewModel(){
                 .setInitialLoadSizeHint(pageSize * 2)
                 .setEnablePlaceholders(false)
                 .build()
-        newsList = LivePagedListBuilder<Int, PokemonRetrofit>(pokemonDataSourceFactory, config).build()
+        newsList = LivePagedListBuilder<Int, SinglePokemonRetrofitPokedex>(pokemonDataSourceFactory, config).build()
     }
 
 

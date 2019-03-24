@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
 import com.pokeapi.lpiem.pokeapiandroid.model.enum.LoadingState
 import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonAPI
-import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonRetrofit
+import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.SinglePokemonRetrofitPokedex
 import io.reactivex.Completable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Action
@@ -14,18 +14,18 @@ import io.reactivex.functions.Action
 class PokedexListDataSource(
         private val compositeDisposable: CompositeDisposable,
         private val api: PokemonAPI)
-    : PageKeyedDataSource<Int, PokemonRetrofit>() {
+    : PageKeyedDataSource<Int, SinglePokemonRetrofitPokedex>() {
 
     var networkState = MutableLiveData<LoadingState>()
     private var retryCompletable: Completable? = null
 
-    override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, PokemonRetrofit>) {
+    override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, SinglePokemonRetrofitPokedex>) {
         networkState.postValue(LoadingState.LOADING)
         compositeDisposable.add(
                 api.getPokemonListData(0, params.requestedLoadSize)
                         .subscribe({ response ->
                             updateLoadingState(LoadingState.DONE)
-                            callback.onResult(response.pokemonList,
+                            callback.onResult(response.singlePokemonListPokedex,
                                     null,
                                     1)
                         }
@@ -42,14 +42,14 @@ class PokedexListDataSource(
         networkState.postValue(newState)
     }
 
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, PokemonRetrofit>) {
+    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, SinglePokemonRetrofitPokedex>) {
         updateLoadingState(LoadingState.LOADING)
         compositeDisposable.add(
                 api.getPokemonListData(params.key, params.requestedLoadSize)
                         .subscribe(
                                 { response ->
                                     updateLoadingState(LoadingState.DONE)
-                                    callback.onResult(response.pokemonList,
+                                    callback.onResult(response.singlePokemonListPokedex,
                                             params.key + 1
                                     )
                                 },
@@ -64,7 +64,7 @@ class PokedexListDataSource(
 
     }
 
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, PokemonRetrofit>) {
+    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, SinglePokemonRetrofitPokedex>) {
         //Nothing will happen ;)
     }
 
