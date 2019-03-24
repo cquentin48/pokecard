@@ -6,7 +6,7 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.pokeapi.lpiem.pokeapiandroid.Model.Enum.LoadingState
+import com.pokeapi.lpiem.pokeapiandroid.model.enum.LoadingState
 import com.pokeapi.lpiem.pokeapiandroid.R
 import kotlinx.android.synthetic.main.pokedex_pagination_loading_layout.view.*
 

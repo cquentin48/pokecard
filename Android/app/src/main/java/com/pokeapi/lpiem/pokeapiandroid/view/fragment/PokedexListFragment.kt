@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import com.pokeapi.lpiem.pokeapiandroid.Model.Enum.LoadingState
+import com.pokeapi.lpiem.pokeapiandroid.model.enum.LoadingState
 import kotlinx.android.synthetic.main.activity_pokedex_list_view.*
 import com.pokeapi.lpiem.pokeapiandroid.R
 import com.pokeapi.lpiem.pokeapiandroid.view.adapter.PokedexViewAdapter

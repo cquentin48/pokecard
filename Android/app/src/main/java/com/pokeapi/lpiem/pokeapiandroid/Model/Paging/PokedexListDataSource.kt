@@ -3,7 +3,7 @@ package com.pokeapi.lpiem.pokeapiandroid.Model.Paging
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
-import com.pokeapi.lpiem.pokeapiandroid.Model.Enum.LoadingState
+import com.pokeapi.lpiem.pokeapiandroid.model.enum.LoadingState
 import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonAPI
 import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonRetrofit
 import io.reactivex.Completable
