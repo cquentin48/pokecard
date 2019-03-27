@@ -6,4 +6,4 @@ data class PokemonDataRetrofit(val id:Int,
                                val types:MutableList<String>,
                                val weight:Int,
                                val name:String,
-                               val pokedexEntries: MutableList<PokedexEntries>)
+                               val pokedexEntry: String)

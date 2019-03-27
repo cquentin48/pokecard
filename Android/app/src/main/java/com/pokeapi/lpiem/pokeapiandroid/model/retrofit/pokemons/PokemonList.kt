@@ -6,5 +6,5 @@ import com.google.gson.annotations.SerializedName
 data class PokemonList(
         @SerializedName("pokemonList")
         @Expose
-        val singlePokemonListPokedex: List<SinglePokemonRetrofitPokedex>
+        val pokemonLists: List<PokemonRetrofit>
 )

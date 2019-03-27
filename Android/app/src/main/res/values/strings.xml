@@ -69,4 +69,5 @@
     <!--Pokemon View-->
     <string name="basicInfos">Informations de base</string>
     <string name="pokedex">Pokédex</string>
+    <string name="pokedexTitleLabel">Pokédex :</string>
 </resources>

@@ -25,5 +25,5 @@ interface PokemonAPI {
     ): Single<PokemonList>
 
     @GET("/pokemon/")
-    fun getPokemonById(): Call<SinglePokemonRetrofitPokedex>
+    fun getPokemonById(): Call<PokemonRetrofit>
 }

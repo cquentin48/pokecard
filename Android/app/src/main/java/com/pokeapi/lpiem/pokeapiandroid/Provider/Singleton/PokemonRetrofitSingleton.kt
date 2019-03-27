@@ -2,7 +2,6 @@ package com.pokeapi.lpiem.pokeapiandroid.provider.singleton
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton.RetrofitSingleton
 import com.pokeapi.lpiem.pokeapiandroid.model.adaptermodel.PokedexBasicInfosAdapter
 import com.pokeapi.lpiem.pokeapiandroid.model.adaptermodel.SinglePokemonBasicInfo
 import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonDataRetrofit
@@ -34,8 +33,8 @@ object PokemonRetrofitSingleton {
     fun initBasicInfosData(rawData: PokemonDataRetrofit): PokedexBasicInfosAdapter {
         val returnedData = PokedexBasicInfosAdapter(mutableListOf())
         returnedData.infos.add(0, SinglePokemonBasicInfo("Types",rawData.types[0]))
-        returnedData.infos.add(0, SinglePokemonBasicInfo("Taille",rawData.height.toString()))
-        returnedData.infos.add(0, SinglePokemonBasicInfo("Poids",rawData.weight.toString()))
+        returnedData.infos.add(0, SinglePokemonBasicInfo("Taille",((rawData.height/10).toFloat()).toString()+" m"))
+        returnedData.infos.add(0, SinglePokemonBasicInfo("Poids",(rawData.weight).toString()+" kg"))
         return returnedData
     }
 
@@ -44,7 +43,7 @@ object PokemonRetrofitSingleton {
     }
 
     fun getPokemonId(rawData:PokemonDataRetrofit):String{
-        return rawData.id.toString()
+        return rawData.id.toString()+"/865"
     }
 
     fun getPokemonSpriteURL(rawData:PokemonDataRetrofit):String{

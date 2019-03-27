@@ -62,8 +62,8 @@ class PokedexListView : Fragment(){
             adapter = groupAdapter
         }
 
-        PokemonRetrofitSingleton.singlePokemonListPokedex.observe(this, androidx.lifecycle.Observer {
-            viewModel.initPokedexAdapter(it.singlePokemonListPokedex.toMutableList(),context!!,groupAdapter)
+        PokemonRetrofitSingleton.pokemonLists.observe(this, androidx.lifecycle.Observer {
+            viewModel.initPokedexAdapter(it.pokemonLists.toMutableList(),context!!,groupAdapter)
         })
     }*/
 

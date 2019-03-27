@@ -67,6 +67,12 @@ class SinglePokemonFragment : Fragment() {
         })
     }
 
+    fun initPokedex(){
+        PokemonRetrofitSingleton.singlePokemonData.observe(this, Observer {
+            pokedexDescription.text = it.pokedexEntry
+        })
+    }
+
     override fun onDetach() {
         super.onDetach()
         listener = null
@@ -94,9 +100,9 @@ class SinglePokemonFragment : Fragment() {
 
     @SuppressLint("WrongConstant")
     fun initRecyclerView(){
-        pokemonInformations.layoutManager = GridLayoutManager(context,3,GridLayoutManager.VERTICAL,false)
+        mainInfosRecyclerView.layoutManager = GridLayoutManager(context,3,GridLayoutManager.VERTICAL,false)
         PokemonRetrofitSingleton.singlePokemonData.observe(this, Observer {
-            pokemonInformations.adapter = GenericPokemonViewRecyclerViewItem(viewModel.initBasicInfosData(it))
+            mainInfosRecyclerView.adapter = GenericPokemonViewRecyclerViewItem(viewModel.initBasicInfosData(it),context!!)
         })
     }
 
@@ -105,6 +111,7 @@ class SinglePokemonFragment : Fragment() {
         viewModel.loadData(pokemonIdValue)
         initBasicInfos()
         initRecyclerView()
+        initPokedex()
     }
 
     companion object {

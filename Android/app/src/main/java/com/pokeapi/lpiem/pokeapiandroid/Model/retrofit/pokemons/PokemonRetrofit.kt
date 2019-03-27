@@ -3,7 +3,7 @@ package com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class SinglePokemonRetrofitPokedex(
+data class PokemonRetrofit(
         @SerializedName("name")
         @Expose
         val name: String,
