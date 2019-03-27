@@ -1,17 +1,22 @@
 package com.pokeapi.lpiem.pokeapiandroid.view.fragment
 
-import android.content.Context
+import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.pokeapi.lpiem.pokeapiandroid.Provider.PokemonRetrofitSingleton
+import com.bumptech.glide.request.RequestOptions
+import com.pokeapi.lpiem.pokeapiandroid.provider.singleton.PokemonRetrofitSingleton
 
 import com.pokeapi.lpiem.pokeapiandroid.R
+import com.pokeapi.lpiem.pokeapiandroid.view.adapter.GenericPokemonViewRecyclerViewItem
 import com.pokeapi.lpiem.pokeapiandroid.viewmodel.SinglePokemonViewModel
 import kotlinx.android.synthetic.main.fragment_single_pokemon.*
 
@@ -35,6 +40,7 @@ class SinglePokemonFragment : Fragment() {
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
     private var viewModel = SinglePokemonViewModel()
+    private var pokemonIdValue: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,22 +52,19 @@ class SinglePokemonFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
+        pokemonIdValue = arguments!!.getInt("PokemonId")
         return inflater.inflate(R.layout.fragment_single_pokemon, container, false)
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }
+    fun initPokemonSpriteAndName(){
+        PokemonRetrofitSingleton.singlePokemonData.observe(this, Observer {
+            pokemonId.text = viewModel.loadPokemonId(it)
+            pokemonName.text = viewModel.loadPokemonName(it)
+            Glide.with(context!!)
+                    .load(viewModel.loadPokemonSpriteURL(it))
+                    .apply(RequestOptions().override(300, 300).circleCrop())
+                    .into(pokemonSprite)
+        })
     }
 
     override fun onDetach() {
@@ -86,20 +89,22 @@ class SinglePokemonFragment : Fragment() {
     }
 
     fun initBasicInfos(){
-        PokemonRetrofitSingleton.singlePokemonData.observe(this, Observer {
-            pokemonName.text = it.name
-            Glide.with(context!!).load(it.sprite).into(pokemonSprite)
-        })
+        initPokemonSpriteAndName()
     }
 
+    @SuppressLint("WrongConstant")
     fun initRecyclerView(){
-
+        pokemonInformations.layoutManager = GridLayoutManager(context,3,GridLayoutManager.VERTICAL,false)
+        PokemonRetrofitSingleton.singlePokemonData.observe(this, Observer {
+            pokemonInformations.adapter = GenericPokemonViewRecyclerViewItem(viewModel.initBasicInfosData(it))
+        })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.loadData(3)
+        viewModel.loadData(pokemonIdValue)
         initBasicInfos()
+        initRecyclerView()
     }
 
     companion object {

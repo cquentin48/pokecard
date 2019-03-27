@@ -24,15 +24,15 @@
             android:id="@+id/pokemonInformations"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pokemonName" />
+            app:layout_constraintTop_toBottomOf="@+id/mainInfosRecyclerView" />
 
         <TextView
             android:id="@+id/pokemonName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:gravity="center"
             android:text="@string/pokedex_activity_pokemon_number_text"
             app:layout_constraintEnd_toEndOf="@+id/pokemonSprite"
             app:layout_constraintStart_toStartOf="@+id/pokemonSprite"
@@ -55,5 +55,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/pokemonName"
             tools:src="@tools:sample/avatars" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mainInfosRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/pokemonInformations"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pokemonName" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
