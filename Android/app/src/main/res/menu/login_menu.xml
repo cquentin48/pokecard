@@ -3,8 +3,8 @@
 
     <item
         android:id="@+id/optionsMenu"
-        android:title="@string/toogleOptionsSubMenuTitle" />
+        android:title="@string/toogle_options_sub_menu_title" />
     <item
         android:id="@+id/aboutMenu"
-        android:title="@string/aboutMenu" />
+        android:title="@string/about_menu" />
 </menu>

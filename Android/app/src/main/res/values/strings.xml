@@ -1,55 +1,59 @@
 <resources>
+    <!-- Manifest -->
     <string name="app_name">PokeApiAndroid</string>
-    <string name="withPokeAccount">Avec un compte PokeCard</string>
-    <string name="throughSocialNetWorksAccounts">A travers les comptes\ndes réseaux sociaux</string>
-    <string name="signIn">Se connecter</string>
-    <string name="register">S\'inscrire !</string>
-    <string name="facebook_app_id">770236446650561</string>
-    <string name="profileSubMenuTitle">Gestion du profil</string>
-    <string name="toogleCollectionSubMenuTitle">Gestion des collections</string>
-    <string name="toogleOptionsSubMenuTitle">Options</string>
-    <string name="logoutSubMenuTitle">Se déconnecter</string>
-    <string name="aboutMenu">A propos</string>
-    <string name="pokedexTitle">Pokédex Mondial</string>
-    <string name="Pokedex">Pokedex Mondial</string>
-    <string name="NotYetImplemented">Pas encore implémenté!</string>
-    <string name="FacebookLoginButton">Compte facebook</string>
-    <string name="googleAccount">Compte Google</string>
-    <string name="twitterAccount">Compte Twitter</string>
-    <string name="emailAccount">Se connecter avec un compte pokéapi</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="PokedexActivityDescriptionTitle">Description : </string>
-    <string name="pokedexActivityEvolutionText">Evolutions :</string>
-    <string name="pokedexActivityStatusText">Status : </string>
-    <string name="pokedexActivityWeightText">Poids :</string>
-    <string name="pokedexActivityHeightText">Taille : </string>
-    <string name="pokedexActivityTypesText">Type : </string>
-    <string name="pokedexActivityPokemonNumberText">Pokémon n°</string>
-    <string name="pokemapMenu">PokéMap</string>
+    <!--Navigation view menu item list-->
+    <string name="profileSubMenuTitle">Gestion du profil</string>
+    <string name="toogle_collection_sub_menu_title">Gestion des collections</string>
+    <string name="toogle_options_sub_menu_title">Options</string>
+    <string name="logout_sub_menu_title">Se déconnecter</string>
+    <string name="about_menu">A propos</string>
+    <string name="pokedex_menu">Pokedex Mondial</string>
+    <string name="pokemap_menu">PokéMap</string>
+    <string name="not_yet_implemented">Pas encore implémenté!</string>
+
+    <!--Single Pokemon Fragment-->
+    <string name="pokedex_activity_prefix_title">Pokémon n° - </string>
+    <string name="pokedex_activity_description_title">Description : </string>
+    <string name="pokedex_activity_evolution_text">Evolutions :</string>
+    <string name="pokedex_activity_status_text">Status : </string>
+    <string name="pokedex_activity_weight_text">Poids :</string>
+    <string name="pokedex_activity_height_text">Taille : </string>
+    <string name="pokedex_activity_types_text">Type : </string>
+    <string name="pokedex_activity_pokemon_number_text">Pokémon n°</string>
+
+    <!--Pokedex List Fragment-->
     <string name="pokedexSearchText">Rechercher</string>
+    <string name="nothingInput" />
+
+    <!-- Login Activity -->
+    <string name="signIn">Se connecter</string>
+    <string name="poke_card_log_in_title">PokeCard - Connexion à l\'application</string>
 
     <!--Firebase Authentification-->
-    <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
-    <string name="facebook_application_id" translatable="false">770236446650561</string>
-    <string name="facebook_login_protocol_scheme" translatable="false">fb770236446650561</string>
-    <!-- Twitter consumer key and secret -->
-    <string name="twitter_consumer_key" translatable="false">yv2RilFDBf8eSJfzofv4lJVSM</string>
-    <string name="twitter_consumer_secret" translatable="false">vSNPQ7mP0SgLnsDG4226gGtZdDtZ7P4Mqxo22mie4nLhCJlNsw</string>
-    <!--Firebase Website-->
-    <string name="firebase_web_host" translatable="false">pokeapi-1541497105412.firebaseapp.com</string>
+        <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
+        <string name="facebook_application_id" translatable="false">770236446650561</string>
+        <string name="facebook_login_protocol_scheme" translatable="false">fb770236446650561</string>
+        <!-- Twitter consumer key and secret -->
+        <string name="twitter_consumer_key" translatable="false">8eFQXMVcK07NsGKAYzrazOPZN</string>
+        <string name="twitter_consumer_secret" translatable="false">iqiljy1VVdqJXp9F8cIMFGZSOFVjNFLsX7J9sOFvDUBaIZ9Kyl</string>
+        <!--Firebase Website-->
+        <string name="firebase_web_host" translatable="false">pokeapi-1541497105412.firebaseapp.com</string>
 
     <!--Error messages-->
     <string name="sign_in_cancelled">Connection annulée</string>
     <string name="no_internet_connection">Pas d\'accès à internet</string>
     <string name="unknown_error">Erreur inconnue</string>
+    <string name="sign_in_error_prefix">Sign-in error: </string>
+    <string name="fetching_data_error">Error while fetching data</string>
+    <string name="error_tag">Error</string>
 
     <!--Default Values-->
     <string name="defaultPhoneValue">01-02-03-04-05</string>
     <string name="default_password_value">password</string>
     <string name="default_username_value">Pseudonyme</string>
     <string name="default_email_value">examplemail@mail.com</string>
+    <string name="default_photo_url">https://ih0.redbubble.net/image.31546296.6294/ap,550x550,12x12,1,transparent,t.png</string>
 
     <!--Labels-->
     <string name="emailLabel">Email : </string>
@@ -57,4 +61,5 @@
     <string name="usernameLabel">Pseudonyme : </string>
     <string name="phoneNumberLabel">N° de téléphone : </string>
     <string name="avatarSelect">Choix de l\'avatart</string>
+    <string name="singlePokemonPaginationLoadingText">Chargement du pokémon</string>
 </resources>
