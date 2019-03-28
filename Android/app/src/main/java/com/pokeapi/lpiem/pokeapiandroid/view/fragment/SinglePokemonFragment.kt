@@ -108,7 +108,7 @@ class SinglePokemonFragment : Fragment() {
     }
 
     private fun initGraphicalElements() {
-        PokemonRetrofitSingleton.singlePokemonData.observe(this, Observer {
+        viewModel.getData().observe(this, Observer {
             initPokemonSpriteAndName(it)
             initRecyclerView(it)
             initPokedex(it)

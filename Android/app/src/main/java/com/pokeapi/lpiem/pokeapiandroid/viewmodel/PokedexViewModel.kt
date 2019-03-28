@@ -1,6 +1,7 @@
 package com.pokeapi.lpiem.pokeapiandroid.viewmodel
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
@@ -30,7 +31,6 @@ class PokedexViewModel : ViewModel(){
                 .build()
         newsList = LivePagedListBuilder<Int, PokemonRetrofit>(pokemonDataSourceFactory, config).build()
     }
-
 
     fun getState(): LiveData<LoadingState> = Transformations.switchMap<PokedexListDataSource,
             LoadingState>(pokemonDataSourceFactory.newsDataSourceLiveData, PokedexListDataSource::networkState)
