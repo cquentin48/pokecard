@@ -3,19 +3,18 @@ package com.pokeapi.lpiem.pokeapiandroid.view.fragment
 import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.pokeapi.lpiem.pokeapiandroid.provider.singleton.PokemonRetrofitSingleton
 
 import com.pokeapi.lpiem.pokeapiandroid.R
+import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonDataRetrofit
 import com.pokeapi.lpiem.pokeapiandroid.view.adapter.GenericPokemonViewRecyclerViewItem
 import com.pokeapi.lpiem.pokeapiandroid.viewmodel.SinglePokemonViewModel
 import kotlinx.android.synthetic.main.fragment_single_pokemon.*
@@ -56,21 +55,17 @@ class SinglePokemonFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_single_pokemon, container, false)
     }
 
-    fun initPokemonSpriteAndName(){
-        PokemonRetrofitSingleton.singlePokemonData.observe(this, Observer {
-            pokemonId.text = viewModel.loadPokemonId(it)
-            pokemonName.text = viewModel.loadPokemonName(it)
+    fun initPokemonSpriteAndName(pokemonData: PokemonDataRetrofit){
+            pokemonId.text = viewModel.loadPokemonId(pokemonData)
+            pokemonName.text = viewModel.loadPokemonName(pokemonData)
             Glide.with(context!!)
-                    .load(viewModel.loadPokemonSpriteURL(it))
+                    .load(viewModel.loadPokemonSpriteURL(pokemonData))
                     .apply(RequestOptions().override(300, 300).circleCrop())
                     .into(pokemonSprite)
-        })
     }
 
-    fun initPokedex(){
-        PokemonRetrofitSingleton.singlePokemonData.observe(this, Observer {
-            pokedexDescription.text = it.pokedexEntry
-        })
+    fun initPokedex(pokemonData: PokemonDataRetrofit){
+        pokedexDescription.text = pokemonData.pokedexEntry
     }
 
     override fun onDetach() {
@@ -94,24 +89,24 @@ class SinglePokemonFragment : Fragment() {
         fun onFragmentInteraction(uri: Uri)
     }
 
-    fun initBasicInfos(){
-        initPokemonSpriteAndName()
-    }
-
     @SuppressLint("WrongConstant")
-    fun initRecyclerView(){
+    fun initRecyclerView(pokemonData:PokemonDataRetrofit){
         mainInfosRecyclerView.layoutManager = GridLayoutManager(context,3,GridLayoutManager.VERTICAL,false)
-        PokemonRetrofitSingleton.singlePokemonData.observe(this, Observer {
-            mainInfosRecyclerView.adapter = GenericPokemonViewRecyclerViewItem(viewModel.initBasicInfosData(it),context!!)
-        })
+            mainInfosRecyclerView.adapter = GenericPokemonViewRecyclerViewItem(viewModel.initBasicInfosData(pokemonData),context!!)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.loadData(pokemonIdValue)
-        initBasicInfos()
-        initRecyclerView()
-        initPokedex()
+        initGraphicalElements()
+    }
+
+    private fun initGraphicalElements() {
+        PokemonRetrofitSingleton.singlePokemonData.observe(this, Observer {
+            initPokemonSpriteAndName(it)
+            initRecyclerView(it)
+            initPokedex(it)
+        })
     }
 
     companion object {
