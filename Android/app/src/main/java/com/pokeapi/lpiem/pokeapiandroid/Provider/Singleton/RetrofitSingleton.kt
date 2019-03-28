@@ -1,4 +1,4 @@
-package com.pokeapi.lpiem.pokeapiandroid.Provider.Singleton
+package com.pokeapi.lpiem.pokeapiandroid.provider.singleton
 
 import com.google.gson.GsonBuilder
 import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonAPI

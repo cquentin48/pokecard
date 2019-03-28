@@ -1,4 +1,4 @@
-package com.pokeapi.lpiem.pokeapiandroid.Model.Paging
+package com.pokeapi.lpiem.pokeapiandroid.model.paging
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource

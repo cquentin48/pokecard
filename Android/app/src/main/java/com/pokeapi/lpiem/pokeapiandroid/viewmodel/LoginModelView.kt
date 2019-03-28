@@ -1,7 +1,7 @@
 package com.pokeapi.lpiem.pokeapiandroid.viewmodel
 
 import android.content.Context
-import com.pokeapi.lpiem.pokeapiandroid.Provider.FirebaseSingleton
+import com.pokeapi.lpiem.pokeapiandroid.provider.singleton.FirebaseSingleton
 
 class LoginModelView {
     /**
