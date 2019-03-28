@@ -26,4 +26,7 @@ interface PokemonAPI {
 
     @GET("/pokemon/")
     fun getPokemonById(): Call<PokemonRetrofit>
+
+    @GET("public/index.php/types/all")
+    fun getAllTypes(): Call<TypeList>
 }
