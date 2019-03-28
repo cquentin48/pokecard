@@ -1,7 +1,9 @@
 package com.pokeapi.lpiem.pokeapiandroid.provider.singleton
 
+import android.content.res.Resources
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.pokeapi.lpiem.pokeapiandroid.R
 import com.pokeapi.lpiem.pokeapiandroid.model.adaptermodel.PokedexBasicInfosAdapter
 import com.pokeapi.lpiem.pokeapiandroid.model.adaptermodel.SinglePokemonBasicInfo
 import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonDataRetrofit
@@ -32,9 +34,9 @@ object PokemonRetrofitSingleton {
 
     fun initBasicInfosData(rawData: PokemonDataRetrofit): PokedexBasicInfosAdapter {
         val returnedData = PokedexBasicInfosAdapter(mutableListOf())
-        returnedData.infos.add(0, SinglePokemonBasicInfo("Types",initPokemonTypes(rawData.types)))
-        returnedData.infos.add(0, SinglePokemonBasicInfo("Taille",((rawData.height/10).toFloat()).toString()+" m"))
-        returnedData.infos.add(0, SinglePokemonBasicInfo("Poids",(rawData.weight).toString()+" kg"))
+        returnedData.infos.add(0, SinglePokemonBasicInfo(if(rawData.types.size>1)"Types" else "Type",initPokemonTypes(rawData.types)))
+        returnedData.infos.add(1, SinglePokemonBasicInfo("Taille",((rawData.height/10).toFloat()).toString()+" m"))
+        returnedData.infos.add(2, SinglePokemonBasicInfo("Poids",(rawData.weight).toString()+" kg"))
         return returnedData
     }
 

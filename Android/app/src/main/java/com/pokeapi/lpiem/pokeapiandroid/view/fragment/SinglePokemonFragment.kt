@@ -15,6 +15,7 @@ import com.pokeapi.lpiem.pokeapiandroid.provider.singleton.PokemonRetrofitSingle
 
 import com.pokeapi.lpiem.pokeapiandroid.R
 import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonDataRetrofit
+import com.pokeapi.lpiem.pokeapiandroid.view.activity.MainActivity
 import com.pokeapi.lpiem.pokeapiandroid.view.adapter.GenericPokemonViewRecyclerViewItem
 import com.pokeapi.lpiem.pokeapiandroid.viewmodel.SinglePokemonViewModel
 import kotlinx.android.synthetic.main.fragment_single_pokemon.*
@@ -60,7 +61,7 @@ class SinglePokemonFragment : Fragment() {
             pokemonName.text = viewModel.loadPokemonName(pokemonData)
             Glide.with(context!!)
                     .load(viewModel.loadPokemonSpriteURL(pokemonData))
-                    .apply(RequestOptions().override(300, 300).circleCrop())
+                    .apply(RequestOptions().override(500, 500).circleCrop())
                     .into(pokemonSprite)
     }
 
@@ -101,11 +102,17 @@ class SinglePokemonFragment : Fragment() {
         initGraphicalElements()
     }
 
+    fun setFragmentTitle(pokemonData : PokemonDataRetrofit){
+        val activity = activity as MainActivity
+        activity.setActionBarTitle(pokemonData.name)
+    }
+
     private fun initGraphicalElements() {
         PokemonRetrofitSingleton.singlePokemonData.observe(this, Observer {
             initPokemonSpriteAndName(it)
             initRecyclerView(it)
             initPokedex(it)
+            setFragmentTitle(it)
         })
     }
 

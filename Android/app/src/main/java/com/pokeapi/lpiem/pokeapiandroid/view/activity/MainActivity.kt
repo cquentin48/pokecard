@@ -84,6 +84,10 @@ class MainActivity : AppCompatActivity(){
                 .into(this.navigationView.getHeaderView(0).findViewById(R.id.userProfileNavigationImage) as ImageView)
     }
 
+    fun setActionBarTitle(title:String){
+        supportActionBar!!.title = title
+    }
+
     /**
      * Manage actions for the items within the navigation view
      */
