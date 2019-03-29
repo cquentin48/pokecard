@@ -76,4 +76,7 @@
     <string name="craftPokemon">Crafter un pokémon</string>
     <string name="createPokemonButton">Créer le pokémon!</string>
     <string name="razSettingsFragment">Réinitialiser le craft</string>
+    <string name="firstType">Premier type</string>
+    <string name="secondType">Deuxième type</string>
+    <string name="createdPokemon">Pokémon créé</string>
 </resources>

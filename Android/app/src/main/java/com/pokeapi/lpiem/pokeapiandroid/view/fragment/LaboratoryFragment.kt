@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 
@@ -65,14 +67,20 @@ class LaboratoryFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         setTitle()
         viewModel.loadData()
-        initAdapter()
-
+        initBothSpinners()
     }
 
-    private fun initAdapter(){
-        typeListInputRecyclerView.layoutManager = LinearLayoutManager(activity)
+    fun initBothSpinners(){
+        initSpinnerData(firstTypeSpinner)
+        initSpinnerData(secondTypeSpinner)
+    }
+
+
+    fun initSpinnerData(spinner: Spinner){
         viewModel.getTypesData().observe(this, Observer {
-            typeListInputRecyclerView.adapter = TypeInputCraftAdapter(it,context!!)
+            val adapter = ArrayAdapter<String>(context,android.R.layout.simple_spinner_item, it.typeList)
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinner.adapter = adapter
         })
     }
 

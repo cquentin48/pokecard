@@ -2,6 +2,7 @@ package com.pokeapi.lpiem.pokeapiandroid.provider.singleton
 
 import android.content.res.Resources
 import android.util.Log
+import android.widget.Spinner
 import androidx.lifecycle.MutableLiveData
 import com.pokeapi.lpiem.pokeapiandroid.R
 import com.pokeapi.lpiem.pokeapiandroid.model.adaptermodel.PokedexBasicInfosAdapter
