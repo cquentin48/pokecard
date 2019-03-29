@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.pokeapi.lpiem.pokeapiandroid.model.enum.LoadingState
-import com.pokeapi.lpiem.pokeapiandroid.Model.Paging.PokedexListDataSource
-import com.pokeapi.lpiem.pokeapiandroid.Model.Paging.PokemonDataFactory
+import com.pokeapi.lpiem.pokeapiandroid.model.paging.PokedexListDataSource
+import com.pokeapi.lpiem.pokeapiandroid.model.paging.PokemonDataFactory
 import com.pokeapi.lpiem.pokeapiandroid.provider.singleton.RetrofitSingleton
 import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonRetrofit
 import io.reactivex.disposables.CompositeDisposable

@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity(){
     /**
      * Managing toolbar attached to navigationView
      */
-    fun managingToolbarSetting() {
+    private fun managingToolbarSetting() {
         actionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.ic_settings_black_24dp)

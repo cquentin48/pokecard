@@ -2,7 +2,7 @@ package com.pokeapi.lpiem.pokeapiandroid.viewmodel
 
 import android.content.Context
 import android.widget.Toast
-import com.pokeapi.lpiem.pokeapiandroid.Provider.FirebaseSingleton
+import com.pokeapi.lpiem.pokeapiandroid.provider.singleton.FirebaseSingleton
 import com.pokeapi.lpiem.pokeapiandroid.R
 
 class MainMenuViewModel {

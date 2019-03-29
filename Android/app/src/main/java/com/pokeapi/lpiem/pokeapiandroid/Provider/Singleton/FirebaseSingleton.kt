@@ -1,4 +1,4 @@
-package com.pokeapi.lpiem.pokeapiandroid.Provider
+package com.pokeapi.lpiem.pokeapiandroid.provider.singleton
 
 import android.content.Context
 import android.content.Intent
@@ -59,6 +59,6 @@ object FirebaseSingleton {
      * Update the current logged in user
      */
     fun setCurrentUser(){
-        FirebaseSingleton.firebaseUser = FirebaseAuth.getInstance().currentUser!!
+        firebaseUser = FirebaseAuth.getInstance().currentUser!!
     }
 }
