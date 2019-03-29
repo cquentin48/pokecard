@@ -38,7 +38,6 @@ class SinglePokemonFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var listener: OnFragmentInteractionListener? = null
     private var viewModel = SinglePokemonViewModel()
     private var pokemonIdValue: Int = 0
 
@@ -56,7 +55,7 @@ class SinglePokemonFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_single_pokemon, container, false)
     }
 
-    fun initPokemonSpriteAndName(pokemonData: PokemonDataRetrofit){
+    private fun initPokemonSpriteAndName(pokemonData: PokemonDataRetrofit){
             pokemonId.text = viewModel.loadPokemonId(pokemonData)
             pokemonName.text = viewModel.loadPokemonName(pokemonData)
             Glide.with(context!!)
@@ -65,29 +64,8 @@ class SinglePokemonFragment : Fragment() {
                     .into(pokemonSprite)
     }
 
-    fun initPokedex(pokemonData: PokemonDataRetrofit){
+    private fun initPokedex(pokemonData: PokemonDataRetrofit){
         pokedexDescription.text = pokemonData.pokedexEntry
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
-    interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
     }
 
     @SuppressLint("WrongConstant")
@@ -102,7 +80,7 @@ class SinglePokemonFragment : Fragment() {
         initGraphicalElements()
     }
 
-    fun setFragmentTitle(pokemonData : PokemonDataRetrofit){
+    private fun setFragmentTitle(pokemonData : PokemonDataRetrofit){
         val activity = activity as MainActivity
         activity.setActionBarTitle(pokemonData.name)
     }
