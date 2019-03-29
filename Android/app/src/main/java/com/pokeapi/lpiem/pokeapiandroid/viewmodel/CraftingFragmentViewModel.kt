@@ -12,8 +12,4 @@ class CraftingFragmentViewModel {
     fun getTypesData():MutableLiveData<TypeList>{
         return TypeListManagment.typeList
     }
-
-    fun updateType(id:Int, value:String){
-        TypeListManagment.updateTypesChosen(id,value)
-    }
 }

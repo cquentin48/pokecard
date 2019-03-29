@@ -1,6 +1,5 @@
 package com.pokeapi.lpiem.pokeapiandroid.view.fragment
 
-import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,11 +9,9 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.pokeapi.lpiem.pokeapiandroid.R
 import com.pokeapi.lpiem.pokeapiandroid.view.activity.MainActivity
-import com.pokeapi.lpiem.pokeapiandroid.view.adapter.TypeInputCraftAdapter
 import com.pokeapi.lpiem.pokeapiandroid.viewmodel.CraftingFragmentViewModel
 import kotlinx.android.synthetic.main.fragment_laboratory.*
 
@@ -63,20 +60,43 @@ class LaboratoryFragment : Fragment() {
         listener?.onFragmentInteraction(uri)
     }
 
+    private fun showOrHideElements(visibility:Int){
+        pokemonSpriteImage.visibility = visibility
+        surnamePokemon.visibility = visibility
+        pokemonNameCreated.visibility = visibility
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setTitle()
         viewModel.loadData()
         initBothSpinners()
+        manageButtons()
+        showOrHideElements(View.INVISIBLE)
     }
 
-    fun initBothSpinners(){
+    private fun razSpinners(){
+        firstTypeSpinner.setSelection(0)
+        secondTypeSpinner.setSelection(0)
+    }
+
+    private fun onRAZButtonClickListener(){
+        razSettingCraftFragment.setOnClickListener {
+            razSpinners()
+        }
+    }
+
+    private fun manageButtons(){
+        onRAZButtonClickListener()
+    }
+
+    private fun initBothSpinners(){
         initSpinnerData(firstTypeSpinner)
         initSpinnerData(secondTypeSpinner)
     }
 
 
-    fun initSpinnerData(spinner: Spinner){
+    private fun initSpinnerData(spinner: Spinner){
         viewModel.getTypesData().observe(this, Observer {
             val adapter = ArrayAdapter<String>(context,android.R.layout.simple_spinner_item, it.typeList)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)

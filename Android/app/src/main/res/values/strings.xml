@@ -79,4 +79,5 @@
     <string name="firstType">Premier type</string>
     <string name="secondType">Deuxième type</string>
     <string name="createdPokemon">Pokémon créé</string>
+    <string name="spritePokemonContentDescription">Pokemon</string>
 </resources>
