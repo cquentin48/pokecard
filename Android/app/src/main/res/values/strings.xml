@@ -80,4 +80,6 @@
     <string name="secondType">Deuxième type</string>
     <string name="createdPokemon">Pokémon créé</string>
     <string name="spritePokemonContentDescription">Pokemon</string>
+    <string name="notChoosingAnyType">Veuillez au moins choisir le premier type</string>
+    <string name="possibleNickname">Un surnom?</string>
 </resources>

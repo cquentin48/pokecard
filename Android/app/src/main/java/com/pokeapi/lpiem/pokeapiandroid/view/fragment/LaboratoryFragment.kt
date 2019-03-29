@@ -8,7 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 
 import com.pokeapi.lpiem.pokeapiandroid.R
 import com.pokeapi.lpiem.pokeapiandroid.view.activity.MainActivity
@@ -62,7 +65,7 @@ class LaboratoryFragment : Fragment() {
 
     private fun showOrHideElements(visibility:Int){
         pokemonSpriteImage.visibility = visibility
-        surnamePokemon.visibility = visibility
+        nickNamePokemon.visibility = visibility
         pokemonNameCreated.visibility = visibility
     }
 
@@ -70,9 +73,30 @@ class LaboratoryFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         setTitle()
         viewModel.loadData()
+        updateVisibilityOfResult()
         initBothSpinners()
         manageButtons()
-        showOrHideElements(View.INVISIBLE)
+        onCraftingResult()
+    }
+
+    private fun onCraftingResult(){
+        generateData()
+    }
+
+    private fun updateVisibilityOfResult(){
+        viewModel.getGeneratedData().observe(this, Observer {
+            showOrHideElements(if(it == null)View.INVISIBLE else View.VISIBLE)
+        })
+    }
+
+    private fun generateData(){
+        viewModel.getGeneratedData().observe(this, Observer {
+            pokemonNameCreated.text = viewModel.loadPokemonName(it)
+            Glide.with(context!!).load(viewModel.loadPokemonSprite(it))
+                 .apply(RequestOptions().override(300, 300).circleCrop())
+                 .into(pokemonSpriteImage)
+            nickNamePokemon.text
+        })
     }
 
     private fun razSpinners(){
@@ -88,6 +112,21 @@ class LaboratoryFragment : Fragment() {
 
     private fun manageButtons(){
         onRAZButtonClickListener()
+        onCreatePokemonCraftButtonClickListener()
+    }
+
+    private fun onCreatePokemonCraftButtonClickListener(){
+        createPokemonCraft.setOnClickListener {
+            if(hasTheTypeBeenChoosen()){
+                viewModel.generateRandomPokemon(firstTypeSpinner.selectedItemId.toInt(), secondTypeSpinner.selectedItemId.toInt())
+            }else{
+                displayErrorMessage()
+            }
+        }
+    }
+
+    private fun hasTheTypeBeenChoosen():Boolean{
+        return firstTypeSpinner.selectedItemId != 0L
     }
 
     private fun initBothSpinners(){
@@ -95,6 +134,9 @@ class LaboratoryFragment : Fragment() {
         initSpinnerData(secondTypeSpinner)
     }
 
+    private fun displayErrorMessage(){
+        Toast.makeText(context,getString(R.string.notChoosingAnyType),Toast.LENGTH_LONG).show()
+    }
 
     private fun initSpinnerData(spinner: Spinner){
         viewModel.getTypesData().observe(this, Observer {

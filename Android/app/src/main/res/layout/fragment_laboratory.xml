@@ -105,12 +105,13 @@
             tools:src="@tools:sample/avatars" />
 
         <EditText
-            android:id="@+id/surnamePokemon"
+            android:id="@+id/nickNamePokemon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="32dp"
             android:ems="10"
+            android:hint="@string/possibleNickname"
             android:inputType="datetime|textPersonName"
             app:layout_constraintBottom_toTopOf="@+id/createPokemonCraft"
             app:layout_constraintEnd_toEndOf="parent"
