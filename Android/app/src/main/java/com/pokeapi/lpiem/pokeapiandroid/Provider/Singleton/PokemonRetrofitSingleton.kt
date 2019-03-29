@@ -35,8 +35,8 @@ object PokemonRetrofitSingleton {
     fun initBasicInfosData(rawData: PokemonDataRetrofit): PokedexBasicInfosAdapter {
         val returnedData = PokedexBasicInfosAdapter(mutableListOf())
         returnedData.infos.add(0, SinglePokemonBasicInfo(if(rawData.types.size>1)"Types" else "Type",initPokemonTypes(rawData.types)))
-        returnedData.infos.add(1, SinglePokemonBasicInfo("Taille",((rawData.height/10).toFloat()).toString()+" m"))
-        returnedData.infos.add(2, SinglePokemonBasicInfo("Poids",(rawData.weight).toString()+" kg"))
+        returnedData.infos.add(1, SinglePokemonBasicInfo("Taille",(rawData.height.toFloat()/10).toString()+" m"))
+        returnedData.infos.add(2, SinglePokemonBasicInfo("Poids",(rawData.weight.toFloat()/10).toString()+" kg"))
         return returnedData
     }
 
