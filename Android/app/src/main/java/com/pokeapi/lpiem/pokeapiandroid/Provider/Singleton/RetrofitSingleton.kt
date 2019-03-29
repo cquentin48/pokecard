@@ -11,16 +11,8 @@ import java.util.concurrent.TimeUnit
 
 
 object RetrofitSingleton {
-    private var instance: PokemonAPI? = null
-    val POKEMONBASEURL = "https://pokeapi.co/"
+    var retrofitInstance: PokemonAPI = buildInstance()
     val OWNAPIBASEURL = "https://walkemon.herokuapp.com/"
-
-    fun getInstance(): PokemonAPI? {
-        if (instance == null) {
-            instance = buildInstance()
-        }
-        return instance
-    }
 
     private fun buildInstance(): PokemonAPI {
         val gson = GsonBuilder().setLenient().create()

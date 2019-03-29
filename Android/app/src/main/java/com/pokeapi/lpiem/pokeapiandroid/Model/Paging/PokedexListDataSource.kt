@@ -25,7 +25,7 @@ class PokedexListDataSource(
                 api.getPokemonListData(0, params.requestedLoadSize)
                         .subscribe({ response ->
                             updateLoadingState(LoadingState.DONE)
-                            callback.onResult(response.pokemonList,
+                            callback.onResult(response.pokemonLists,
                                     null,
                                     1)
                         }
@@ -49,7 +49,7 @@ class PokedexListDataSource(
                         .subscribe(
                                 { response ->
                                     updateLoadingState(LoadingState.DONE)
-                                    callback.onResult(response.pokemonList,
+                                    callback.onResult(response.pokemonLists,
                                             params.key + 1
                                     )
                                 },

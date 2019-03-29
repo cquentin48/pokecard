@@ -8,10 +8,10 @@ import retrofit2.http.Query
 
 interface PokemonAPI {
 
-    @GET("/api/v2/pokemon/{id}")
+    @GET("/public/index.php/pokemon/{id}")
     fun getPokemonById(
             @Path("id") id: Int
-    ): Call<PokemonRetrofit>
+    ): Call<PokemonDataRetrofit>
 
     /*@GET("/api/v2/pokemon-species/{id}")
     fun getPokemonSpecies(

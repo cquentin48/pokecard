@@ -38,7 +38,7 @@ object FirebaseSingleton {
      * @param context in wich activity/fragment the function is called
      */
     fun getImageURL(context: Context):String{
-        return if(firebaseUser.photoUrl.toString() == "") context.getString(R.string.default_photo_url) else firebaseUser.photoUrl.toString()
+        return if(firebaseUser.photoUrl.toString() == "" || firebaseUser.photoUrl == null) context.getString(R.string.default_photo_url) else firebaseUser.photoUrl.toString()
     }
 
     /**

@@ -9,6 +9,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.pokeapi.lpiem.pokeapiandroid.R
@@ -29,6 +30,10 @@ class MainActivity : AppCompatActivity(){
     private fun setUpFragment(){
         pokedexListView = PokedexListView()
         pokeMap = MapScreenFragment()
+    }
+
+    override fun onAttachFragment(fragment: Fragment?) {
+        super.onAttachFragment(fragment)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,6 +82,10 @@ class MainActivity : AppCompatActivity(){
                 load(viewModel.getImageURL(this@MainActivity))
                 .apply(RequestOptions().override(300, 300).circleCrop())
                 .into(this.navigationView.getHeaderView(0).findViewById(R.id.userProfileNavigationImage) as ImageView)
+    }
+
+    fun setActionBarTitle(title:String){
+        supportActionBar!!.title = title
     }
 
     /**

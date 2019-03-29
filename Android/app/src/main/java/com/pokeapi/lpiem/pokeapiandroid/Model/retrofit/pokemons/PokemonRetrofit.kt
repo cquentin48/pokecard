@@ -10,5 +10,9 @@ data class PokemonRetrofit(
 
         @SerializedName("sprite")
         @Expose
-        val sprite: String
+        val sprite: String,
+
+        @SerializedName("id")
+        @Expose
+        val id:Int
 )
