@@ -2,8 +2,8 @@ package com.pokeapi.lpiem.pokeapiandroid.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.pokeapi.lpiem.pokeapiandroid.model.adaptermodel.PokedexBasicInfosAdapter
-import com.pokeapi.lpiem.pokeapiandroid.provider.singleton.PokemonRetrofitSingleton
 import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonDataRetrofit
+import com.pokeapi.lpiem.pokeapiandroid.provider.singleton.PokemonRetrofitSingleton
 
 class SinglePokemonViewModel {
     fun loadData(pokemonId: Int){
