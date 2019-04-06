@@ -60,5 +60,7 @@
 
     <!--Collections-->
     <string name="collectionFragmentTitle">Hall des honneurs</string>
+    <string name="collectionMenuPokemonList">Pokémons Obtenus</string>
+    <string name="collectionMenuAchievementList">Succès obtenus</string>
     <string name="collections_menu">Collections</string>
 </resources>
