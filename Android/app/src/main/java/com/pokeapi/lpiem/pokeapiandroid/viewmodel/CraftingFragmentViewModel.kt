@@ -24,10 +24,6 @@ class CraftingFragmentViewModel {
         CraftingSingleton.setPokemonId(pokemonGenerated)
     }
 
-    fun emptyPokemonGenerated(){
-        CraftingSingleton.emptyPokemonGenerated()
-    }
-
     fun addPokemonToCollection(nickname: String){
         FirebaseDatabaseSingleton.addPokemonToCollection(nickname)
     }

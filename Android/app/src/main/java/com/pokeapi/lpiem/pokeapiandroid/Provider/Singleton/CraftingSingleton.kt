@@ -34,8 +34,4 @@ object CraftingSingleton {
     init {
         isPokemonCrafted.postValue(false)
     }
-
-    fun emptyPokemonGenerated(){
-        pokemonGenerated.postValue(null)
-    }
 }

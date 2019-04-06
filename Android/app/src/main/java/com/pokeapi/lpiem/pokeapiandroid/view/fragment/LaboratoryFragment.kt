@@ -69,23 +69,24 @@ class LaboratoryFragment : Fragment() {
         nickNamePokemon.visibility = visibility
         pokemonNameCreated.visibility = visibility
         createPokemonCraft.visibility = otherVisibility
+        craftPokemonButton.visibility = visibility
+        razSettingCraftFragment.visibility = otherVisibility
     }
 
     private fun manageRazButtonHandler(){
-        viewModel.isPokemonCrafted().observe(this, Observer {isPokemonCrafted ->
             razSettingCraftFragment.setOnClickListener {
-                if(isPokemonCrafted){
-                    razSettingCraftFragment.text = getString(R.string.craftPokemon)
-                    viewModel.getGeneratedData().observe(this, Observer {
-                        viewModel.addPokemonToCollection(if(nickNamePokemon.text.toString() == "")it.name else nickNamePokemon.text.toString())
-                    })
-                }else{
-                    razSpinners()
-                    razGeneratedPokemon()
-                }
+                razSpinners()
+                razGeneratedPokemon()
             }
-        })
+    }
 
+    private fun manageCraftButtonHandler(){
+        craftPokemonButton.setOnClickListener {
+            viewModel.getGeneratedData().observe(this, Observer {
+                viewModel.addPokemonToCollection(nickNamePokemon.text.toString())
+            })
+            viewModel.getGeneratedData().removeObservers(this)
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -120,7 +121,7 @@ class LaboratoryFragment : Fragment() {
     }
 
     private fun razGeneratedPokemon(){
-        viewModel.emptyPokemonGenerated()
+        updateVisibilityOfResult()
     }
 
     private fun razSpinners(){
@@ -131,6 +132,7 @@ class LaboratoryFragment : Fragment() {
     private fun manageButtons(){
         manageRazButtonHandler()
         onCreatePokemonCraftButtonClickListener()
+        manageCraftButtonHandler()
     }
 
     private fun onCreatePokemonCraftButtonClickListener(){

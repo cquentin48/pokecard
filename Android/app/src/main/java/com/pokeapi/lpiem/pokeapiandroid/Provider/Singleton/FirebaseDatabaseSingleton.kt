@@ -2,6 +2,7 @@ package com.pokeapi.lpiem.pokeapiandroid.provider.singleton
 
 import com.google.firebase.database.FirebaseDatabase
 import com.pokeapi.lpiem.pokeapiandroid.model.firebase.PokemonCollection
+import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonRetrofit
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -18,6 +19,7 @@ object FirebaseDatabaseSingleton {
                 .child(CraftingSingleton.pokemonId.toString())
                 .push()
                 .setValue(generatePokemon(nickname))
+        CraftingSingleton.isPokemonCrafted.postValue(false)
     }
 
     /**
