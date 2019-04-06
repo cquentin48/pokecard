@@ -14,19 +14,11 @@ interface PokemonAPI {
             @Path("id") id: Int
     ): Call<PokemonDataRetrofit>
 
-    /*@GET("/api/v2/pokemon-species/{id}")
-    fun getPokemonSpecies(
-            @Path("id") id: Int
-    ): Call<Species>*/
-
     @GET("/public/index.php/pokemonlist/{pageId}")
     fun getPokemonListData(
             @Path("pageId") pageId: Int,
             @Query("pageSize")pageSize:Int
     ): Single<PokemonList>
-
-    @GET("/pokemon/")
-    fun getPokemonById(): Call<PokemonRetrofit>
 
     @GET("public/index.php/types/all")
     fun getAllTypes(): Call<TypeList>

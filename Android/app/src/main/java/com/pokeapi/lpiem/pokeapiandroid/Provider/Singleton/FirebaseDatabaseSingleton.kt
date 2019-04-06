@@ -13,10 +13,10 @@ object FirebaseDatabaseSingleton {
      * Add pokemon to collection list in firebase
      * @param nickname nickname chosen by the user
      */
-    fun addPokemonToCollection(nickname: String){
+    fun addPokemonToCollection(nickname: String, pokemonId:Int){
         database.child("collections")
                 .child(FirebaseSingleton.firebaseUser.uid)
-                .child(CraftingSingleton.pokemonId.toString())
+                .child(pokemonId.toString())
                 .push()
                 .setValue(generatePokemon(nickname))
         CraftingSingleton.isPokemonCrafted.postValue(false)

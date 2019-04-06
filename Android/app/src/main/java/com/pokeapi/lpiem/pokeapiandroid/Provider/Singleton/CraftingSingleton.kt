@@ -10,7 +10,10 @@ import retrofit2.Response
 object CraftingSingleton {
     val pokemonGenerated = MutableLiveData<PokemonRetrofit>()
     var isPokemonCrafted = MutableLiveData<Boolean>()
-    var pokemonId = 0
+
+    /**
+     * Generate random pokemon based on the types chosen
+     */
     fun generateRandomPokemon(firstType:Int, secondType:Int){
         val api = RetrofitSingleton.retrofitInstance
         api.generateRandomPokemon(firstType, secondType).enqueue(object: Callback<PokemonRetrofit>{
@@ -25,10 +28,6 @@ object CraftingSingleton {
                 }
             }
         })
-    }
-
-    fun setPokemonId(pokemonRetrofit: PokemonRetrofit){
-        pokemonId = (pokemonRetrofit.sprite.replace("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/","")).replace(".png","").toInt()
     }
 
     init {

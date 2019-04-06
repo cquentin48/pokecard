@@ -1,6 +1,5 @@
 package com.pokeapi.lpiem.pokeapiandroid.view.fragment
 
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,15 +13,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
 import com.pokeapi.lpiem.pokeapiandroid.R
-import com.pokeapi.lpiem.pokeapiandroid.provider.singleton.CraftingSingleton
 import com.pokeapi.lpiem.pokeapiandroid.view.activity.MainActivity
 import com.pokeapi.lpiem.pokeapiandroid.viewmodel.CraftingFragmentViewModel
 import kotlinx.android.synthetic.main.fragment_laboratory.*
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -34,23 +27,13 @@ private const val ARG_PARAM2 = "param2"
  *
  */
 class LaboratoryFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    private var listener: OnFragmentInteractionListener? = null
     private var viewModel: CraftingFragmentViewModel = CraftingFragmentViewModel()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+    /**
+     * Update the title of the view
+     */
     private fun setTitle(){
-        val activity = activity as MainActivity
-        activity.setActionBarTitle(getString(R.string.fragmentLaboTitle))
+        (this.activity as MainActivity).setActionBarTitle(getString(R.string.fragmentLaboTitle))
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -59,11 +42,9 @@ class LaboratoryFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_laboratory, container, false)
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
-    }
-
+    /**
+     * Update the visibility of the elements of the view
+     */
     private fun showOrHideElements(visibility:Int, otherVisibility:Int){
         pokemonSpriteImage.visibility = visibility
         nickNamePokemon.visibility = visibility
@@ -73,6 +54,9 @@ class LaboratoryFragment : Fragment() {
         razSettingCraftFragment.visibility = otherVisibility
     }
 
+    /**
+     * Manage actions for the resetting button
+     */
     private fun manageRazButtonHandler(){
             razSettingCraftFragment.setOnClickListener {
                 razSpinners()
@@ -80,10 +64,13 @@ class LaboratoryFragment : Fragment() {
             }
     }
 
+    /**
+     * Manage actions for the crafting pokemon button
+     */
     private fun manageCraftButtonHandler(){
         craftPokemonButton.setOnClickListener {
             viewModel.getGeneratedData().observe(this, Observer {
-                viewModel.addPokemonToCollection(nickNamePokemon.text.toString())
+                viewModel.addPokemonToCollection(nickNamePokemon.text.toString(), it.id)
             })
             viewModel.getGeneratedData().removeObservers(this)
         }
@@ -99,10 +86,16 @@ class LaboratoryFragment : Fragment() {
         onCraftingResult()
     }
 
+    /**
+     * Manage actions on the result of the craft
+     */
     private fun onCraftingResult(){
         generateData()
     }
 
+    /**
+     * Handle the visibility of the element of the view based on the action of the player
+     */
     private fun updateVisibilityOfResult(){
         viewModel.isPokemonCrafted().observe(this, Observer {
             showOrHideElements(if(it)View.VISIBLE else View.INVISIBLE,
@@ -110,100 +103,86 @@ class LaboratoryFragment : Fragment() {
         })
     }
 
+    /**
+     * Display the result of the craft
+     */
     private fun generateData(){
         viewModel.getGeneratedData().observe(this, Observer {
             pokemonNameCreated.text = viewModel.loadPokemonName(it)
             Glide.with(context!!).load(viewModel.loadPokemonSprite(it))
                  .apply(RequestOptions().override(300, 300).circleCrop())
                  .into(pokemonSpriteImage)
-            viewModel.setPokemonId(it)
         })
     }
 
+    /**
+     * Reset the pokemon generated
+     */
     private fun razGeneratedPokemon(){
         updateVisibilityOfResult()
     }
 
+    /**
+     * Reset the spinners index to 0
+     */
     private fun razSpinners(){
         firstTypeSpinner.setSelection(0)
         secondTypeSpinner.setSelection(0)
     }
 
+    /**
+     * Manage the actions of the buttons
+     */
     private fun manageButtons(){
         manageRazButtonHandler()
         onCreatePokemonCraftButtonClickListener()
         manageCraftButtonHandler()
     }
 
+    /**
+     * Manage the randomly generated pokemon action
+     */
     private fun onCreatePokemonCraftButtonClickListener(){
         createPokemonCraft.setOnClickListener {
             if(hasTheTypeBeenChoosen()){
                 viewModel.generateRandomPokemon(firstTypeSpinner.selectedItemId.toInt(), secondTypeSpinner.selectedItemId.toInt())
+                generateData()
             }else{
                 displayErrorMessage()
             }
         }
     }
 
+    /**
+     * Check if a type had been chosen
+     */
     private fun hasTheTypeBeenChoosen():Boolean{
         return firstTypeSpinner.selectedItemId != 0L
     }
 
+    /**
+     * Init the types spinners
+     */
     private fun initBothSpinners(){
         initSpinnerData(firstTypeSpinner)
         initSpinnerData(secondTypeSpinner)
     }
 
+    /**
+     * Display an error message if the user had forgotten to choose a type
+     */
     private fun displayErrorMessage(){
         Toast.makeText(context,getString(R.string.notChoosingAnyType),Toast.LENGTH_LONG).show()
     }
 
+    /**
+     * Load all types from walkemon API
+     */
     private fun initSpinnerData(spinner: Spinner){
         viewModel.getTypesData().observe(this, Observer {
             val adapter = ArrayAdapter<String>(context,android.R.layout.simple_spinner_item, it.typeList)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = adapter
         })
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
-    interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LaboratoryFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-                LaboratoryFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
-                }
     }
 }
