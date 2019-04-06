@@ -2,21 +2,22 @@ package com.pokeapi.lpiem.pokeapiandroid.view.activity
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.pokeapi.lpiem.pokeapiandroid.R
-import com.pokeapi.lpiem.pokeapiandroid.viewmodel.MainMenuViewModel
-import com.pokeapi.lpiem.pokeapiandroid.view.fragment.PokedexListView
 import com.pokeapi.lpiem.pokeapiandroid.view.MapScreenFragment
+import com.pokeapi.lpiem.pokeapiandroid.view.fragment.CollectionFragment
 import com.pokeapi.lpiem.pokeapiandroid.view.fragment.LaboratoryFragment
+import com.pokeapi.lpiem.pokeapiandroid.view.fragment.PokedexListView
+import com.pokeapi.lpiem.pokeapiandroid.viewmodel.MainMenuViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(){
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity(){
     private lateinit var pokedexListView: PokedexListView
     private lateinit var pokeMap: MapScreenFragment
     private lateinit var craftingFragment: LaboratoryFragment
+    private lateinit var collectionsFragment: CollectionFragment
     private var viewModel: MainMenuViewModel = MainMenuViewModel()
 
     /**
@@ -33,6 +35,7 @@ class MainActivity : AppCompatActivity(){
         pokedexListView = PokedexListView()
         pokeMap = MapScreenFragment()
         craftingFragment = LaboratoryFragment()
+        collectionsFragment = CollectionFragment()
     }
 
     override fun onAttachFragment(fragment: Fragment?) {
@@ -119,9 +122,11 @@ class MainActivity : AppCompatActivity(){
                 R.id.crafting -> {
                     supportFragmentManager.beginTransaction().replace(R.id.fragment_container,craftingFragment).commit()
                 }
+                R.id.collections ->{
+                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, collectionsFragment).commit()
+                }
                 R.id.options -> {
                     displayToastNotYetImplemented()
-
                 }
                 R.id.about -> {
                     displayToastNotYetImplemented()

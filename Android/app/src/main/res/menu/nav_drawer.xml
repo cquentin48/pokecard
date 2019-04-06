@@ -15,6 +15,9 @@
             android:id="@+id/crafting"
             android:title="@string/toogle_laboratory_sub_menu_title"></item>
         <item
+            android:id="@+id/collections"
+            android:title="@string/collections_menu"></item>
+        <item
             android:id="@+id/options"
             android:title="@string/toogle_options_sub_menu_title"/>
         <item

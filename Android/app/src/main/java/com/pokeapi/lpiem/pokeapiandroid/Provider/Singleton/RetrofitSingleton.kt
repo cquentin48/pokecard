@@ -2,11 +2,10 @@ package com.pokeapi.lpiem.pokeapiandroid.provider.singleton
 
 import com.google.gson.GsonBuilder
 import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonAPI
-
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
 
 

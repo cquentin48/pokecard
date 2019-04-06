@@ -3,16 +3,15 @@ package com.pokeapi.lpiem.pokeapiandroid.view.activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.firebase.ui.auth.AuthUI
-
-import kotlinx.android.synthetic.main.activity_log_in.*
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
-import android.widget.Toast
 import com.pokeapi.lpiem.pokeapiandroid.R
 import com.pokeapi.lpiem.pokeapiandroid.viewmodel.LoginModelView
+import kotlinx.android.synthetic.main.activity_log_in.*
 
 const val RC_SIGN_IN = 1
 
