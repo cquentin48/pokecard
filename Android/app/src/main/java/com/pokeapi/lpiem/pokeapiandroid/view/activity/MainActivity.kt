@@ -16,12 +16,14 @@ import com.pokeapi.lpiem.pokeapiandroid.R
 import com.pokeapi.lpiem.pokeapiandroid.viewmodel.MainMenuViewModel
 import com.pokeapi.lpiem.pokeapiandroid.view.fragment.PokedexListView
 import com.pokeapi.lpiem.pokeapiandroid.view.MapScreenFragment
+import com.pokeapi.lpiem.pokeapiandroid.view.fragment.LaboratoryFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(){
     private lateinit var mDrawerLayout: DrawerLayout
     private lateinit var pokedexListView: PokedexListView
     private lateinit var pokeMap: MapScreenFragment
+    private lateinit var craftingFragment: LaboratoryFragment
     private var viewModel: MainMenuViewModel = MainMenuViewModel()
 
     /**
@@ -30,6 +32,7 @@ class MainActivity : AppCompatActivity(){
     private fun setUpFragment(){
         pokedexListView = PokedexListView()
         pokeMap = MapScreenFragment()
+        craftingFragment = LaboratoryFragment()
     }
 
     override fun onAttachFragment(fragment: Fragment?) {
@@ -113,8 +116,8 @@ class MainActivity : AppCompatActivity(){
                 R.id.profile -> {
                     displayToastNotYetImplemented()
                 }
-                R.id.collections -> {
-                    displayToastNotYetImplemented()
+                R.id.crafting -> {
+                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container,craftingFragment).commit()
                 }
                 R.id.options -> {
                     displayToastNotYetImplemented()

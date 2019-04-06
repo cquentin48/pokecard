@@ -4,7 +4,7 @@
 
     <!--Navigation view menu item list-->
     <string name="profileSubMenuTitle">Gestion du profil</string>
-    <string name="toogle_collection_sub_menu_title">Gestion des collections</string>
+    <string name="toogle_laboratory_sub_menu_title">Laboratoire</string>
     <string name="toogle_options_sub_menu_title">Options</string>
     <string name="logout_sub_menu_title">Se déconnecter</string>
     <string name="about_menu">A propos</string>
@@ -70,4 +70,18 @@
     <string name="basicInfos">Informations de base</string>
     <string name="pokedex">Pokédex</string>
     <string name="pokedexTitleLabel">Pokédex :</string>
+
+    <!--Laboratory-->
+    <string name="fragmentLaboTitle">Laboratoire</string>
+    <string name="craftPokemon">Crafter un pokémon</string>
+    <string name="createPokemonButton">Créer le pokémon!</string>
+    <string name="razSettingsFragment">Réinitialiser le craft</string>
+    <string name="firstType">Premier type</string>
+    <string name="secondType">Deuxième type</string>
+    <string name="createdPokemon">Pokémon créé</string>
+    <string name="spritePokemonContentDescription">Pokemon</string>
+    <string name="notChoosingAnyType">Veuillez au moins choisir le premier type</string>
+    <string name="possibleNickname">Un surnom?</string>
+    <string name="addPokemonToCollection">Ajouter le pokémon!</string>
+    <string name="nickNameValue">Surnom du pokémon</string>
 </resources>
