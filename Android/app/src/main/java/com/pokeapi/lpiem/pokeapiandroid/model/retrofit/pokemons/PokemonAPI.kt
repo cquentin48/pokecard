@@ -31,9 +31,9 @@ interface PokemonAPI {
     @GET("public/index.php/types/all")
     fun getAllTypes(): Call<TypeList>
 
-    @POST("public/index.php/craft/pokemon")
+    @GET("public/index.php/craft/pokemon/{firstTypeId}/{secondTypeId}")
     fun generateRandomPokemon(
-            @Path("firstType") firstType:Int,
-            @Path("secondType") secondType:Int
+            @Path("firstTypeId") firstType:Int,
+            @Path("secondTypeId") secondType:Int
     ): Call<PokemonRetrofit>
 }

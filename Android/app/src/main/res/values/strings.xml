@@ -82,4 +82,5 @@
     <string name="spritePokemonContentDescription">Pokemon</string>
     <string name="notChoosingAnyType">Veuillez au moins choisir le premier type</string>
     <string name="possibleNickname">Un surnom?</string>
+    <string name="addPokemonToCollection">Ajouter le pokémon!</string>
 </resources>

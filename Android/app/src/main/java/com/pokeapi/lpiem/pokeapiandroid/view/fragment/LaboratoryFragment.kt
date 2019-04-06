@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
 import com.pokeapi.lpiem.pokeapiandroid.R
+import com.pokeapi.lpiem.pokeapiandroid.provider.singleton.CraftingSingleton
 import com.pokeapi.lpiem.pokeapiandroid.view.activity.MainActivity
 import com.pokeapi.lpiem.pokeapiandroid.viewmodel.CraftingFragmentViewModel
 import kotlinx.android.synthetic.main.fragment_laboratory.*
@@ -63,10 +64,28 @@ class LaboratoryFragment : Fragment() {
         listener?.onFragmentInteraction(uri)
     }
 
-    private fun showOrHideElements(visibility:Int){
+    private fun showOrHideElements(visibility:Int, otherVisibility:Int){
         pokemonSpriteImage.visibility = visibility
         nickNamePokemon.visibility = visibility
         pokemonNameCreated.visibility = visibility
+        createPokemonCraft.visibility = otherVisibility
+    }
+
+    private fun manageRazButtonHandler(){
+        viewModel.isPokemonCrafted().observe(this, Observer {isPokemonCrafted ->
+            razSettingCraftFragment.setOnClickListener {
+                if(isPokemonCrafted){
+                    razSettingCraftFragment.text = getString(R.string.craftPokemon)
+                    viewModel.getGeneratedData().observe(this, Observer {
+                        viewModel.addPokemonToCollection(if(nickNamePokemon.text.toString() == "")it.name else nickNamePokemon.text.toString())
+                    })
+                }else{
+                    razSpinners()
+                    razGeneratedPokemon()
+                }
+            }
+        })
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -84,8 +103,9 @@ class LaboratoryFragment : Fragment() {
     }
 
     private fun updateVisibilityOfResult(){
-        viewModel.getGeneratedData().observe(this, Observer {
-            showOrHideElements(if(it == null)View.INVISIBLE else View.VISIBLE)
+        viewModel.isPokemonCrafted().observe(this, Observer {
+            showOrHideElements(if(it)View.VISIBLE else View.INVISIBLE,
+                    if(it)View.INVISIBLE else View.VISIBLE)
         })
     }
 
@@ -95,8 +115,12 @@ class LaboratoryFragment : Fragment() {
             Glide.with(context!!).load(viewModel.loadPokemonSprite(it))
                  .apply(RequestOptions().override(300, 300).circleCrop())
                  .into(pokemonSpriteImage)
-            nickNamePokemon.text
+            viewModel.setPokemonId(it)
         })
+    }
+
+    private fun razGeneratedPokemon(){
+        viewModel.emptyPokemonGenerated()
     }
 
     private fun razSpinners(){
@@ -104,14 +128,8 @@ class LaboratoryFragment : Fragment() {
         secondTypeSpinner.setSelection(0)
     }
 
-    private fun onRAZButtonClickListener(){
-        razSettingCraftFragment.setOnClickListener {
-            razSpinners()
-        }
-    }
-
     private fun manageButtons(){
-        onRAZButtonClickListener()
+        manageRazButtonHandler()
         onCreatePokemonCraftButtonClickListener()
     }
 
