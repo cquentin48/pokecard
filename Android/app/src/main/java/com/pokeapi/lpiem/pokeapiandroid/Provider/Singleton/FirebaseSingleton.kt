@@ -2,17 +2,23 @@ package com.pokeapi.lpiem.pokeapiandroid.provider.singleton
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.pokeapi.lpiem.pokeapiandroid.R
+import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonFirebase
 import com.pokeapi.lpiem.pokeapiandroid.view.activity.LogInActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 object FirebaseSingleton {
     lateinit var firebaseUser: FirebaseUser
     private lateinit var firebaseAuthentification: FirebaseAuth
-
+    val pokemonCollections = MutableLiveData<ArrayList<PokemonFirebase>>()
     /**
      * initialisation of firebase authentification service
      * @param context which activity will init firebase authentification
@@ -34,8 +40,28 @@ object FirebaseSingleton {
     }
 
     /**
+     * Load the collections of the pokemon
+     */
+    fun getPokemonCollections(userId:String){
+        val api = RetrofitSingleton.retrofitInstance
+        api.getPokemoCollection(userId).enqueue(
+                object: Callback<ArrayList<PokemonFirebase>>{
+                    override fun onFailure(call: Call<ArrayList<PokemonFirebase>>, t: Throwable) {
+                        Log.e("Error",t.message)
+                    }
+
+                    override fun onResponse(call: Call<ArrayList<PokemonFirebase>>, response: Response<ArrayList<PokemonFirebase>>) {
+                        if(response.isSuccessful){
+                            pokemonCollections.postValue(response.body())
+                        }
+                    }
+                }
+        )
+    }
+
+    /**
      * Return the image url of the user
-     * @param context in wich activity/fragment the function is called
+     * @param context in which activity/fragment the function is called
      */
     fun getImageURL(context: Context):String{
         return if(firebaseUser.photoUrl.toString() == "" || firebaseUser.photoUrl == null) context.getString(R.string.default_photo_url) else firebaseUser.photoUrl.toString()

@@ -58,7 +58,7 @@ class SinglePokemonFragment : Fragment() {
             Glide.with(context!!)
                     .load(viewModel.loadPokemonSpriteURL(pokemonData))
                     .apply(RequestOptions().override(500, 500).circleCrop())
-                    .into(pokemonSprite)
+                    .into(pokemonCollectionSprite)
     }
 
     private fun initPokedex(pokemonData: PokemonDataRetrofit){

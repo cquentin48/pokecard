@@ -27,4 +27,9 @@ interface PokemonAPI {
             @Path("firstTypeId") firstType:Int,
             @Path("secondTypeId") secondType:Int
     ): Call<PokemonRetrofit>
+
+    @GET("public/index.php/users/{userId}/pokemonList")
+    fun getPokemoCollection(
+            @Path("userId") userId:String
+    ): Call<ArrayList<PokemonFirebase>>
 }
