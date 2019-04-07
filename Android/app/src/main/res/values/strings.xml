@@ -13,18 +13,8 @@
     <string name="not_yet_implemented">Pas encore implémenté!</string>
 
     <!--Single Pokemon Fragment-->
-    <string name="pokedex_activity_prefix_title">Pokémon n° - </string>
-    <string name="pokedex_activity_description_title">Description : </string>
-    <string name="pokedex_activity_evolution_text">Evolutions :</string>
-    <string name="pokedex_activity_status_text">Status : </string>
-    <string name="pokedex_activity_weight_text">Poids :</string>
-    <string name="pokedex_activity_height_text">Taille : </string>
-    <string name="pokedex_activity_types_text">Type : </string>
-    <string name="pokedex_activity_pokemon_number_text">Pokémon n°</string>
 
     <!--Pokedex List Fragment-->
-    <string name="pokedexSearchText">Rechercher</string>
-    <string name="nothingInput" />
 
     <!-- Login Activity -->
     <string name="signIn">Se connecter</string>
@@ -41,34 +31,19 @@
     <string name="firebase_web_host" translatable="false">pokeapi-1541497105412.firebaseapp.com</string>
 
     <!--Error messages-->
-    <string name="sign_in_cancelled">Connection annulée</string>
     <string name="no_internet_connection">Pas d\'accès à internet</string>
-    <string name="unknown_error">Erreur inconnue</string>
     <string name="sign_in_error_prefix">Sign-in error: </string>
-    <string name="fetching_data_error">Error while fetching data</string>
     <string name="error_tag">Error</string>
 
     <!--Default Values-->
-    <string name="defaultPhoneValue">01-02-03-04-05</string>
-    <string name="default_password_value">password</string>
-    <string name="default_username_value">Pseudonyme</string>
-    <string name="default_email_value">examplemail@mail.com</string>
     <string name="default_photo_url">https://ih0.redbubble.net/image.31546296.6294/ap,550x550,12x12,1,transparent,t.png</string>
 
     <!--Labels-->
-    <string name="emailLabel">Email : </string>
-    <string name="passwordLabel">Mot de passe : </string>
-    <string name="usernameLabel">Pseudonyme : </string>
-    <string name="phoneNumberLabel">N° de téléphone : </string>
-    <string name="avatarSelect">Choix de l\'avatart</string>
     <string name="singlePokemonPaginationLoadingText">Chargement du pokémon</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!--Pokemon View-->
-    <string name="basicInfos">Informations de base</string>
-    <string name="pokedex">Pokédex</string>
     <string name="pokedexTitleLabel">Pokédex :</string>
 
     <!--Laboratory-->
@@ -82,8 +57,6 @@
     <string name="spritePokemonContentDescription">Pokemon</string>
     <string name="notChoosingAnyType">Veuillez au moins choisir le premier type</string>
     <string name="possibleNickname">Un surnom?</string>
-    <string name="addPokemonToCollection">Ajouter le pokémon!</string>
-    <string name="nickNameValue">Surnom du pokémon</string>
 
     <!--Collections-->
     <string name="collectionFragmentTitle">Hall des honneurs</string>

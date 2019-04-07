@@ -14,8 +14,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import com.pokeapi.lpiem.pokeapiandroid.model.UserApp
 import com.pokeapi.lpiem.pokeapiandroid.R
+import com.pokeapi.lpiem.pokeapiandroid.model.UserApp
 import kotlinx.android.synthetic.main.activity_localization.*
 
 class MapScreenFragment : Fragment() , MapFragment.OnFragmentInteractionListener, LocationListener {
