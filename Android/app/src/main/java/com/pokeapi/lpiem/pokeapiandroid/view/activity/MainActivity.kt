@@ -94,6 +94,10 @@ class MainActivity : AppCompatActivity(){
         supportActionBar!!.title = title
     }
 
+    private fun startFragment(fragment: Fragment){
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit()
+    }
+
     /**
      * Manage actions for the items within the navigation view
      */
@@ -111,19 +115,19 @@ class MainActivity : AppCompatActivity(){
             when (menuItem.itemId) {
 
                 R.id.pokedexMenu -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, pokedexListView).commit()
+                    startFragment(pokedexListView)
                 }
                 R.id.pokeMap -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, pokeMap).commit()
+                    startFragment(pokeMap)
                 }
                 R.id.profile -> {
                     displayToastNotYetImplemented()
                 }
                 R.id.crafting -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container,craftingFragment).commit()
+                    startFragment(craftingFragment)
                 }
                 R.id.collections ->{
-                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container, collectionsFragment).commit()
+                    startFragment(collectionsFragment)
                 }
                 R.id.options -> {
                     displayToastNotYetImplemented()
