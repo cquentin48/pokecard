@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.pokeapi.lpiem.pokeapiandroid.R
 import com.pokeapi.lpiem.pokeapiandroid.model.enum.LoadingState
+import com.pokeapi.lpiem.pokeapiandroid.view.activity.MainActivity
 import com.pokeapi.lpiem.pokeapiandroid.view.adapter.PokedexViewAdapter
 import com.pokeapi.lpiem.pokeapiandroid.viewmodel.PokedexViewModel
 import kotlinx.android.synthetic.main.activity_pokedex_list_view.*
@@ -44,6 +45,10 @@ class PokedexListView : Fragment(){
             }
 
         })
+    }
+
+    private fun setActivityTitle(){
+        (activity as MainActivity).setActionBarTitle(getString(R.string.pokedex_menu))
     }
 
     @SuppressLint("WrongConstant")
@@ -81,6 +86,7 @@ class PokedexListView : Fragment(){
     fun initAdapter(){
         initPokedex()
         initState()
+        setActivityTitle()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

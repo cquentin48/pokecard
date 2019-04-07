@@ -1,6 +1,6 @@
 <resources>
     <!-- Manifest -->
-    <string name="app_name">PokeApiAndroid</string>
+    <string name="app_name">Walkemon</string>
 
     <!--Navigation view menu item list-->
     <string name="profileSubMenuTitle">Gestion du profil</string>
