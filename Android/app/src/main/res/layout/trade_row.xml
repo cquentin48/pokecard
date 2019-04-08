@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" android:padding="10dp" >
+
+    <ImageView
+        android:id="@+id/pokemon1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="#AAA" />
+
+    <TextView
+        android:id="@+id/pokemonName1"
+        android:layout_width="94dp"
+        android:layout_height="19dp"
+        android:layout_alignTop="@+id/pokemon1"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="35dp"
+        android:layout_toRightOf="@+id/pokemon1"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/pokemon1"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Pseudo" />
+
+    <TextView
+        android:id="@+id/pokemonName2"
+        android:layout_width="101dp"
+        android:layout_height="21dp"
+        android:layout_alignLeft="@+id/pokemonName1"
+        android:layout_centerHorizontal="false"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="10dp"
+        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toStartOf="@+id/pokemon2"
+        app:layout_constraintStart_toEndOf="@+id/pokemonName1"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Texte de mon tweet" />
+
+    <ImageView
+        android:id="@+id/pokemon2"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignLeft="@id/pokemon2"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/pokemonName2"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="#AAA" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
