@@ -29,7 +29,7 @@ interface PokemonAPI {
     ): Call<PokemonRetrofit>
 
     @GET("public/index.php/users/{userId}/pokemonList")
-    fun getPokemoCollection(
+    fun getPokemonCollection(
             @Path("userId") userId:String
-    ): Call<ArrayList<PokemonFirebase>>
+    ): Call<PokemonCollectionFirebase>
 }

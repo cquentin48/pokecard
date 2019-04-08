@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.pokeapi.lpiem.pokeapiandroid.R
 import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonFirebase
 import kotlinx.android.synthetic.main.pokemon_collection_res_layout.view.*
@@ -21,7 +22,10 @@ class CollectionsAdapter(val context: Context, val data:ArrayList<PokemonFirebas
     }
 
     override fun onBindViewHolder(holder: GenericInfosPokemonViewHolder, position: Int) {
-        Glide.with(context).load(data[position].sprite).into(holder.sprite)
+        Glide.with(context).
+                load(data[position].sprite).
+                apply(RequestOptions().override(300, 300).circleCrop()).
+                into(holder.sprite)
         holder.nickname.text = data[position].surname
     }
 

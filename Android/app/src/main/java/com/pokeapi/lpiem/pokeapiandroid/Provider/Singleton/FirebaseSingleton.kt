@@ -9,6 +9,7 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.pokeapi.lpiem.pokeapiandroid.R
+import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonCollectionFirebase
 import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonFirebase
 import com.pokeapi.lpiem.pokeapiandroid.view.activity.LogInActivity
 import retrofit2.Call
@@ -18,7 +19,7 @@ import retrofit2.Response
 object FirebaseSingleton {
     lateinit var firebaseUser: FirebaseUser
     private lateinit var firebaseAuthentification: FirebaseAuth
-    val pokemonCollections = MutableLiveData<ArrayList<PokemonFirebase>>()
+    val pokemonCollections = MutableLiveData<PokemonCollectionFirebase>()
     /**
      * initialisation of firebase authentification service
      * @param context which activity will init firebase authentification
@@ -44,13 +45,13 @@ object FirebaseSingleton {
      */
     fun getPokemonCollections(userId:String){
         val api = RetrofitSingleton.retrofitInstance
-        api.getPokemoCollection(userId).enqueue(
-                object: Callback<ArrayList<PokemonFirebase>>{
-                    override fun onFailure(call: Call<ArrayList<PokemonFirebase>>, t: Throwable) {
+        api.getPokemonCollection(userId).enqueue(
+                object: Callback<PokemonCollectionFirebase>{
+                    override fun onFailure(call: Call<PokemonCollectionFirebase>, t: Throwable) {
                         Log.e("Error",t.message)
                     }
 
-                    override fun onResponse(call: Call<ArrayList<PokemonFirebase>>, response: Response<ArrayList<PokemonFirebase>>) {
+                    override fun onResponse(call: Call<PokemonCollectionFirebase>, response: Response<PokemonCollectionFirebase>) {
                         if(response.isSuccessful){
                             pokemonCollections.postValue(response.body())
                         }
