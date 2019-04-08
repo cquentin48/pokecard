@@ -5,8 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import com.pokeapi.lpiem.pokeapiandroid.R
+import com.pokeapi.lpiem.pokeapiandroid.provider.singleton.FirebaseSingleton
 import com.pokeapi.lpiem.pokeapiandroid.view.activity.MainActivity
+import com.pokeapi.lpiem.pokeapiandroid.view.adapter.CollectionsAdapter
 import com.pokeapi.lpiem.pokeapiandroid.viewmodel.CollectionsViewModel
 import kotlinx.android.synthetic.main.fragment_collection.*
 
@@ -30,39 +34,27 @@ class CollectionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        loadData()
         initGraphicalElements()
     }
 
     private fun initGraphicalElements(){
-        initBottomNavigationMenu()
         setTitle()
+        initPokemonList()
     }
 
     private fun setTitle(){
         (this.activity as MainActivity).setActionBarTitle(getString(R.string.collectionFragmentTitle))
     }
 
-    private fun initAchievementList(){
-
+    private fun loadData(){
+        viewModel.loadData(FirebaseSingleton.firebaseUser.uid)
     }
 
     private fun initPokemonList(){
-
-    }
-
-    private fun initBottomNavigationMenu(){
-        navigationViewCollections.setOnNavigationItemSelectedListener {
-            when(it.itemId){
-                R.id.profilePokemonList -> {
-                    initPokemonList()
-                    true
-                }
-                R.id.profileAchievementList -> {
-                    initAchievementList()
-                    true
-                }
-                else ->false
-            }
-        }
+        viewModel.getCollectionMutableLiveData().observe(this, Observer {
+            collectionsRecyclerView.layoutManager = GridLayoutManager(context,3)
+            collectionsRecyclerView.adapter = CollectionsAdapter(context!!,it)
+        })
     }
 }

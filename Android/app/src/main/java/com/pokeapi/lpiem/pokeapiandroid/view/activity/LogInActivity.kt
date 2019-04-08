@@ -48,7 +48,7 @@ class LogInActivity : AppCompatActivity() {
                     AuthUI.getInstance()
                             .createSignInIntentBuilder()
                             .setTheme(R.style.firebaseAuthUI)
-                            .setLogo(R.drawable.walkemon_logo)
+                            .setLogo(R.drawable.logo)
                             .setAvailableProviders(providers)
                             .build(),
                     RC_SIGN_IN)
