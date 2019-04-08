@@ -22,8 +22,9 @@
              android:id="@+id/toolbar"
              android:layout_width="match_parent"
              android:layout_height="?attr/actionBarSize"
-             android:background="@color/colorPrimary"
-             android:theme="@style/ThemeOverlay.AppCompat.Dark" />
+             android:background="@color/backgroundColor"
+             app:titleTextColor="#ffff"
+             android:theme="@style/firebaseAuthUI" />
 
       </LinearLayout>
       <FrameLayout
