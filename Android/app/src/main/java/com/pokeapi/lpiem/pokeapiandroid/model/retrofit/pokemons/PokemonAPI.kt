@@ -22,14 +22,23 @@ interface PokemonAPI {
     @GET("public/index.php/types/all")
     fun getAllTypes(): Call<TypeList>
 
-    @GET("public/index.php/craft/pokemon/{firstTypeId}/{secondTypeId}")
+    @GET("public/index.php/users/{userId}/craft/pokemon/{firstTypeId}/{secondTypeId}")
     fun generateRandomPokemon(
             @Path("firstTypeId") firstType:Int,
-            @Path("secondTypeId") secondType:Int
+            @Path("secondTypeId") secondType:Int,
+            @Path("userId") userId:String
     ): Call<PokemonRetrofit>
 
     @GET("public/index.php/users/{userId}/pokemonList")
-    fun getPokemoCollection(
+    fun getPokemonCollection(
             @Path("userId") userId:String
-    ): Call<ArrayList<PokemonFirebase>>
+    ): Call<PokemonCollectionFirebase>
+
+    @GET("/public/index.php/users/{userId}/add/{pokemonId}/{nickname}/{creationDate}")
+    fun addPokemonToFirebase(
+            @Path("userId") userId: String,
+            @Path("pokemonId") pokemonId:Int,
+            @Path("nickname") nickname:String,
+            @Path("creationDate") creationDate: String
+    ) : Call<ErrorMessageReturn>
 }

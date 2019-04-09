@@ -1,5 +1,6 @@
 package com.pokeapi.lpiem.pokeapiandroid.view.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -51,10 +52,11 @@ class CollectionFragment : Fragment() {
         viewModel.loadData(FirebaseSingleton.firebaseUser.uid)
     }
 
+    @SuppressLint("WrongConstant")
     private fun initPokemonList(){
         viewModel.getCollectionMutableLiveData().observe(this, Observer {
-            collectionsRecyclerView.layoutManager = GridLayoutManager(context,3)
-            collectionsRecyclerView.adapter = CollectionsAdapter(context!!,it)
+            collectionsRecyclerView.layoutManager = GridLayoutManager(activity,3,GridLayoutManager.VERTICAL,false)
+            collectionsRecyclerView.adapter = CollectionsAdapter(context!!,it.collection)
         })
     }
 }
