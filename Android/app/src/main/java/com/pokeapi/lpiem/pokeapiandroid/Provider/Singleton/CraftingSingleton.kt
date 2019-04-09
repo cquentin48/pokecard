@@ -16,7 +16,7 @@ object CraftingSingleton {
      */
     fun generateRandomPokemon(firstType:Int, secondType:Int){
         val api = RetrofitSingleton.retrofitInstance
-        api.generateRandomPokemon(firstType, secondType).enqueue(object: Callback<PokemonRetrofit>{
+        api.generateRandomPokemon(firstType, secondType,FirebaseSingleton.firebaseUser.uid).enqueue(object: Callback<PokemonRetrofit>{
             override fun onFailure(call: Call<PokemonRetrofit>, t: Throwable) {
                 Log.e("Error",t.localizedMessage)
             }
@@ -25,6 +25,8 @@ object CraftingSingleton {
                 if(response.isSuccessful){
                     pokemonGenerated.postValue(response.body())
                     isPokemonCrafted.postValue(true)
+                }else{
+                    println(response.message())
                 }
             }
         })
