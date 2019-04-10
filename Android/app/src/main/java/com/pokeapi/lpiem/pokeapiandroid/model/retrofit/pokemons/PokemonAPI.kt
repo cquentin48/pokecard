@@ -38,6 +38,6 @@ interface PokemonAPI {
     @Path("pokemonIdWanted") pokemonIdWanted : Int,
     @Path(" originalPokemonId")  originalPokemonId : Int,
     @Path("userId") userId : Int,
-    @Path("friendUserId") friendUserId : Int,
-    ) : Call<ClassQuiGèreLeRetourDesDonnées>
+    @Path("friendUserId") friendUserId : Int
+    ) : Call<TradeRetrofit>
 }
