@@ -32,7 +32,7 @@ class CollectionsAdapter(val context: Context, val data:ArrayList<PokemonFirebas
                 apply(RequestOptions().override(300, 300).circleCrop()).
                 into(holder.sprite)
         holder.nickname.text = data[position].nickname
-        holder.creationDate.text = data[position].creationDate.substring(0,10)
+        holder.creationDate.text = data[position].creationDate//.substring(0,10)
     }
 
     inner class GenericInfosPokemonViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){

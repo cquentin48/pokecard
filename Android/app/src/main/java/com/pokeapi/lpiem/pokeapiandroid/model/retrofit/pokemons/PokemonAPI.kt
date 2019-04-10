@@ -34,6 +34,15 @@ interface PokemonAPI {
             @Path("userId") userId:String
     ): Call<PokemonCollectionFirebase>
 
+    @GET("public/index.php/{userId}/init/{username}/{avatarImage}/{email}")
+    fun initUser(
+            @Path("userId")userId: String,
+            @Path("username")username:String,
+            @Path("avatarImage")avatarImage:String,
+            @Path("email")email:String
+
+    ) : Call<ErrorMessageReturn>
+
     @GET("/public/index.php/users/{userId}/add/{pokemonId}/{nickname}/{creationDate}")
     fun addPokemonToFirebase(
             @Path("userId") userId: String,
