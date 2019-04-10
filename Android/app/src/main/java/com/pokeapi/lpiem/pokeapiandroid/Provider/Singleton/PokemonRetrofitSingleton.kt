@@ -11,6 +11,7 @@ import retrofit2.Response
 
 object PokemonRetrofitSingleton {
     var singlePokemonData = MutableLiveData<PokemonDataRetrofit>()
+    var selectedPokemonCollectionId = MutableLiveData<Int>()
 
     fun loadSinglePokemonData(pokemonId:Int){
         val instance = RetrofitSingleton.retrofitInstance
@@ -28,6 +29,10 @@ object PokemonRetrofitSingleton {
             }
 
         })
+    }
+
+    fun setSelectedPokemonCollectionId(id:Int){
+        selectedPokemonCollectionId.postValue(id)
     }
 
     fun initBasicInfosData(rawData: PokemonDataRetrofit): PokedexBasicInfosAdapter {

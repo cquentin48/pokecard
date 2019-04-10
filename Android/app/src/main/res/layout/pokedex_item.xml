@@ -15,7 +15,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/pokemonCollectionSprite"
+            android:id="@+id/singlePokemonCollectionSprite"
             android:layout_width="111dp"
             android:layout_height="95dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -26,9 +26,9 @@
             android:layout_width="0dp"
             android:layout_height="38dp"
             android:gravity="center"
-            app:layout_constraintEnd_toEndOf="@+id/pokemonCollectionSprite"
-            app:layout_constraintStart_toStartOf="@+id/pokemonCollectionSprite"
-            app:layout_constraintTop_toBottomOf="@+id/pokemonCollectionSprite" />
+            app:layout_constraintEnd_toEndOf="@+id/singlePokemonCollectionSprite"
+            app:layout_constraintStart_toStartOf="@+id/singlePokemonCollectionSprite"
+            app:layout_constraintTop_toBottomOf="@+id/singlePokemonCollectionSprite" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>
