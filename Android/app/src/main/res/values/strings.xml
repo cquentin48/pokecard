@@ -63,4 +63,9 @@
     <string name="collectionMenuPokemonList">Pokémons Obtenus</string>
     <string name="collectionMenuAchievementList">Succès obtenus</string>
     <string name="collections_menu">Collections</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="givePokemonToProfChen">Donner le pokémon au professeur Chen</string>
+    <string name="dissolvePokemon">Dissoudre le pokémon (10 poképièces)</string>
 </resources>
