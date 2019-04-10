@@ -32,4 +32,12 @@ interface PokemonAPI {
     fun getPokemoCollection(
             @Path("userId") userId:String
     ): Call<ArrayList<PokemonFirebase>>
+
+    @GET("/public/index.php/exchanges/confirm/")
+    fun confirmTrade(
+    @Path("pokemonIdWanted") pokemonIdWanted : Int,
+    @Path(" originalPokemonId")  originalPokemonId : Int,
+    @Path("userId") userId : Int,
+    @Path("friendUserId") friendUserId : Int,
+    ) : Call<ClassQuiGèreLeRetourDesDonnées>
 }

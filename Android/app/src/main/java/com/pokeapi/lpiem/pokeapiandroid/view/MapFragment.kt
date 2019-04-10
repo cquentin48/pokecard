@@ -22,6 +22,9 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.pokeapi.lpiem.pokeapiandroid.R
+import android.content.DialogInterface
+import android.content.Intent
+import androidx.appcompat.app.AlertDialog
 
 
 class MapFragment : Fragment(), LocationListener {
@@ -163,8 +166,13 @@ class MapFragment : Fragment(), LocationListener {
     }
 
     override fun onProviderDisabled(provider: String?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+        val builder = AlertDialog.Builder(context!!)
+        builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", DialogInterface.OnClickListener { dialog, id -> startActivity(Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS)) })
+                .setNegativeButton("No", DialogInterface.OnClickListener { dialog, id -> dialog.cancel() })
+        val alert = builder.create()
+        alert.show()    }
 
 
 
