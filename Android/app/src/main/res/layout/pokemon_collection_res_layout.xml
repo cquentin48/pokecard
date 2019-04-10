@@ -3,10 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
+    android:id="@+id/singlePokemonCollectionLayout"
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/pokemonCollectionSprite"
+        android:id="@+id/singlePokemonCollectionSprite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,14 +19,16 @@
         android:id="@+id/pokemonCollectionNickname"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@+id/pokemonCollectionSprite"
-        app:layout_constraintStart_toStartOf="@+id/pokemonCollectionSprite"
-        app:layout_constraintTop_toBottomOf="@+id/pokemonCollectionSprite" />
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="@+id/singlePokemonCollectionSprite"
+        app:layout_constraintStart_toStartOf="@+id/singlePokemonCollectionSprite"
+        app:layout_constraintTop_toBottomOf="@+id/singlePokemonCollectionSprite" />
 
     <TextView
         android:id="@+id/pokemonCollectionCreationDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="@+id/pokemonCollectionNickname"
         app:layout_constraintStart_toStartOf="@+id/pokemonCollectionNickname"
         app:layout_constraintTop_toBottomOf="@+id/pokemonCollectionNickname" />

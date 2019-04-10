@@ -53,16 +53,16 @@ class SinglePokemonFragment : Fragment() {
     }
 
     private fun initPokemonSpriteAndName(pokemonData: PokemonDataRetrofit){
-            pokemonId.text = viewModel.loadPokemonId(pokemonData)
-            pokemonName.text = viewModel.loadPokemonName(pokemonData)
+            singlePokemonId.text = viewModel.loadPokemonId(pokemonData)
+            singlePokemonName.text = viewModel.loadPokemonName(pokemonData)
             Glide.with(context!!)
                     .load(viewModel.loadPokemonSpriteURL(pokemonData))
                     .apply(RequestOptions().override(500, 500).circleCrop())
-                    .into(pokemonCollectionSprite)
+                    .into(singlePokemonCollectionSprite)
     }
 
     private fun initPokedex(pokemonData: PokemonDataRetrofit){
-        pokedexDescription.text = pokemonData.pokedexEntry
+        singlePokemonPokedexDescription.text = pokemonData.pokedexEntry
     }
 
     @SuppressLint("WrongConstant")
