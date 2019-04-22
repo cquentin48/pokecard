@@ -8,12 +8,12 @@ import retrofit2.http.Query
 
 interface PokemonAPI {
 
-    @GET("/public/index.php/pokemon/{id}")
+    @GET("/public/index.php/pokemon/rendbasicinfos/pokemonid={id}")
     fun getPokemonById(
             @Path("id") id: Int
     ): Call<PokemonDataRetrofit>
 
-    @GET("/public/index.php/pokemonlist/{pageId}")
+    @GET("/public/index.php/pokemon/list/pageid={pageId}")
     fun getPokemonListData(
             @Path("pageId") pageId: Int,
             @Query("pageSize")pageSize:Int
@@ -22,28 +22,19 @@ interface PokemonAPI {
     @GET("public/index.php/types/all")
     fun getAllTypes(): Call<TypeList>
 
-    @GET("public/index.php/users/{userId}/craft/pokemon/{firstTypeId}/{secondTypeId}")
+    @GET("public/index.php/user/userid={userId}/craft/pokemon/firstypeid={firstTypeId}/secondtypeid={secondTypeId}")
     fun generateRandomPokemon(
             @Path("firstTypeId") firstType:Int,
             @Path("secondTypeId") secondType:Int,
             @Path("userId") userId:String
     ): Call<PokemonRetrofit>
 
-    @GET("public/index.php/users/{userId}/pokemonList")
+    @GET("public/index.php/user/userid={userId}/pokemonlist")
     fun getPokemonCollection(
             @Path("userId") userId:String
     ): Call<PokemonCollectionFirebase>
 
-    @GET("public/index.php/{userId}/init/{username}/{avatarImage}/{email}")
-    fun initUser(
-            @Path("userId")userId: String,
-            @Path("username")username:String,
-            @Path("avatarImage")avatarImage:String,
-            @Path("email")email:String
-
-    ) : Call<ErrorMessageReturn>
-
-    @GET("/public/index.php/users/{userId}/add/{pokemonId}/{nickname}/{creationDate}")
+    @GET("/public/index.php/user/userid={userId}/addpokemontocollection/id={pokemonId}/nickname={nickname}/creationdate={creationDate}")
     fun addPokemonToFirebase(
             @Path("userId") userId: String,
             @Path("pokemonId") pokemonId:Int,
