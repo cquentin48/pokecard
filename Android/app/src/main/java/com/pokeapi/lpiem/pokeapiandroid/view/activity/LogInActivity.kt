@@ -116,6 +116,7 @@ class LogInActivity : AppCompatActivity() {
     private fun checkUser() {
         if(viewModel.checkIfUserIsAlreadyConnected()){
             viewModel.updateCurrentUser()
+            viewModel.initUser(this@LogInActivity)
             startActivity(Intent(this@LogInActivity, MainActivity::class.java))
         }
     }

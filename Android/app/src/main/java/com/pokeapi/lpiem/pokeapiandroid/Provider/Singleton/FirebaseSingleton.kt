@@ -9,6 +9,7 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.pokeapi.lpiem.pokeapiandroid.R
+import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.ErrorMessageReturn
 import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonCollectionFirebase
 import com.pokeapi.lpiem.pokeapiandroid.model.retrofit.pokemons.PokemonFirebase
 import com.pokeapi.lpiem.pokeapiandroid.view.activity.LogInActivity
@@ -40,6 +41,10 @@ object FirebaseSingleton {
                 }
     }
 
+    fun initUser(){
+
+    }
+
     /**
      * Load the collections of the pokemon
      */
@@ -65,7 +70,7 @@ object FirebaseSingleton {
      * @param context in which activity/fragment the function is called
      */
     fun getImageURL(context: Context):String{
-        return if(firebaseUser.photoUrl.toString() == "" || firebaseUser.photoUrl == null) context.getString(R.string.default_photo_url) else firebaseUser.photoUrl.toString()
+        return if(firebaseUser.photoUrl == null || firebaseUser.photoUrl.toString() == "") context.getString(R.string.default_photo_url) else firebaseUser.photoUrl.toString()
     }
 
     /**

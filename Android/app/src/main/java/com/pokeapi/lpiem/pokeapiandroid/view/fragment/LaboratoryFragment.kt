@@ -69,7 +69,7 @@ class LaboratoryFragment : Fragment() {
     private fun manageCraftButtonHandler(){
         craftPokemonButton.setOnClickListener {
             viewModel.getGeneratedData().observe(this, Observer {
-                viewModel.addPokemonToCollection(nickNamePokemon.text.toString(), it.id)
+                viewModel.addPokemonToCollection(if(nickNamePokemon.text.toString() == "") pokemonNameCreated.text.toString() else nickNamePokemon.text.toString(), it.id)
             })
             viewModel.getGeneratedData().removeObservers(this)
         }
